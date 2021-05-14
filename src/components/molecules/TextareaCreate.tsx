@@ -3,10 +3,18 @@ import { Button } from "../atoms/Button"
 import {useState} from "react"
 import {Table} from "../atoms/Table"
 
+const makeRequest = (bodyData:Object):RequestInit=>{
+    return {
+            method:"POST",
+            mode:"cors",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(bodyData)
+        }
+    }
+const url = "copyToCreate"
+
 export const TextareaCreate = ()=>{
-    const onClick = ()=>{
-        console.log(dataType)
-        console.log(isPrimary)
+    const sendDataAndSetResults = ()=>{
         const sendDatas = {
                 tableName:tableName,
                 dataTypes:dataType,
@@ -14,16 +22,11 @@ export const TextareaCreate = ()=>{
                 columns:columns,
                 options:options
             }
-        fetch("http://127.0.0.1:8000/copyToCreate",{
-            method:"POST",
-            mode:"cors",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(sendDatas)
-        }).then((res)=>res.json())
-        .then((data)=>console.log(data))
+        fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
+        .then((res)=>res.json())
+        .then((results)=>setResults(results))
     }
+    type Results = {results:string}
     type IsNull = "NOT NULL" | "NULL"
     const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
     const [columns,setColumns] = useState<string[]>(constColumns)
@@ -34,6 +37,8 @@ export const TextareaCreate = ()=>{
     const [isPrimary,setIsPrimary] = useState<string[]>(["PRIMARY"])
     const [isNull,setIsNull] = useState<IsNull[]>([])
     const [options, setOptions] = useState<string[]>([])
+    const [results, setResults] = useState<Results>()
+    console.log(results)
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
         const splitn = e.target.value.split("\n")
         if(splitn.length<4 && valueDatas.length<2){
@@ -194,7 +199,7 @@ export const TextareaCreate = ()=>{
         {/* </TestConte> */}
         </TextareaAndTableContener>
         <ButtonContener>
-        <Button onClick={onClick}></Button>
+        <Button onClick={sendDataAndSetResults}></Button>
         <Button onClick={changeUI}>Reset</Button>
         <Button onClick={addRows}>ADD</Button>
         </ButtonContener>
