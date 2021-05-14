@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import { Button } from "../atoms/Button"
-import {cloneElement, useState} from "react"
+import {useState} from "react"
 import {Table} from "../atoms/Table"
+
+const url = "copyToCreate"
 
 const makeRequest = (bodyData:Object):RequestInit=>{
     return {
@@ -12,10 +14,9 @@ const makeRequest = (bodyData:Object):RequestInit=>{
         }
     }
 
-const url = "copyToCreate"
+export const TextareaCreate = () =>{
 
-export const TextareaCreate = ()=>{
-    const sendDataAndSetResults = ()=>{
+    const sendDataAndSetResults = () =>{
         const sendDatas = {
                 tableName:tableName,
                 dataTypes:dataType,
@@ -27,11 +28,12 @@ export const TextareaCreate = ()=>{
         .then((res)=>res.json())
         .then((results)=>setResults(results))
     }
+
     type Results = {results:string}
     type IsNull = "NOT NULL" | "NULL"
     const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
     const [columns,setColumns] = useState<string[]>(constColumns)
-    const [rows, setRows] = useState<string[][]>([["","","","",""]])
+    const [cells, setCells] = useState<string[][]>([["","","","",""]])
     const [tableName,setTableName] = useState("") 
     const [isArea, setIsArea] = useState(true)
     const [dataType, setDataType] = useState<string[]>([])
@@ -73,42 +75,34 @@ export const TextareaCreate = ()=>{
             this.types.push(joinRow.split("\t")[typeLocationAtCopy])
         }
         setOrginal(){
-            setRows(this.values)
+            setCells(this.values)
             setDataType(this.types)
             setIsPrimary(this.primary)
             setIsNull(this.isNull)
         }
     }
 
-    const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
-        const splitn = e.target.value.split("\n")
-        if(splitn.length<4 && rows.length<2){
-            const clone = [...rows]
+    const caseNotTable = (copyTable:string)=>{
+        const joinRowCells = copyTable.split("\n")
+        const not2Dimensions = joinRowCells.filter((cell)=>cell.split("\t").length < 2)
+        if(joinRowCells.length===not2Dimensions.length){
+            alert("テーブルを挿入してくだい")
+            return true
         }
-        // const primary:string[] = []
-        // const types:string[] = []
-        // const columns:string[] = []
-        // const isNull:IsNull[] = []
-        // const values:string[][] = []
-        const clone = new Clones()
-        splitn.map((joinRow,i)=>{
-            clone.setDefault(joinRow)
+        return false
+    }
 
-            // const splitTab = joinRow.split("\t")
-            // values.push([...splitTab,"","","NULL"])
-            // primary.push("")
-            // isNull.push("NULL")
-            // columns.push(splitTab[0])
-            // types.push(splitTab[1])
+    const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
+        const copyTable = e.target.value
+        if(caseNotTable(copyTable)){
+            return
+        }
+        const joinRowCells = copyTable.split("\n")
+        const clone = new Clones()
+        joinRowCells.map((joinRow)=>{
+            clone.setDefault(joinRow)
         })
         clone.setOrginal()
-        // console.log(values)
-        // setIsArea(false)
-        // setRows(values)
-        // setDataType(types)
-        // setIsPrimary(primary)
-        // setIsNull(isNull)
-        // setColumns(constColumns)
     }
     
     const pushPrimary = (columnIndex:number)=>{
@@ -119,27 +113,27 @@ export const TextareaCreate = ()=>{
         console.log("select")
     }
     const addRows = ()=>{
-        if(rows[0][0]!==""){
+        if(cells[0][0]!==""){
             const empty:string[] =[]
             for(let i=0;i<columns.length;i++){
                 empty.push("")
             }
-            setRows([...rows,empty])
+            setCells([...cells,empty])
         }else{
             alert("Plase Input One Line")
         }
     }
     const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>,i:number,j:number)=>{
         const value = e.target.value
-        const clone = [...rows]
+        const clone = [...cells]
         clone[i][j] = value
         console.log(clone)
-        setRows(clone)     
+        setCells(clone)     
     }
 
     const changeUI = ()=> {
         setIsArea(true)
-        setRows([["","","","",""]])
+        setCells([["","","","",""]])
         
     }
     const handleChangeNull = (i:number)=>{
@@ -234,7 +228,7 @@ export const TextareaCreate = ()=>{
         <div>
         <Table
         columns={columns}
-        rows={rows}
+        rows={cells}
         headerKey={"testhed"}
         bodyKey={"testbody"}
         tableKey={"tabless"}
