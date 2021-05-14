@@ -31,7 +31,7 @@ export const TextareaCreate = ()=>{
     type IsNull = "NOT NULL" | "NULL"
     const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
     const [columns,setColumns] = useState<string[]>(constColumns)
-    const [valueDatas, setValueDatas] = useState<string[][]>([["","","","",""]])
+    const [rows, setRows] = useState<string[][]>([["","","","",""]])
     const [tableName,setTableName] = useState("") 
     const [isArea, setIsArea] = useState(true)
     const [dataType, setDataType] = useState<string[]>([])
@@ -73,7 +73,7 @@ export const TextareaCreate = ()=>{
             this.types.push(joinRow.split("\t")[typeLocationAtCopy])
         }
         setOrginal(){
-            setValueDatas(this.values)
+            setRows(this.values)
             setDataType(this.types)
             setIsPrimary(this.primary)
             setIsNull(this.isNull)
@@ -82,8 +82,8 @@ export const TextareaCreate = ()=>{
 
     const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
         const splitn = e.target.value.split("\n")
-        if(splitn.length<4 && valueDatas.length<2){
-            const clone = [...valueDatas]
+        if(splitn.length<4 && rows.length<2){
+            const clone = [...rows]
         }
         // const primary:string[] = []
         // const types:string[] = []
@@ -104,7 +104,7 @@ export const TextareaCreate = ()=>{
         clone.setOrginal()
         // console.log(values)
         // setIsArea(false)
-        // setValueDatas(values)
+        // setRows(values)
         // setDataType(types)
         // setIsPrimary(primary)
         // setIsNull(isNull)
@@ -119,27 +119,27 @@ export const TextareaCreate = ()=>{
         console.log("select")
     }
     const addRows = ()=>{
-        if(valueDatas[0][0]!==""){
+        if(rows[0][0]!==""){
             const empty:string[] =[]
             for(let i=0;i<columns.length;i++){
                 empty.push("")
             }
-            setValueDatas([...valueDatas,empty])
+            setRows([...rows,empty])
         }else{
             alert("Plase Input One Line")
         }
     }
     const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>,i:number,j:number)=>{
         const value = e.target.value
-        const clone = [...valueDatas]
+        const clone = [...rows]
         clone[i][j] = value
         console.log(clone)
-        setValueDatas(clone)     
+        setRows(clone)     
     }
 
     const changeUI = ()=> {
         setIsArea(true)
-        setValueDatas([["","","","",""]])
+        setRows([["","","","",""]])
         
     }
     const handleChangeNull = (i:number)=>{
@@ -234,7 +234,7 @@ export const TextareaCreate = ()=>{
         <div>
         <Table
         columns={columns}
-        rows={valueDatas}
+        rows={rows}
         headerKey={"testhed"}
         bodyKey={"testbody"}
         tableKey={"tabless"}
