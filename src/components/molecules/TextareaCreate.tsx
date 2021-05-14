@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Button } from "../atoms/Button"
-import {useState} from "react"
+import {cloneElement, useState} from "react"
 import {Table} from "../atoms/Table"
 
 const makeRequest = (bodyData:Object):RequestInit=>{
@@ -11,6 +11,7 @@ const makeRequest = (bodyData:Object):RequestInit=>{
             body:JSON.stringify(bodyData)
         }
     }
+
 const url = "copyToCreate"
 
 export const TextareaCreate = ()=>{
@@ -38,32 +39,76 @@ export const TextareaCreate = ()=>{
     const [isNull,setIsNull] = useState<IsNull[]>([])
     const [options, setOptions] = useState<string[]>([])
     const [results, setResults] = useState<Results>()
-    console.log(results)
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
+
+    class Clones{
+        primary:string[]
+        types:string[]
+        isNull:IsNull[]
+        values:string[][]
+
+        constructor(){
+            this.primary = []
+            this.types = []
+            this.isNull = []
+            this.values = []
+        }
+
+        setDefault(joinRow:string){
+            this.setRowData(joinRow)
+            this.setDefaultPrimary()
+            this.setDefaultIsNull()
+            this.setDefaultType(joinRow,1)
+        }
+        setRowData(joinRow:string){
+            const row = joinRow.split("\t")
+            this.values.push([...row,"","","NULL"])
+        }
+        setDefaultPrimary(){
+            this.primary.push("")
+        }
+        setDefaultIsNull(){
+            this.isNull.push("NOT NULL")
+        }
+        setDefaultType(joinRow:string,typeLocationAtCopy:number){
+            this.types.push(joinRow.split("\t")[typeLocationAtCopy])
+        }
+        setOrginal(){
+            setValueDatas(this.values)
+            setDataType(this.types)
+            setIsPrimary(this.primary)
+            setIsNull(this.isNull)
+        }
+    }
+
+    const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
         const splitn = e.target.value.split("\n")
         if(splitn.length<4 && valueDatas.length<2){
             const clone = [...valueDatas]
         }
-        const primary:string[] = []
-        const types:string[] = []
-        const columns:string[] = []
-        const isNull:IsNull[] = []
-        const values:string[][] = []
-        splitn.map((row,i)=>{
-            const splitTab = row.split("\t")
-            values.push([...splitTab,"","","NULL"])
-            primary.push("")
-            isNull.push("NULL")
-            columns.push(splitTab[0])
-            types.push(splitTab[1])
+        // const primary:string[] = []
+        // const types:string[] = []
+        // const columns:string[] = []
+        // const isNull:IsNull[] = []
+        // const values:string[][] = []
+        const clone = new Clones()
+        splitn.map((joinRow,i)=>{
+            clone.setDefault(joinRow)
+
+            // const splitTab = joinRow.split("\t")
+            // values.push([...splitTab,"","","NULL"])
+            // primary.push("")
+            // isNull.push("NULL")
+            // columns.push(splitTab[0])
+            // types.push(splitTab[1])
         })
-        console.log(values)
-        setIsArea(false)
-        setValueDatas(values)
-        setDataType(types)
-        setIsPrimary(primary)
-        setIsNull(isNull)
-        setColumns(constColumns)
+        clone.setOrginal()
+        // console.log(values)
+        // setIsArea(false)
+        // setValueDatas(values)
+        // setDataType(types)
+        // setIsPrimary(primary)
+        // setIsNull(isNull)
+        // setColumns(constColumns)
     }
     
     const pushPrimary = (columnIndex:number)=>{
@@ -182,7 +227,7 @@ export const TextareaCreate = ()=>{
             <STextArea
             spellCheck="false"
             id="texts" 
-            onChange={onChange}
+            onChange={pasteToTable}
             ></STextArea>
         </TextareaContener>) : (null)}
         {/* <TestConte> */}
