@@ -115,60 +115,75 @@ export const TextareaInsert = ()=>{
             value={tableName}
             onChange={(e)=>setTableName(e.target.value)}/>
         </InputContener>
-        <TextareaAndTableContener>
-        {isArea ?(
+        <ImageContener id="fn;lakdnf;kan">
         <TextareaAndImage
         src={"../../../db.png"}
         onChange={pasteToTable}
         value={textarea}
-        ></TextareaAndImage>):(null)}
-        {/* // <TextareaContener>
-        //     <img src="../../../db.png"></img>
-        //     <STextArea */} 
-            {/* value={textarea}
-            spellCheck="false"
-            id="texts" 
-            onChange={pasteToTable}
-            ></STextArea>
-        </TextareaContener>) : (null)} */}
-        {/* <TestConte>*/}
-
-        <Table
-        columns={columns}
-        rows={columnsValues}
-        cellElements={cellChildren}
-        tableKey={"taveleel"}
-        headerKey={"nf;alfkd"}
-        bodyKey={"dd"}
-        ></Table>
-
-        {/* </TestConte> */}
-        </TextareaAndTableContener>
-        <ButtonContener>
-        <Button onClick={onClick}></Button>
+        ></TextareaAndImage>
+        </ImageContener>
+        <ResetButtonContener>
         <Button onClick={resetAndChangeUI}>Reset</Button>
-        <Button onClick={addRows}>ADD</Button>
-        </ButtonContener>
+        </ResetButtonContener>
         </Contener>
+        // // <TextareaAndTableContener>
+        // {/* // <TextareaContener>
+        // //     <img src="../../../db.png"></img>
+        // //     <STextArea */} 
+        //     {/* value={textarea}
+        //     spellCheck="false"
+        //     id="texts" 
+        //     onChange={pasteToTable}
+        //     ></STextArea>
+        // </TextareaContener>) : (null)} */}
+        // {/* <TestConte>*/}
+
+        // {/* <Table
+        // columns={columns}
+        // rows={columnsValues}
+        // cellElements={cellChildren}
+        // tableKey={"taveleel"}
+        // headerKey={"nf;alfkd"}
+        // bodyKey={"dd"}
+        // ></Table> */}
+
+        // {/* </TestConte> */}
+        // {/* </TextareaAndTableContener>
+        // <ButtonContener>
+        // <Button onClick={onClick}></Button>
+        // <Button onClick={resetAndChangeUI}>Reset</Button>
+        // <Button onClick={addRows}>ADD</Button>
+        // </ButtonContener> */}
+        
     )
 }
 
 
 const Contener = styled.div`
 position:absolute;
+overflow:auto;
 display:grid;
 width:100%;
-height:100%;
-grid-template-columns:800px 100px 1fr;
-grid-template-rows:50px 600px 50px 50px 800px;
+height:1650px;
+grid-template-columns:500px 50px 1fr;
+grid-template-rows:150px 400px 50px 50px 800px;
 `
 const InputContener = styled.div`
-.area{
-    grid-row:1/2;
-    grid-column:1/2;
-}
+margin:10px;
+grid-row:1/2;
+grid-column:1/2;
+`
+const ImageContener = styled.div`
+width:500px;
+height:420px;
+grid-row: 2 / 4;
+grid-column: 1 / 2;
 `
 
+const ResetButtonContener = styled.div`
+grid-row: 3 / 4;
+grid-column: 2 / 3;
+`
 const ButtonContener = styled.div`
 display:flex;
 justify-content:space-around;
