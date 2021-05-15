@@ -104,16 +104,20 @@ export const TextareaCreate = () =>{
         setMultiLineCells(multiLineCellsClone.clone)
     }
     
-    const pushPrimary = (e:React.ChangeEvent<HTMLSelectElement>,columnIndex:number)=>{
+    const handleChangePrimary = (e:React.ChangeEvent<HTMLSelectElement>,columnIndex:number)=>{
         const clone = [...multiLineCells]
         clone[columnIndex]["IsPrimary"] = e.target.value
         setMultiLineCells(clone)
     }
     
-    const handleChangeNameOrType = (e: React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
-        const value = e.target.value
+    const handleChangeNameOrType = (e:React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
         const clone = [...multiLineCells]
-        clone[i][column] = value
+        clone[i][column] = e.target.value
+        setMultiLineCells(clone)
+    }
+    const handeleChangeOptins = (e:React.ChangeEvent<HTMLSelectElement>,i:number,column:string)=>{
+        const clone = [...multiLineCells]
+        clone[i][column] = e.target.value
         setMultiLineCells(clone)
     }
     const addRows = ()=>{
@@ -149,13 +153,13 @@ export const TextareaCreate = () =>{
                 return(
                     <>
                         {multiLineCells[index][column] === "PRIMARY" ? (
-                            <SSelect onChange={(e)=>pushPrimary(e,index)}>
+                            <SSelect onChange={(e)=>handleChangePrimary(e,index)}>
                                 <SOption value={""}></SOption>
                                 <SOption  defaultValue={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
                             ):
                             (
-                            <SSelect onChange={(e)=>pushPrimary(e,index)}>
+                            <SSelect onChange={(e)=>handleChangePrimary(e,index)}>
                                 <SOption defaultValue=""></SOption>
                                 <SOption value={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
@@ -166,11 +170,11 @@ export const TextareaCreate = () =>{
 
             case "Option":
                 return(
-                    <SSelect>
+                    <SSelect onChange={(e)=>handeleChangeOptins(e,index,column)}>
                         <SOption defaultValue=""></SOption>
-                        <SOption>AUTO INCREMENT</SOption>
-                        <SOption>DEFAULT CURRENT_TIMESTAMP</SOption>
-                        <SOption>DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
+                        <SOption value="AUTO INCREMENT">AUTO INCREMENT</SOption>
+                        <SOption value="DEFAULT CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP</SOption>
+                        <SOption value="DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
                     </SSelect>
                 )
             
