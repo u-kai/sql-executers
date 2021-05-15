@@ -10,8 +10,9 @@ export const TextareaInsert = ()=>{
     const onClick = ()=>{
         const sendDatas = {
                 tableName:tableName,
+                columns:columns,
                 columnsValues:columnsValues
-            }
+        }
         postDataAndReturnResposeJson(sendDatas,url)
         .then((data)=>console.log(data))
     }
@@ -22,6 +23,7 @@ export const TextareaInsert = ()=>{
     const [valueDatas, setValueDatas] = useState<string[][]>([[]])
     const [tableName,setTableName] = useState("") 
     const [isArea, setIsArea] = useState(true)
+    const [textarea,setTextarea] = useState("")
 
     class ColumnValueClone{
         clone:ColumnValue[]
@@ -58,33 +60,16 @@ export const TextareaInsert = ()=>{
         }
         const rows = e.target.value.split("\n")
         const columnsAndValues = new ColumnValueClone(columnsValues,e.target.value)
-        rows.map((row)=>{
-            columnsAndValues.makeClone(row)
+        rows.map((row,i)=>{
+            if(i!==0){
+                columnsAndValues.makeClone(row)
+            }
         })
         console.log(columnsAndValues.clone)
         setColumnsValues(columnsAndValues.clone)
     }
-    // const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
-    //     const split = e.target.value.split("\n")
-    //     let datas:[string[]] = [[]]
-    //     split.map((value,i)=>{
-    //         if(i===0){
-    //             datas.pop()
-    //             setColumns(value.split("\t"))
-    //         }else{
-    //             datas.push(value.split("\t"))
-    //         }
-    //     })
-    //     setValueDatas(datas)
-    //     console.log(datas)
-    //     datas.map((data)=>{
-    //         console.log(data)
-    //         data.map((d)=>{
-    //             console.log(d)
-    //         })
-    //     })
-    //     setIsArea(false)
-    // }
+    
+    
     const addRows = ()=>{
         // if(!isArea){
         //     let empty:string[] =[]
@@ -95,23 +80,15 @@ export const TextareaInsert = ()=>{
         // }
     }
     const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
-        // const value = e.target.value
-        // console.log(e.target.value)
-        // const clone = [...valueDatas]
-        // clone[i][j] = value
-        // console.log(clone)
-        // setValueDatas(clone)      
+        columnsValues[i][column] = e.target.value
+        setColumnsValues([...columnsValues])
+        
     }
-    const handleChangeColumns = (e: React.ChangeEvent<HTMLInputElement>,i:number)=>{
-        // const column = e.target.value
-        // const clone = [...columns]
-        // clone[i] = column
-        // setColumns(clone)
-    }
-    const changeUI = ()=> {
-        // setIsArea(true)
-        // setColumns([])
-        // setValueDatas([])
+  
+    const resetAndChangeUI = ()=> {
+        setIsArea(true)
+        setColumns([])
+        setColumnsValues([])
     }
     const cellChildren = (value:string,i:number,column:string)=>{
         return(
@@ -124,10 +101,27 @@ export const TextareaInsert = ()=>{
 
     return(
         <>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         <TextareaAndTableContener>
         {isArea ?(
         <TextareaContener>
             <STextArea
+            value={textarea}
             spellCheck="false"
             id="texts" 
             onChange={pasteToTable}
@@ -146,7 +140,7 @@ export const TextareaInsert = ()=>{
         </TextareaAndTableContener>
         <ButtonContener>
         <Button onClick={onClick}></Button>
-        <Button onClick={changeUI}>Reset</Button>
+        <Button onClick={resetAndChangeUI}>Reset</Button>
         <Button onClick={addRows}>ADD</Button>
         </ButtonContener>
         <input

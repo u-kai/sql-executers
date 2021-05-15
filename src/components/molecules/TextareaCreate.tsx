@@ -5,7 +5,7 @@ import {Table} from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
 import {Results} from "../../types/tableTypes"
 
-const url = "copyToCreate/test"
+const url = "copyToCreate"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 
 
@@ -52,6 +52,7 @@ export const TextareaCreate = () =>{
     const [isArea, setIsArea] = useState(true)
     const [results, setResults] = useState<Results>()
     const [multiLineCells,setMultiLineCells] = useState<OneLineCells[]>([initLine])
+    const [textarea,setTextarea] = useState("")
     
     const sendDataAndSetResults = () => {
         const sendDatas = {
@@ -164,6 +165,7 @@ export const TextareaCreate = () =>{
         {isArea ?(
         <TextareaContener>
             <STextArea
+                value={textarea}
                 spellCheck="false"
                 id="texts" 
                 onChange={pasteToTable}
