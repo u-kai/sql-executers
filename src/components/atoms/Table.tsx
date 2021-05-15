@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import {VFC} from "react"
 
-type makeElement = (value:string,rowIndex:number,valueIndex:number)=>JSX.Element
+type makeElement = (value:string,rowIndex:number,column:string)=>JSX.Element
 
 type Props = {
     columns:string[]
-    rows:string[][]
+    rows:{[key:string]:string}[]
     tableKey:string
     headerKey:string
     bodyKey:string
@@ -27,23 +27,23 @@ export const Table:VFC<Props> = (props)=>{
                 </STr>
             </STHeader>
             <STBody key={`${bodyKey}TBody`}>
-                {rows.map((row,rowIndex)=>(
-                    <STr key={`tr${bodyKey}TBody${rowIndex}`}>
-                        {row.map((value,index)=>(
-                            <STh key={`th${bodyKey}${index}`}>
-                                {cellElements ? (
-                                    cellElements(value,rowIndex,index)
-                                ):(
-                                 `${value}`   
-                                ) }
-                            </STh>
+                {rows.map((row,rowIndex)=>
+                        (
+                        <STr key={`tr${bodyKey}TBody${rowIndex}`}>
+                            {columns.map((columnType,index) => 
+                                    (
+                                    <STh key={`th${bodyKey}${index}${rowIndex}`}>
+                                        {cellElements? cellElements(row[columnType],rowIndex,columnType):(`${row[columnType]}`)}
+                                    </STh>
+                                    )
                                 )
-                            )
-                        }
-                    </STr>
+                            }
+                        </STr>
                         )
                     )
                 }
+                
+                      
             </STBody>
         </STable >
     )

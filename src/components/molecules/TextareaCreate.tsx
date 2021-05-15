@@ -2,110 +2,22 @@ import styled from "styled-components"
 import { Button } from "../atoms/Button"
 import {useState} from "react"
 import {Table} from "../atoms/Table"
+import {postData} from "../../functions/tableFunctions"
 
-const url = "copyToCreate"
+
+const url = "copyToCreate/test"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
-const makeRequest = (bodyData:Object):RequestInit=>{
-    return {
-            method:"POST",
-            mode:"cors",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(bodyData)
-        }
-    }
+
 
 export const TextareaCreate = () =>{
 
-    const sendDataAndSetResults = () =>{
-        const sendDatas = {
-                tableName:tableName,
-                dataTypes:dataType,
-                isPrimary:isPrimary,
-                columns:columns,
-                options:options
-            }
-        fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
-        .then((res)=>res.json())
-        .then((results)=>setResults(results))
-    }
-
     type Results = {results:string}
-    type IsNull = "NOT NULL" | "NULL"
-    type OneLineCells = {
-        dataName:string
-        dataType:string
-        isPrimary:""|"PRIMARY"
-        option:string
-        isNull:IsNull
-    }
-    const initLine:OneLineCells = {
-        dataName:"",
-        dataType:"",
-        isPrimary:"",
-        option:"",
-        isNull:"NULL"
-    } 
-    const [columns,setColumns] = useState<string[]>(constColumns)
-    const [cells, setCells] = useState<string[][]>([["","","","",""]])
-    const [tableName,setTableName] = useState("") 
-    const [isArea, setIsArea] = useState(true)
-    const [dataType, setDataType] = useState<string[]>([])
-    const [isPrimary,setIsPrimary] = useState<string[]>(["PRIMARY"])
-    const [isNull,setIsNull] = useState<IsNull[]>([])
-    const [options, setOptions] = useState<string[]>([])
-    const [results, setResults] = useState<Results>()
-    const [multiLineCells,setMultiLineCells] =  useState<OneLineCells[]>([initLine])
-
-    class Clones{
-        primary:string[]
-        types:string[]
-        isNull:IsNull[]
-        values:string[][]
-        options:string[]
-
-        constructor(){
-            this.primary = []
-            this.types = []
-            this.isNull = []
-            this.values = []
-            this.options = []
-        }
-
-        setDefault(joinRow:string){
-            this.setRowData(joinRow)
-            this.setDefaultPrimary()
-            this.setDefaultIsNull()
-            this.setDefaultType(joinRow,1)
-        }
-        setRowData(joinRow:string){
-            const row = joinRow.split("\t")
-            this.values.push([...row,"","","NULL"])
-        }
-        setDefaultPrimary(){
-            this.primary.push("")
-        }
-        setDefaultIsNull(){
-            this.isNull.push("NOT NULL")
-        }
-        setDefaultType(joinRow:string,typeLocationAtCopy:number){
-            this.types.push(joinRow.split("\t")[typeLocationAtCopy])
-        }
-        setDefaultOption(){
-            this.options.push("")
-        }
-        setOrginal(){
-            setCells(this.values)
-            setDataType(this.types)
-            setIsPrimary(this.primary)
-            setIsNull(this.isNull)
-            setOptions(this.options)
-        }
-    }
-
+    type OneLineCells = {[key:string]:string}
+    type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     class MultiLineCellsClone {
         clone:OneLineCells[]
         constructor(multiLineCells:OneLineCells[]){
-            if(multiLineCells[0].dataName === ""){
+            if(multiLineCells[0].DataName === ""){
                 this.clone = []
             }else{
                 this.clone = multiLineCells
@@ -114,11 +26,11 @@ export const TextareaCreate = () =>{
         setOneLineCells(joinRow:string){
             const nameAndType = joinRow.split("\t")
             const cells:OneLineCells ={
-                dataName:nameAndType[0],
-                dataType:nameAndType[1],
-                option:"",
-                isPrimary:"",
-                isNull:"NULL"
+                DataName:nameAndType[0],
+                DataType:nameAndType[1],
+                Option:"",
+                IsPrimary:"",
+                IsNull:"NULL"
             }
             return cells
         }
@@ -129,10 +41,32 @@ export const TextareaCreate = () =>{
             const cells = this.setOneLineCells(joinRow)
             this.appendCells(cells)
         }
-        
     }
-
-    const caseNotTable = (copyTable:string)=>{
+    const initLine:OneLineCells = {
+        DataName:"",
+        DataType:"",
+        IsPrimary:"",
+        Option:"",
+        IsNull:"NULL"
+    } 
+    const [tableName,setTableName] = useState("") 
+    const [isArea, setIsArea] = useState(true)
+    const [results, setResults] = useState<Results>()
+    const [multiLineCells,setMultiLineCells] = useState<OneLineCells[]>([initLine])
+    
+    const sendDataAndSetResults = () => {
+        const sendDatas = {
+                tableName:tableName,
+                multiLineCells:multiLineCells
+            }
+        postData(sendDatas,url).then((res)=>res.json())
+        .then((re)=>console.log(re))        // fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
+        // .then((res)=>res.json())
+        // .then((test)=>{console.log(test)
+        //     return test})
+        // .then((results)=>setResults(results))
+    }
+    const caseNotTable = (copyTable:string) => {
         const joinRowCells = copyTable.split("\n")
         const not2Dimensions = joinRowCells.filter((cell)=>cell.split("\t").length < 2)
         if(joinRowCells.length===not2Dimensions.length){
@@ -141,117 +75,82 @@ export const TextareaCreate = () =>{
         }
         return false
     }
-
-    const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>)=>{
-        const copyTable = e.target.value
-        if(caseNotTable(copyTable)){
+    const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if(caseNotTable(e.target.value)){
             return
         }
-        const joinRowCells = copyTable.split("\n")
-        const clone = new Clones()
-        const cloneTest = new MultiLineCellsClone(multiLineCells)
-        joinRowCells.map((joinRow)=>{
-            console.log("joinRow",joinRow)
-            clone.setDefault(joinRow)
-            cloneTest.makeClone(joinRow)
+        const rows = e.target.value.split("\n")
+        const multiLineCellsClone = new MultiLineCellsClone(multiLineCells)
+        rows.map((row)=>{
+            multiLineCellsClone.makeClone(row)
         })
-        clone.setOrginal()
-        console.log("clone",cloneTest.clone)
+        setMultiLineCells(multiLineCellsClone.clone)
     }
-    
-    const pushPrimary = (columnIndex:number)=>{
-        const clone = [...isPrimary]
-        clone[columnIndex] = "PRIMARY"
-        setColumns([...isPrimary])
-        console.log(isPrimary)
-        console.log("select")
+    const handleChange = (e:CellChageEvent,index:number,column:string) => {
+        const multiLineCellsClone = [...multiLineCells]
+        multiLineCellsClone[index][column] = e.target.value
+        setMultiLineCells(multiLineCellsClone)
     }
-    const addRows = ()=>{
-        if(cells[0][0]!==""){
-            const empty:string[] =[]
-            for(let i=0;i<columns.length;i++){
-                empty.push("")
-            }
-            setCells([...cells,empty])
-        }else{
-            alert("Plase Input One Line")
+    const isDataExist = () => {
+        if(multiLineCells[0]["DataName"]===""){
+            alert("1つ目のデータを定義してください")
+            return false
+        }
+        return true
+    }
+    const addRows = () => {
+        if(isDataExist()){
+            setMultiLineCells([...multiLineCells,initLine])
         }
     }
-    const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>,i:number,j:number)=>{
-        const value = e.target.value
-        const clone = [...cells]
-        clone[i][j] = value
-        const testclone = [...multiLineCells]
-        testclone[i].dataName = value
-        console.log(clone)
-        setCells(clone)
-        setMultiLineCells(testclone)  
-    }
-
-    const changeUI = ()=> {
+    const resetAndChangeUI = () => {
         setIsArea(true)
-        setCells([["","","","",""]])
-        
+        setMultiLineCells([initLine])
     }
-    const handleChangeNull = (i:number)=>{
-        const clone = [...isNull]
-        clone[i] = "NULL"
-        setIsNull(clone)
-    }
-    const handleChangeNotNull = (i:number)=>{
-        const clone = [...isNull]
-        clone[i] = "NOT NULL"
-        setIsNull(clone)
-    }
-    
-    const cellChildren = (values:string,i:number,j:number)=>{
-        switch(j){
-            case 2:
+    const cellChildren = (value:string,index:number,column:string) => {
+        switch(column){
+            case "IsPrimary":
                 return(
-                    // <SSelect>
                     <>
-                        {isPrimary[i] === "PRIMARY" ? (
-                        <SSelect>
-                            <SOption></SOption>
-                            <SOption selected onChange={(e)=>pushPrimary(i)} value={"ps"}>Primary</SOption>
-                        </SSelect>
-                        ):(
-                        <SSelect onChange={(e)=>console.log(e)}>
-                            <SOption selected onChange={(e)=>console.log(e)}></SOption>
-                            <SOption onChange={(e)=>console.log(e)} value={"p"}>Primary</SOption>
-                        </SSelect>
-                        )}
-                        {/* <SOption selected></SOption>
-                        <SOption onChange={(_)=>pushPrimary(j)} value={"p"}>Primary</SOption> */}
-                    {/* // </SSelect> */}
+                        {multiLineCells[index][column] === "PRIMARY" ? (
+                            <SSelect onChange={(e)=>handleChange(e,index,column)}>
+                                <SOption value={""}></SOption>
+                                <SOption  defaultValue={"PRIMARY"}>PRIMARY</SOption>
+                            </SSelect>
+                            ):
+                            (
+                            <SSelect onChange={(e)=>handleChange(e,index,column)}>
+                                <SOption defaultValue=""></SOption>
+                                <SOption value={"PRIMARY"}>PRIMARY</SOption>
+                            </SSelect>
+                            )
+                        }
                     </>
                 )
-
-            case 3:
+            case "Option":
                 return(
-                    <SSelect>
-                        <SOption selected></SOption>
-                        <SOption>AUTO INCREMENT</SOption>
-                        <SOption>DEFAULT CURRENT_TIMESTAMP</SOption>
-                        <SOption>DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
+                    <SSelect onChange={(e)=>handleChange(e,index,column)}>
+                        <SOption defaultValue=""></SOption>
+                        <SOption value="AUTO INCREMENT">AUTO INCREMENT</SOption>
+                        <SOption value="DEFAULT CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP</SOption>
+                        <SOption value="DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
                     </SSelect>
                 )
-            
-            case 4:
+            case "IsNull":
                 return(
-                    <SSelect>
-                            <SOption selected value="NULL" onChange={(_)=>handleChangeNull(i)}>Null</SOption>
-                            <SOption value="NOT NULL" onChange={(_)=>handleChangeNotNull(i)}>NOT NULL</SOption>
+                    <SSelect onChange={(e)=>handleChange(e,index,column)}>
+                            <SOption defaultValue="NULL" >Null</SOption>
+                            <SOption value="NOT NULL" >NOT NULL</SOption>
                     </SSelect>
                 )
             default:
                 return(
-                        <TableTextArea
+                    <TableTextArea
                         spellCheck="false"
-                        value={values}
-                        onChange={(e)=>handleChangeValues(e,i,j)}/>
+                        value={value}
+                        onChange={(e)=>handleChange(e,index,column)}/>
                 )
-        }
+            }
     }
 
     return(
@@ -276,27 +175,35 @@ export const TextareaCreate = () =>{
         {isArea ?(
         <TextareaContener>
             <STextArea
-            spellCheck="false"
-            id="texts" 
-            onChange={pasteToTable}
+                spellCheck="false"
+                id="texts" 
+                onChange={pasteToTable}
             ></STextArea>
         </TextareaContener>) : (null)}
         {/* <TestConte> */}
         <div>
         <Table
-        columns={columns}
+        columns={constColumns}
+        rows={multiLineCells}
+        headerKey={"testhedss"}
+        bodyKey={"testbodys"}
+        tableKey={"tablesss"}
+        cellElements={cellChildren}
+        />
+        {/* <Table
+        columns={constColumns}
         rows={cells}
         headerKey={"testhed"}
         bodyKey={"testbody"}
         tableKey={"tabless"}
         cellElements={cellChildren}
-        />
+        /> */}
         </div>
         {/* </TestConte> */}
         </TextareaAndTableContener>
         <ButtonContener>
         <Button onClick={sendDataAndSetResults}></Button>
-        <Button onClick={changeUI}>Reset</Button>
+        <Button onClick={resetAndChangeUI}>Reset</Button>
         <Button onClick={addRows}>ADD</Button>
         </ButtonContener>
         <input

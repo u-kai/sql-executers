@@ -1,4 +1,4 @@
-import { TextareaCreate } from "components/molecules/TextareaCreatetest";
+import { TextareaCreate } from "components/molecules/TextareaCreate";
 
 
 function App() {
