@@ -123,8 +123,44 @@ export const TextareaInsert = ()=>{
         ></TextareaAndImage>
         </ImageContener>
         <ResetButtonContener>
-        <Button onClick={resetAndChangeUI}>Reset</Button>
+        <Button 
+        backgroundColor={"#e73562"}
+        borderColor={"#942343"}
+        bottomColor={"#941f57"}
+        onClick={resetAndChangeUI}
+        width={120}
+        height={50}
+        fontSize={30}
+        >RESET</Button>
         </ResetButtonContener>
+        <TableContener>
+        <Table
+        columns={columns}
+        rows={columnsValues}
+        cellElements={cellChildren}
+        tableKey={"taveleel"}
+        headerKey={"nf;alfkd"}
+        bodyKey={"dd"}
+        ></Table> 
+        </TableContener>
+        <ButtonsContener>
+        <Button 
+        onClick={onClick}
+        backgroundColor={"#e73562"}
+        borderColor={"#942343"}
+        bottomColor={"#941f57"}
+        width={150}
+        height={50}
+        fontSize={30}
+        >EXECUTE</Button>
+        <Button onClick={addRows}
+        backgroundColor={"#e73562"}
+        borderColor={"#942343"}
+        bottomColor={"#941f57"}
+        width={120}
+        height={50}
+        fontSize={30}>ADD</Button>
+        </ButtonsContener>
         </Contener>
         // // <TextareaAndTableContener>
         // {/* // <TextareaContener>
@@ -164,9 +200,9 @@ position:absolute;
 overflow:auto;
 display:grid;
 width:100%;
-height:1650px;
-grid-template-columns:500px 50px 1fr;
-grid-template-rows:150px 400px 50px 50px 800px;
+height:100%;
+grid-template-columns:300px 50px 400px;
+grid-template-rows:100px 200px 70px 70px 1fr;
 `
 const InputContener = styled.div`
 margin:10px;
@@ -174,8 +210,8 @@ grid-row:1/2;
 grid-column:1/2;
 `
 const ImageContener = styled.div`
-width:500px;
-height:420px;
+width:310px;
+height:220px;
 grid-row: 2 / 4;
 grid-column: 1 / 2;
 `
@@ -184,7 +220,18 @@ const ResetButtonContener = styled.div`
 grid-row: 3 / 4;
 grid-column: 2 / 3;
 `
-const ButtonContener = styled.div`
+
+const TableContener = styled.div`
+grid-row: 5 / 6;
+grid-column: 1 / 4;
+overflow:auto;
+`
+const ButtonsContener = styled.div`
+grid-row: 4 / 5;
+grid-column: 1 / 4;
+// diplay:grid;
+// grid-template-columns:33% 33% 1fr;
+// grid-template-rows: 100%;
 display:flex;
 justify-content:space-around;
 `

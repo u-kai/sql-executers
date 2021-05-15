@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {VFC} from "react"
 
 export type Props = {
+    fontSize?:number
     width?:number
     height?:number
     backgroundColor?:string
@@ -14,7 +15,7 @@ export type Props = {
 export const Button:VFC<Props> =(props)=>{
     const {onClick,width=100,height=30,
             backgroundColor="transparent",borderColor="#1e50a2",
-            children="Button",bottomColor="#1e50a2"} = props
+            children="Button",bottomColor="#1e50a2",fontSize=16} = props
     return(
         <SBox
         backgroundColor={backgroundColor}
@@ -23,6 +24,7 @@ export const Button:VFC<Props> =(props)=>{
         width={width}
         height={height}>
         <SButton 
+        fontSize={fontSize}
         onClick={onClick}>
             {children}
         </SButton>
@@ -50,10 +52,11 @@ background-color:${props=>props.backgroundColor};
     transform:translateY(2px)
 }
 `
-const SButton = styled.button`
+const SButton = styled.button<{fontSize:number}>`
 width:100%;
 height:100%;
 border-radius:3px;
 border:none;
 background-color:transparent;
+font-size:${props=>props.fontSize}px;
 `

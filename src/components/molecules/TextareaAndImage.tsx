@@ -24,8 +24,8 @@ position:relative;
 `
 
 const STextArea = styled.textarea`
-width:500px;
-height:400px;
+width:300px;
+height:200px;
 outline:none;
 color:transparent;
 background-color:transparent;
@@ -42,8 +42,8 @@ z-index:1;
 `
 const SImage = styled.img`
 position:absolute;
-width:500px;
-height:400px;
+width:300px;
+height:200px;
 top:0px;
 left:0px;
 
