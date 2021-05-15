@@ -104,9 +104,16 @@ export const TextareaCreate = () =>{
         setMultiLineCells(multiLineCellsClone.clone)
     }
     
-    const pushPrimary = (columnIndex:number)=>{
+    const pushPrimary = (e:React.ChangeEvent<HTMLSelectElement>,columnIndex:number)=>{
         const clone = [...multiLineCells]
-        clone[columnIndex]["IsPrimary"] = "PRIMARY"
+        clone[columnIndex]["IsPrimary"] = e.target.value
+        setMultiLineCells(clone)
+    }
+    
+    const handleChangeNameOrType = (e: React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
+        const value = e.target.value
+        const clone = [...multiLineCells]
+        clone[i][column] = value
         setMultiLineCells(clone)
     }
     const addRows = ()=>{
@@ -120,13 +127,6 @@ export const TextareaCreate = () =>{
         //     alert("Plase Input One Line")
         // }
     }
-    const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
-        const value = e.target.value
-        const clone = [...multiLineCells]
-        clone[i][column] = value
-        setMultiLineCells(clone)
-    }
-    
     const changeUI = ()=> {
         // setIsArea(true)
         // setCells([["","","","",""]])
@@ -149,15 +149,15 @@ export const TextareaCreate = () =>{
                 return(
                     <>
                         {multiLineCells[index][column] === "PRIMARY" ? (
-                            <SSelect onChange={(_)=>pushPrimary(index)}>
-                                <SOption></SOption>
+                            <SSelect onChange={(e)=>pushPrimary(e,index)}>
+                                <SOption value={""}></SOption>
                                 <SOption  defaultValue={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
                             ):
                             (
-                            <SSelect onChange={(_)=>pushPrimary(index)}>
+                            <SSelect onChange={(e)=>pushPrimary(e,index)}>
                                 <SOption defaultValue=""></SOption>
-                                <SOption value={"p"}>Primary</SOption>
+                                <SOption value={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
                             )
                         }
@@ -176,9 +176,9 @@ export const TextareaCreate = () =>{
             
             case "IsNull":
                 return(
-                    <SSelect>
-                            <SOption defaultValue="NULL" onChange={(_)=>handleChangeNull(index)}>Null</SOption>
-                            <SOption value="NOT NULL" onChange={(_)=>handleChangeNotNull(index)}>NOT NULL</SOption>
+                    <SSelect onChange={(_)=>handleChangeNull(index)}>
+                            <SOption defaultValue="NULL" >Null</SOption>
+                            <SOption value="NOT NULL" >NOT NULL</SOption>
                     </SSelect>
                 )
             default:
@@ -186,7 +186,7 @@ export const TextareaCreate = () =>{
                         <TableTextArea
                         spellCheck="false"
                         value={values}
-                        onChange={(e)=>handleChangeValues(e,index,column)}/>
+                        onChange={(e)=>handleChangeNameOrType(e,index,column)}/>
                 )
         }
     }
