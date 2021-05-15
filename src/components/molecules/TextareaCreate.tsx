@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Button } from "../atoms/Button"
 import {useState} from "react"
 import {Table} from "../atoms/Table"
-import {postDataAndReturnResposeJson} from "../../functions/tableFunctions"
+import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
 
 
 const url = "copyToCreate/test"
@@ -60,25 +60,13 @@ export const TextareaCreate = () =>{
                 multiLineCells:multiLineCells
             }
         postDataAndReturnResposeJson(sendDatas,url)
-        .then((result)=>{
+        .then((results)=>{
             console.log(results)
-            setResults(results)})        // fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
-        // .then((res)=>res.json())
-        // .then((test)=>{console.log(test)
-        //     return test})
-        // .then((results)=>setResults(results))
+            setResults(results)})
     }
-    const caseNotTable = (copyTable:string) => {
-        const joinRowCells = copyTable.split("\n")
-        const not2Dimensions = joinRowCells.filter((cell)=>cell.split("\t").length < 2)
-        if(joinRowCells.length===not2Dimensions.length){
-            alert("テーブルを挿入してくだい")
-            return true
-        }
-        return false
-    }
+    
     const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if(caseNotTable(e.target.value)){
+        if(caseNotTable(e.target.value,"create")){
             return
         }
         const rows = e.target.value.split("\n")
