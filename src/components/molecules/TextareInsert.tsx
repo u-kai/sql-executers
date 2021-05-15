@@ -3,7 +3,8 @@ import { Button } from "../atoms/Button"
 import {useState} from "react"
 import { Table } from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-
+import { TextareaAndImage } from "./TextareaAndImage"
+import {TransformInput} from "../atoms/TransformInput"
 const url = "copyToInsert"
 export const TextareaInsert = ()=>{
 
@@ -83,19 +84,11 @@ export const TextareaInsert = ()=>{
         })
         setColumnsValues([...columnsValues,newRow])
         }
-        
-        // if(!isArea){
-        //     let empty:string[] =[]
-        //     for(let i=0;i<columns.length;i++){
-        //         empty.push("")
-        //     }
-        //     setValueDatas([...valueDatas,empty])
-        // }
     }
+
     const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
         columnsValues[i][column] = e.target.value
         setColumnsValues([...columnsValues])
-        
     }
   
     const resetAndChangeUI = ()=> {
@@ -113,34 +106,33 @@ export const TextareaInsert = ()=>{
     }
 
     return(
-        <>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
+        <Contener>
+        <InputContener>
+        <TransformInput
+            lineColor={"red"}
+            defaultChildren={"Input table name"}
+            label={"Table name"}
+            value={tableName}
+            onChange={(e)=>setTableName(e.target.value)}/>
+        </InputContener>
         <TextareaAndTableContener>
         {isArea ?(
-        <TextareaContener>
-            <STextArea
-            value={textarea}
+        <TextareaAndImage
+        src={"../../../db.png"}
+        onChange={pasteToTable}
+        value={textarea}
+        ></TextareaAndImage>):(null)}
+        {/* // <TextareaContener>
+        //     <img src="../../../db.png"></img>
+        //     <STextArea */} 
+            {/* value={textarea}
             spellCheck="false"
             id="texts" 
             onChange={pasteToTable}
             ></STextArea>
-        </TextareaContener>) : (null)}
-        {/* <TestConte> */}
+        </TextareaContener>) : (null)} */}
+        {/* <TestConte>*/}
+
         <Table
         columns={columns}
         rows={columnsValues}
@@ -149,6 +141,7 @@ export const TextareaInsert = ()=>{
         headerKey={"nf;alfkd"}
         bodyKey={"dd"}
         ></Table>
+
         {/* </TestConte> */}
         </TextareaAndTableContener>
         <ButtonContener>
@@ -156,14 +149,25 @@ export const TextareaInsert = ()=>{
         <Button onClick={resetAndChangeUI}>Reset</Button>
         <Button onClick={addRows}>ADD</Button>
         </ButtonContener>
-        <input
-        type="text"
-        value={tableName}
-        onChange={(e)=>setTableName(e.target.value)}
-        ></input>
-        </>
+        </Contener>
     )
 }
+
+
+const Contener = styled.div`
+position:absolute;
+display:grid;
+width:100%;
+height:100%;
+grid-template-columns:800px 100px 1fr;
+grid-template-rows:50px 600px 50px 50px 800px;
+`
+const InputContener = styled.div`
+.area{
+    grid-row:1/2;
+    grid-column:1/2;
+}
+`
 
 const ButtonContener = styled.div`
 display:flex;
