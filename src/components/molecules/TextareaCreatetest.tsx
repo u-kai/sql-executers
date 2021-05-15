@@ -4,7 +4,7 @@ import {useState} from "react"
 import {Tabletest} from "../atoms/Tabletest"
 import {Table} from "../atoms/Table"
 
-const url = "copyToCreate"
+const url = "copyToCreate/test"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 const makeRequest = (bodyData:Object):RequestInit=>{
     return {
@@ -20,12 +20,12 @@ export const TextareaCreate = () =>{
     const sendDataAndSetResults = () =>{
         const sendDatas = {
                 tableName:tableName,
-                dataTypes:dataType,
-                isPrimary:isPrimary,
-                options:options
+                multiLineCells:multiLineCells
             }
         fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
         .then((res)=>res.json())
+        .then((test)=>{console.log(test)
+            return test})
         .then((results)=>setResults(results))
     }
 
@@ -33,11 +33,6 @@ export const TextareaCreate = () =>{
     type IsNull = "NOT NULL" | "NULL"
     type OneLineCells = {
         [key:string]:string
-        // dataName:string
-        // dataType:string
-        // isPrimary:""|"PRIMARY"
-        // option:string
-        // isNull:IsNull
     }
     const initLine:OneLineCells = {
         DataName:"",
@@ -55,7 +50,6 @@ export const TextareaCreate = () =>{
     const [options, setOptions] = useState<string[]>([])
     const [results, setResults] = useState<Results>()
     const [multiLineCells,setMultiLineCells] =  useState<OneLineCells[]>([initLine])
-    console.log("multiline",multiLineCells)
     class Clones{
         primary:string[]
         types:string[]
