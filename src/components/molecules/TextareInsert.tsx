@@ -20,7 +20,6 @@ export const TextareaInsert = ()=>{
     type ColumnValue = {[key:string]:string}
     const [columnsValues,setColumnsValues] = useState<ColumnValue[]>([])
     const [columns,setColumns] = useState<string[]>([])
-    const [valueDatas, setValueDatas] = useState<string[][]>([[]])
     const [tableName,setTableName] = useState("") 
     const [isArea, setIsArea] = useState(true)
     const [textarea,setTextarea] = useState("")
@@ -69,8 +68,22 @@ export const TextareaInsert = ()=>{
         setColumnsValues(columnsAndValues.clone)
     }
     
-    
+    const isDataExist = () => {
+        if(columnsValues.length < 1){
+            alert("データを挿入してください")
+            return false
+        }
+        return true
+    }
     const addRows = ()=>{
+        if(isDataExist()){
+            let newRow:ColumnValue = {}
+            columns.map((column)=>{
+            newRow[column] = ""
+        })
+        setColumnsValues([...columnsValues,newRow])
+        }
+        
         // if(!isArea){
         //     let empty:string[] =[]
         //     for(let i=0;i<columns.length;i++){
