@@ -4,7 +4,7 @@ import {useState} from "react"
 import {Table} from "../atoms/Table"
 
 const url = "copyToCreate"
-
+const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 const makeRequest = (bodyData:Object):RequestInit=>{
     return {
             method:"POST",
@@ -31,7 +31,20 @@ export const TextareaCreate = () =>{
 
     type Results = {results:string}
     type IsNull = "NOT NULL" | "NULL"
-    const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
+    type OneLineCells = {
+        dataName:string
+        dataType:string
+        isPrimary:""|"PRIMARY"
+        option:string
+        isNull:IsNull
+    }
+    const initLine:OneLineCells = {
+        dataName:"",
+        dataType:"",
+        isPrimary:"",
+        option:"",
+        isNull:"NULL"
+    } 
     const [columns,setColumns] = useState<string[]>(constColumns)
     const [cells, setCells] = useState<string[][]>([["","","","",""]])
     const [tableName,setTableName] = useState("") 
@@ -41,18 +54,21 @@ export const TextareaCreate = () =>{
     const [isNull,setIsNull] = useState<IsNull[]>([])
     const [options, setOptions] = useState<string[]>([])
     const [results, setResults] = useState<Results>()
+    const [multiLineCells,setMultiLineCells] =  useState<OneLineCells[]>([initLine])
 
     class Clones{
         primary:string[]
         types:string[]
         isNull:IsNull[]
         values:string[][]
+        options:string[]
 
         constructor(){
             this.primary = []
             this.types = []
             this.isNull = []
             this.values = []
+            this.options = []
         }
 
         setDefault(joinRow:string){
@@ -74,12 +90,46 @@ export const TextareaCreate = () =>{
         setDefaultType(joinRow:string,typeLocationAtCopy:number){
             this.types.push(joinRow.split("\t")[typeLocationAtCopy])
         }
+        setDefaultOption(){
+            this.options.push("")
+        }
         setOrginal(){
             setCells(this.values)
             setDataType(this.types)
             setIsPrimary(this.primary)
             setIsNull(this.isNull)
+            setOptions(this.options)
         }
+    }
+
+    class MultiLineCellsClone {
+        clone:OneLineCells[]
+        constructor(multiLineCells:OneLineCells[]){
+            if(multiLineCells[0].dataName === ""){
+                this.clone = []
+            }else{
+                this.clone = multiLineCells
+            }
+        }
+        setOneLineCells(joinRow:string){
+            const nameAndType = joinRow.split("\t")
+            const cells:OneLineCells ={
+                dataName:nameAndType[0],
+                dataType:nameAndType[1],
+                option:"",
+                isPrimary:"",
+                isNull:"NULL"
+            }
+            return cells
+        }
+        appendCells(cells:OneLineCells){
+            this.clone = [...this.clone,cells]
+        }
+        makeClone(joinRow:string){
+            const cells = this.setOneLineCells(joinRow)
+            this.appendCells(cells)
+        }
+        
     }
 
     const caseNotTable = (copyTable:string)=>{
@@ -99,10 +149,14 @@ export const TextareaCreate = () =>{
         }
         const joinRowCells = copyTable.split("\n")
         const clone = new Clones()
+        const cloneTest = new MultiLineCellsClone(multiLineCells)
         joinRowCells.map((joinRow)=>{
+            console.log("joinRow",joinRow)
             clone.setDefault(joinRow)
+            cloneTest.makeClone(joinRow)
         })
         clone.setOrginal()
+        console.log("clone",cloneTest.clone)
     }
     
     const pushPrimary = (columnIndex:number)=>{
@@ -127,8 +181,11 @@ export const TextareaCreate = () =>{
         const value = e.target.value
         const clone = [...cells]
         clone[i][j] = value
+        const testclone = [...multiLineCells]
+        testclone[i].dataName = value
         console.log(clone)
-        setCells(clone)     
+        setCells(clone)
+        setMultiLineCells(testclone)  
     }
 
     const changeUI = ()=> {
@@ -173,7 +230,7 @@ export const TextareaCreate = () =>{
             case 3:
                 return(
                     <SSelect>
-                        <SOption></SOption>
+                        <SOption selected></SOption>
                         <SOption>AUTO INCREMENT</SOption>
                         <SOption>DEFAULT CURRENT_TIMESTAMP</SOption>
                         <SOption>DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
@@ -183,7 +240,7 @@ export const TextareaCreate = () =>{
             case 4:
                 return(
                     <SSelect>
-                            <SOption value="NULL" onChange={(_)=>handleChangeNull(i)}>Null</SOption>
+                            <SOption selected value="NULL" onChange={(_)=>handleChangeNull(i)}>Null</SOption>
                             <SOption value="NOT NULL" onChange={(_)=>handleChangeNotNull(i)}>NOT NULL</SOption>
                     </SSelect>
                 )
