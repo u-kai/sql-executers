@@ -1,9 +1,10 @@
 import { TextareaCreate } from "components/molecules/TextareaCreate";
+import { TextareaInsert } from "components/molecules/TextareInsert";
 
 
 function App() {
   return (
-    <TextareaCreate></TextareaCreate>
+    <TextareaInsert></TextareaInsert>
   );
 }
 

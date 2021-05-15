@@ -3,15 +3,14 @@ import { Button } from "../atoms/Button"
 import {useState} from "react"
 import {Table} from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-
+import {Results} from "../../types/tableTypes"
 
 const url = "copyToCreate/test"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 
 
 export const TextareaCreate = () =>{
-
-    type Results = {results:string}
+    
     type OneLineCells = {[key:string]:string}
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     class MultiLineCellsClone {
