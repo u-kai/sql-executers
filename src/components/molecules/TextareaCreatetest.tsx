@@ -111,38 +111,25 @@ export const TextareaCreate = () =>{
         multiLineCellsClone[index][column] = e.target.value
         setMultiLineCells(multiLineCellsClone)
     }
-    const isDataExist =()=>{
+    const isDataExist = () => {
         if(multiLineCells[0]["DataName"]===""){
             alert("1つ目のデータを定義してください")
             return false
         }
         return true
     }
-    const addRows = ()=>{
+    const addRows = () => {
         if(isDataExist()){
-            const newRow = initLine
             setMultiLineCells([...multiLineCells,initLine])
-
         }
-
-        // if(cells[0][0]!==""){
-        //     const empty:string[] =[]
-        //     for(let i=0;i<constColumns.length;i++){
-        //         empty.push("")
-        //     }
-        //     setCells([...cells,empty])
-        // }else{
-        //     alert("Plase Input One Line")
-        // }
     }
-    const changeUI = ()=> {
-        // setIsArea(true)
-        // setCells([["","","","",""]])
-        
+    const resetAndChangeUI = () => {
+        setIsArea(true)
+        setMultiLineCells([initLine])
     }
    
     
-    const cellChildrentest = (values:string,index:number,column:string)=>{
+    const cellChildrentest = (values:string,index:number,column:string) => {
         switch(column){
             case "IsPrimary":
                 return(
@@ -238,7 +225,7 @@ export const TextareaCreate = () =>{
         </TextareaAndTableContener>
         <ButtonContener>
         <Button onClick={sendDataAndSetResults}></Button>
-        <Button onClick={changeUI}>Reset</Button>
+        <Button onClick={resetAndChangeUI}>Reset</Button>
         <Button onClick={addRows}>ADD</Button>
         </ButtonContener>
         <input
