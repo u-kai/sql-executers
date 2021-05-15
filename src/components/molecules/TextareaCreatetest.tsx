@@ -104,23 +104,27 @@ export const TextareaCreate = () =>{
         setMultiLineCells(multiLineCellsClone.clone)
     }
     
-    const handleChangePrimary = (e:React.ChangeEvent<HTMLSelectElement>,columnIndex:number)=>{
-        const clone = [...multiLineCells]
-        clone[columnIndex]["IsPrimary"] = e.target.value
-        setMultiLineCells(clone)
+    type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
+
+    const handleChange = (e:CellChageEvent,index:number,column:string)=>{
+        const multiLineCellsClone = [...multiLineCells]
+        multiLineCellsClone[index][column] = e.target.value
+        setMultiLineCells(multiLineCellsClone)
     }
-    
-    const handleChangeNameOrType = (e:React.ChangeEvent<HTMLInputElement>,i:number,column:string)=>{
-        const clone = [...multiLineCells]
-        clone[i][column] = e.target.value
-        setMultiLineCells(clone)
-    }
-    const handeleChangeOptins = (e:React.ChangeEvent<HTMLSelectElement>,i:number,column:string)=>{
-        const clone = [...multiLineCells]
-        clone[i][column] = e.target.value
-        setMultiLineCells(clone)
+    const isDataExist =()=>{
+        if(multiLineCells[0]["DataName"]===""){
+            alert("1つ目のデータを定義してください")
+            return false
+        }
+        return true
     }
     const addRows = ()=>{
+        if(isDataExist()){
+            const newRow = initLine
+            setMultiLineCells([...multiLineCells,initLine])
+
+        }
+
         // if(cells[0][0]!==""){
         //     const empty:string[] =[]
         //     for(let i=0;i<constColumns.length;i++){
@@ -136,16 +140,7 @@ export const TextareaCreate = () =>{
         // setCells([["","","","",""]])
         
     }
-    const handleChangeNull = (i:number)=>{
-        const clone = [...isNull]
-        clone[i] = "NULL"
-        setIsNull(clone)
-    }
-    const handleChangeNotNull = (i:number)=>{
-        const clone = [...isNull]
-        clone[i] = "NOT NULL"
-        setIsNull(clone)
-    }
+   
     
     const cellChildrentest = (values:string,index:number,column:string)=>{
         switch(column){
@@ -153,13 +148,13 @@ export const TextareaCreate = () =>{
                 return(
                     <>
                         {multiLineCells[index][column] === "PRIMARY" ? (
-                            <SSelect onChange={(e)=>handleChangePrimary(e,index)}>
+                            <SSelect onChange={(e)=>handleChange(e,index,column)}>
                                 <SOption value={""}></SOption>
                                 <SOption  defaultValue={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
                             ):
                             (
-                            <SSelect onChange={(e)=>handleChangePrimary(e,index)}>
+                            <SSelect onChange={(e)=>handleChange(e,index,column)}>
                                 <SOption defaultValue=""></SOption>
                                 <SOption value={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
@@ -167,30 +162,28 @@ export const TextareaCreate = () =>{
                         }
                     </>
                 )
-
             case "Option":
                 return(
-                    <SSelect onChange={(e)=>handeleChangeOptins(e,index,column)}>
+                    <SSelect onChange={(e)=>handleChange(e,index,column)}>
                         <SOption defaultValue=""></SOption>
                         <SOption value="AUTO INCREMENT">AUTO INCREMENT</SOption>
                         <SOption value="DEFAULT CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP</SOption>
                         <SOption value="DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
                     </SSelect>
                 )
-            
             case "IsNull":
                 return(
-                    <SSelect onChange={(_)=>handleChangeNull(index)}>
+                    <SSelect onChange={(e)=>handleChange(e,index,column)}>
                             <SOption defaultValue="NULL" >Null</SOption>
                             <SOption value="NOT NULL" >NOT NULL</SOption>
                     </SSelect>
                 )
             default:
                 return(
-                        <TableTextArea
+                    <TableTextArea
                         spellCheck="false"
                         value={values}
-                        onChange={(e)=>handleChangeNameOrType(e,index,column)}/>
+                        onChange={(e)=>handleChange(e,index,column)}/>
                 )
         }
     }
