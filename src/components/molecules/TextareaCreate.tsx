@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Button } from "../atoms/Button"
 import {useState} from "react"
 import {Table} from "../atoms/Table"
-import {postData} from "../../functions/tableFunctions"
+import {postDataAndReturnResposeJson} from "../../functions/tableFunctions"
 
 
 const url = "copyToCreate/test"
@@ -59,8 +59,10 @@ export const TextareaCreate = () =>{
                 tableName:tableName,
                 multiLineCells:multiLineCells
             }
-        postData(sendDatas,url).then((res)=>res.json())
-        .then((re)=>console.log(re))        // fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
+        postDataAndReturnResposeJson(sendDatas,url)
+        .then((result)=>{
+            console.log(results)
+            setResults(results)})        // fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas))
         // .then((res)=>res.json())
         // .then((test)=>{console.log(test)
         //     return test})
