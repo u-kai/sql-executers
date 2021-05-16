@@ -56,6 +56,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         let colorListClone = colorList
         colorListClone[focusRowIndex] = []
         setIsDisplayAutoCorrects(false)
+        setAutoCorrectsIndex(0)//add init condition
         // setAutoCorrectsIndex(0)
         strList.map((str,i)=>{
             let isRed = false
@@ -118,6 +119,7 @@ export const EditerAndAutoCorrectModi = ()=>{
             const currentStrList = sentences[focusRowIndex].split(" ")
             const removeMatchChar = currentStrList[currentStrList.length-1]
             changeString(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
+            // setAutoCorrectsIndex(0)//add init condition
         }
         focusElement("input"+focusRowIndex.toString())
     }
