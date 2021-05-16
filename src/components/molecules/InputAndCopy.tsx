@@ -45,8 +45,9 @@ export const InputAndCopy:VFC<Props> = (props) => {
                         {phrase}
                     </CopySpan>
             ))}
+            <TailSpan id={`tailPosition${index}`}/>
             </CopyBox>
-                <TailSpan id={`tailPosition${index}`}/>
+                
         </Contener>
     )
 }

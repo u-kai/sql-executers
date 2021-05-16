@@ -8,15 +8,19 @@ type Props = {
         x:number
         y:number
     }
+    handleMouseDown:(e:React.MouseEvent<HTMLSpanElement>)=>void
+    autoCorrectFocusIndex:number
+    setAutoCorrectFocusIndex:React.Dispatch<React.SetStateAction<number>>
     handleClick:(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
 }
 export const AutoCorrects:VFC<Props> = (props) =>{
-    const {autoCorrects, position,handleClick} = props
-    const [autoCorrectFocusIndex,setAutoCorrectFocusIndex] = useState(0)
-    const handleMouseDown = (e:React.MouseEvent<HTMLSpanElement>)=>{
-        const hoverId = e.currentTarget.id    
-        setAutoCorrectFocusIndex(parseInt(hoverId.replace("hover","")))
-    }
+    const {autoCorrects, position,handleClick,
+        handleMouseDown,autoCorrectFocusIndex,setAutoCorrectFocusIndex} = props
+    // const [autoCorrectFocusIndex,setAutoCorrectFocusIndex] = useState(0)
+    // const handleMouseDown = (e:React.MouseEvent<HTMLSpanElement>)=>{
+    //     const hoverId = e.currentTarget.id    
+    //     setAutoCorrectFocusIndex(parseInt(hoverId.replace("hover","")))
+    // }
     return(
         <AutoCorrectBox id="AutoCorrectsBox" posi={position}>
             {autoCorrects.map((value,i)=>(
