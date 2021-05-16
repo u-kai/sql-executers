@@ -18,7 +18,8 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [focusRowIndex,setFocusIndex] = useState(0)
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
-    console.log(sentences)
+    const editerContenerHeight = 800
+    const rowHeight = 30
     // const addRow = ()=>{
     //     // setMaxRowIndex(maxRowIndex + 1)
     //     setFocusIndex(maxRowIndex + 1)
@@ -159,8 +160,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         if(focusRowIndex<=rowPosition.length-1){
             return 
         }
-        const editerContenerHeight = 300
-        const rowHeight = 40
         console.log(rowPosition,focusRowIndex)
         const scroll = document.getElementById("contener")
         const input = document.getElementById(`input${focusRowIndex}`)
@@ -176,6 +175,7 @@ export const EditerAndAutoCorrectModi = ()=>{
     },[copyWords.length])
 
     useEffect(()=>{
+        console.log(focusRowIndex)
         focusElement("input"+focusRowIndex.toString())
         const scroll = document.getElementById("contener")
         const input = document.getElementById(`input${focusRowIndex}`)
@@ -187,6 +187,7 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     return (
         <Contener 
+        height={editerContenerHeight}
         id="contener"
         onScroll={(e)=>setLabelPosition(e.currentTarget.scrollLeft)}>
             {isDisplayAutoCorrects ? (
@@ -216,8 +217,8 @@ export const EditerAndAutoCorrectModi = ()=>{
             
     )
 }
-const Contener = styled.div`
-width:700px;
+const Contener = styled.div<{height:number}>`
+width:${props=>props.height}px;
 height:800px;
 overflow:auto;
 `
