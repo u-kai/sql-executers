@@ -30,16 +30,19 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusIndex(Number(e.currentTarget.id.replace("input","")))
     })
 
+    const enterNewCharacter = (newCharacter:string) => {
+        sentences[focusRowIndex] = newCharacter
+        setSentences([...sentences])
+    } 
 
-    const changeString = (newChar:string)=>{
+    const changeString = (newCharacter:string)=>{
     //     console.log("chars:",sentences)
     // console.log("colorList:",colorList)
     // console.log("copyStr:",copyWords)
     // console.log("focusRowIndex:",focusRowIndex)
-        let sentencesClone = sentences
-        sentencesClone[focusRowIndex] = newChar
-        setSentences(sentencesClone)
-        const strList = newChar.split(" ")
+        
+        enterNewCharacter(newCharacter)
+        const strList = newCharacter.split(" ")
         let copyWordsClone = copyWords
         copyWordsClone[focusRowIndex] = strList
         setCopyWords(copyWordsClone)
@@ -165,6 +168,8 @@ export const EditerAndAutoCorrectModi = ()=>{
         const input = document.getElementById(`input${focusRowIndex}`)
         let cloneRowPosition = rowPosition
         if(input && scroll){
+            console.log(scroll.scrollHeight)
+            console.log("input",input.getBoundingClientRect().top)
             if(editerContenerHeight>input.getBoundingClientRect().top){
                 cloneRowPosition.push(input.getBoundingClientRect().top)
             }else{
