@@ -3,26 +3,34 @@ import styled from "styled-components"
 import { useState } from "react"
 import {Image} from "../atoms/Image"
 import {StyledType} from "../styledTypes/styledType"
+import {VFC} from "react"
+import { returnStyle } from "functions/returnStyle"
 
+type Props = {
+    src:string
+    imageStyle?:StyledType
+    contenerStyle?:StyledType
+    children:JSX.Element
+}
 
-
-
-export const FileReaderOnIcon = () =>{
-    const [texts,setTexts] = useState([""])
+export const ImageToButton:VFC<Props> = (props) =>{
+    const {src,imageStyle,contenerStyle,children} = props
     const [isMouseEnter,setIsMouseEnter] = useState(false)
+    let contenerStyles = ""
+    if(contenerStyle){
+        contenerStyles = returnStyle(contenerStyle)
+    }
     return (
         <>
         <Contener
+            styles={contenerStyles}
             onMouseLeave={(_)=>setIsMouseEnter(false)}
             onMouseEnter={(_)=>setIsMouseEnter(true)}>
             <Image
-            src="../../../image/folder-blue-documents-icon.png"
+            src={src}
             style={imageStyle}
             ></Image>
-            <Label htmlFor={"readfile"}><ReadFile
-            texts={texts}
-            setTexts={setTexts}
-            ></ReadFile></Label>
+            {children}
         </Contener>
         {isMouseEnter ? (
             <p>ファイル読み取り</p>
@@ -34,23 +42,16 @@ export const FileReaderOnIcon = () =>{
     )
 }
 
-const imageStyle:StyledType = {
-    width:"120px",
-    height:"100px",
-    position:"absolute",
-    top:"0px",
-    left:"0px"
-}
-const Contener = styled.div`
+const Contener = styled.div<{styles:string}>`
 width:120px;
 height:80px;
 position:relative;
-opacity:undifine;
 background-color:transparent;
 :hover{
     opacity:0.7;
     background-color:white;
 }
+${props=>props.styles}
 `
 const Label = styled.label`
 width:100%;

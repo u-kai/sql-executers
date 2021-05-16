@@ -1,13 +1,4 @@
-import styled from "styled-components"
-import { Button } from "../atoms/Button"
-import {useState} from "react"
-import { Table } from "../atoms/Table"
-import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-import { TextareaAndImage } from "../molecules/TextareaAndImage"
-import {TransformInput} from "../atoms/TransformInput"
 import {TextareaToSQL} from "../molecules/TextareaToSQL"
-
-
 
 export const TextareaInsertProps = () => {
     const url = "copyToInsert"

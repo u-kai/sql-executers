@@ -5,8 +5,9 @@ import {Table} from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
 import {Results} from "../../types/tableTypes"
 import {VFC} from "react"
-import { TextareaAndImage } from "../molecules/TextareaAndImage"
+import { TextareaAndImage } from "./TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
+
 
 type Props = {
     url:string
@@ -18,62 +19,34 @@ type Props = {
     sqlType:"insert"|"create"
 }
 
-// const url = "copyToCreate"
-// const initColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
-
 export const TextareaToSQL:VFC<Props> = (props) =>{
     const {url,initColumns,CloneClass,sqlType,initState} = props
     type OneLineCells = {[key:string]:string}
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
-    class MultiLineCellsClone {
-        clone:OneLineCells[]
-        constructor(multiLineCells:OneLineCells[]){
-            if(multiLineCells[0].DataName === ""){
-                this.clone = []
-            }else{
-                this.clone = multiLineCells
-            }
-        }
-        setOneLineCells(joinRow:string){
-            const nameAndType = joinRow.split("\t")
-            const cells:OneLineCells ={
-                DataName:nameAndType[0],
-                DataType:nameAndType[1],
-                Option:"",
-                IsPrimary:"",
-                IsNull:"NULL"
-            }
-            return cells
-        }
-        appendCells(cells:OneLineCells){
-            this.clone = [...this.clone,cells]
-        }
-        makeClone(joinRow:string){
-            const cells = this.setOneLineCells(joinRow)
-            this.appendCells(cells)
-        }
-    }
-
-    const initLine:OneLineCells = {
-        DataName:"",
-        DataType:"",
-        IsPrimary:"",
-        Option:"",
-        IsNull:"NULL"
-    } 
-
-    const [tableName,setTableName] = useState("") 
-    const [isArea, setIsArea] = useState(true)
+    
+    const [tableName,setTableName] = useState("")
     const [results, setResults] = useState<Results>()
     const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
     
+    
+    const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
+        const sendTableName = {
+            tableName:e.target.value
+        }
+        console.log(sendTableName)
+        postDataAndReturnResposeJson(sendTableName,"showTableColumn")
+        .then((results)=>{
+            console.log(results)
+        })
+    }
     useEffect(()=>{
         if(initState){
             setMultiLineCells([initState])
         }
     },[])
+
     const sendDataAndSetResults = () => {
         const sendDatas = {
                 tableName:tableName,
@@ -101,7 +74,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 }
             })
         }else{
-            rows.map((row,i)=>{
+            rows.map((row)=>{
                 cloneClass.makeClone(row)
             })
         }
@@ -142,7 +115,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         }
     }
     const resetAndChangeUI = () => {
-        setIsArea(true)
         setColumns(initColumns.slice())
         setMultiLineCells([Object.assign({},initState)])
         
@@ -197,6 +169,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         <Contener>
             <InputContener>
                 <TransformInput
+                    onBlur={sendTableNameAndsetColumns}
                     lineColor={"red"}
                     defaultChildren={"Input table name"}
                     label={"Table name"}

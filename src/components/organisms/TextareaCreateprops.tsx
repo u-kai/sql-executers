@@ -1,16 +1,9 @@
-import styled from "styled-components"
-import { Button } from "../atoms/Button"
-import {useState} from "react"
-import {Table} from "../atoms/Table"
-import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-import {Results} from "../../types/tableTypes"
 import {TextareaToSQL} from "../molecules/TextareaToSQL"
 
 const url = "copyToCreate"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 
 export const TextareaCreateProps = () =>{
-    
     type OneLineCells = {[key:string]:string}
     class MultiLineCellsClone {
         clone:OneLineCells[]

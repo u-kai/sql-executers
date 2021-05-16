@@ -7,11 +7,12 @@ type Props = {
     value?:string
     id?:string
     label?:string
+    onBlur?:((event: React.FocusEvent<HTMLInputElement>) => void) | undefined
 }
 
 export const TransformInput:VFC<Props> = (props)=>{
     const {lineColor="#3be5ae",defaultChildren="Input password"
-    ,onChange,id,value="",label="Password"} = props
+    ,onChange,id,value="",label="Password",onBlur} = props
     const [color,setColor] = useState("lightgray")
     const [isInput,setIsInput] = useState(false)
     const handleFocus = ()=>{
@@ -32,7 +33,8 @@ export const TransformInput:VFC<Props> = (props)=>{
                     lineColor={lineColor}
                     onFocus={handleFocus} 
                     onBlurCapture={()=>{setColor("lightgray")}}>
-                    <SInput 
+                    <SInput
+                        onBlur={onBlur}
                         value={value}
                         id={id}
                         type="text" 
