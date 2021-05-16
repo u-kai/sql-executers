@@ -41,6 +41,10 @@ export const EditerAndAutoCorrectModi = ()=>{
         setCopyWords([...copyWords])
     }
 
+    const initColorList = () => {
+        colorList[focusRowIndex] = []
+    }
+
     const changeString = (newCharacter:string)=>{
     //     console.log("chars:",sentences)
     // console.log("colorList:",colorList)
@@ -53,8 +57,9 @@ export const EditerAndAutoCorrectModi = ()=>{
         // let copyWordsClone = copyWords
         // copyWordsClone[focusRowIndex] = strList
         // setCopyWords(copyWordsClone)
-        let colorListClone = colorList
-        colorListClone[focusRowIndex] = []
+        // let colorListClone = colorList
+        // colorListClone[focusRowIndex] = []
+        initColorList()
         setIsDisplayAutoCorrects(false)
         setAutoCorrectsIndex(0)//add init condition
         // setAutoCorrectsIndex(0)
@@ -66,16 +71,16 @@ export const EditerAndAutoCorrectModi = ()=>{
                     continue
                 }
                 if(key === str || key.toLocaleLowerCase() === str){
-                    colorListClone[focusRowIndex].push("red")
+                    colorList[focusRowIndex].push("red")
                     isRed = true
                     break
                 }
             }
             if(!isRed){
-                colorListClone[focusRowIndex].push("black")
+                colorList[focusRowIndex].push("black")
             }
         })
-        setColorList(colorListClone)
+        setColorList([...colorList])
         
     }
 
