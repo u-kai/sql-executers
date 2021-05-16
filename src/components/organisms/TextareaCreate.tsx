@@ -8,7 +8,6 @@ import {Results} from "../../types/tableTypes"
 const url = "copyToCreate"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 
-
 export const TextareaCreate = () =>{
     
     type OneLineCells = {[key:string]:string}
@@ -145,22 +144,6 @@ export const TextareaCreate = () =>{
 
     return(
         <>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
         <TextareaAndTableContener>
         {isArea ?(
         <TextareaContener>
@@ -181,14 +164,6 @@ export const TextareaCreate = () =>{
         tableKey={"tablesss"}
         cellElements={cellChildren}
         />
-        {/* <Table
-        columns={constColumns}
-        rows={cells}
-        headerKey={"testhed"}
-        bodyKey={"testbody"}
-        tableKey={"tabless"}
-        cellElements={cellChildren}
-        /> */}
         </div>
         {/* </TestConte> */}
         </TextareaAndTableContener>
@@ -242,45 +217,7 @@ height:300px;
 // overflow:auto;
 `
 
-const STable = styled.table`
-top:300px;
-border-collapse:  collapse;
-background-color:transparent;
-width:  30px;               /* 幅指定 */
-table-layout: fixed; 
-// width:400px;
-// height:30px;
-// width:5000px;
-`
-const STr = styled.tr`
-border:solid black 2px;
-background-color:transparent;
-// position:relative;
-overflow:auto;
-// width:30px;
-height:30px;
-// width:10%;
-// height:30px;
-`
-const ColumnTr = styled.tr`
-border:solid black 2px;
-background-color:yellow;
-// position:relative;
-overflow:auto;
-// width:30px;
-height:30px;
-// width:10%;
-// height:30px;
-`
 
-const STh = styled.th`
-border:solid black 2px;
-background-color:transparent;
-// position:relative;
-overflow:auto;
-width:150px;
-height:30px;
-`
 const InputAndCopyBoxStyle =  
 `
 border-bottom-width:0;

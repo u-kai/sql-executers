@@ -1,11 +1,12 @@
 import { TextareaAndImage } from "components/molecules/TextareaAndImage";
-import { TextareaCreate } from "components/molecules/TextareaCreate";
-import { TextareaInsert } from "components/molecules/TextareInsert";
-
+import { TextareaCreate } from "components/organisms/TextareaCreate";
+import { TextareaCreateProps } from "components/organisms/TextareaCreateprops";
+import { TextareaInsert } from "components/organisms/TextareInsert";
+import {FileReaderOnIcon} from "components/molecules/FileReaderOnIcon"
 
 function App() {
   return (
-    <TextareaInsert></TextareaInsert>
+    <TextareaCreateProps></TextareaCreateProps>
   );
 }
 

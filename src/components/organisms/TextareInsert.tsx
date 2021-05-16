@@ -3,12 +3,13 @@ import { Button } from "../atoms/Button"
 import {useState} from "react"
 import { Table } from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-import { TextareaAndImage } from "./TextareaAndImage"
+import { TextareaAndImage } from "../molecules/TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
+
 const url = "copyToInsert"
 export const TextareaInsert = ()=>{
 
-    const onClick = ()=>{
+    const sendDataAndSetResults = ()=>{
         const sendDatas = {
                 tableName:tableName,
                 columns:columns,
@@ -115,9 +116,9 @@ export const TextareaInsert = ()=>{
             value={tableName}
             onChange={(e)=>setTableName(e.target.value)}/>
         </InputContener>
-        <ImageContener id="fn;lakdnf;kan">
+        <ImageContener>
         <TextareaAndImage
-        src={"../../../db.png"}
+        src={"../../../image/db.png"}
         onChange={pasteToTable}
         value={textarea}
         ></TextareaAndImage>
@@ -145,7 +146,7 @@ export const TextareaInsert = ()=>{
         </TableContener>
         <ButtonsContener>
         <Button 
-        onClick={onClick}
+        onClick={sendDataAndSetResults}
         backgroundColor={"#e73562"}
         borderColor={"#942343"}
         bottomColor={"#941f57"}
@@ -162,34 +163,6 @@ export const TextareaInsert = ()=>{
         fontSize={30}>ADD</Button>
         </ButtonsContener>
         </Contener>
-        // // <TextareaAndTableContener>
-        // {/* // <TextareaContener>
-        // //     <img src="../../../db.png"></img>
-        // //     <STextArea */} 
-        //     {/* value={textarea}
-        //     spellCheck="false"
-        //     id="texts" 
-        //     onChange={pasteToTable}
-        //     ></STextArea>
-        // </TextareaContener>) : (null)} */}
-        // {/* <TestConte>*/}
-
-        // {/* <Table
-        // columns={columns}
-        // rows={columnsValues}
-        // cellElements={cellChildren}
-        // tableKey={"taveleel"}
-        // headerKey={"nf;alfkd"}
-        // bodyKey={"dd"}
-        // ></Table> */}
-
-        // {/* </TestConte> */}
-        // {/* </TextareaAndTableContener>
-        // <ButtonContener>
-        // <Button onClick={onClick}></Button>
-        // <Button onClick={resetAndChangeUI}>Reset</Button>
-        // <Button onClick={addRows}>ADD</Button>
-        // </ButtonContener> */}
         
     )
 }
@@ -229,69 +202,11 @@ overflow:auto;
 const ButtonsContener = styled.div`
 grid-row: 4 / 5;
 grid-column: 1 / 4;
-// diplay:grid;
-// grid-template-columns:33% 33% 1fr;
-// grid-template-rows: 100%;
 display:flex;
 justify-content:space-around;
 `
 
-const STextArea = styled.textarea`
-width:80%;
-height:200px;
-outline:none;
-color:transparent;
-background-color:transparent;
-border:solid 1px black;
-resize:none;
-`
-const TextareaAndTableContener = styled.div`
-// position:relative;
-width:100%;
-height:300px;
-// display:flex;
-// justify-content:center;
-overflow:auto;
-`
 
-const STable = styled.table`
-border-collapse:  collapse;
-background-color:transparent;
-width:  30px;               /* 幅指定 */
-table-layout: fixed; 
-// width:400px;
-// height:30px;
-// width:5000px;
-`
-const STr = styled.tr`
-border:solid black 2px;
-background-color:transparent;
-// position:relative;
-overflow:auto;
-// width:30px;
-height:30px;
-// width:10%;
-// height:30px;
-`
-const ColumnTr = styled.tr`
-border:solid black 2px;
-background-color:yellow;
-// position:relative;
-overflow:auto;
-// width:30px;
-height:30px;
-// width:10%;
-// height:30px;
-`
-
-const STh = styled.th`
-border:solid black 2px;
-background-color:transparent;
-// position:relative;
-overflow:auto;
-width:150px;
-height:30px;
-`
 const InputAndCopyBoxStyle =  
 `
 border-bottom-width:0;
@@ -311,29 +226,14 @@ padding-top:5px;
 text-decoration:none;
 width:100%;
 `
-const TextareaContener = styled.div`
-top:0px;
-left:0px;
-position:absolute;
-width:100%;
-display:flex;
-justify-content:center;
-`
+
 const TableTextArea = styled.input`
-// resize:none;
 background-color:transparent;
 border:none;
-// z-index:2;
 outline:none;
 width:150px;
-// height:100%;
-// position:absolute;
-// top:2px;
-// left:0px;
 font-size:15px;
 ${InputAndCopyBoxStyle};
 box-sizing: border-box;
 overflow:auto;
 `
-
-// export const d = ""
