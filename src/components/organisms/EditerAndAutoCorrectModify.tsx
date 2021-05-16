@@ -55,28 +55,28 @@ export const EditerAndAutoCorrectModi = ()=>{
         return true
     }
 
-    const colorDistibution = (wordList:string[]) => {
-        wordList.map((word)=>{
-            let isRed = false
+    const colorDistribution = (wordList:string[]) => {
+        let colorListClone = [...colorList]
+        wordList.map((word,wordIndex)=>{
+            // let isRed = false
+            
+            colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
             for (let key in ChangeColorRegDatas){
                 if(!isExistRegData(word,key)){
                     continue
                 }
-                // const index = word.length - 1
-                // if(ChangeColorRegDatas[key][index]===undefined){
-                //     continue
-                // }
                 if(key === word || key.toLocaleLowerCase() === word){
-                    colorList[focusRowIndex].push("red")
-                    isRed = true
+                    // colorList[focusRowIndex].push("red")
+                    // isRed = true
+                    colorListClone[focusRowIndex][wordIndex] = "red"
                     break
                 }
             }
-            if(!isRed){
-                colorList[focusRowIndex].push("black")
-            }
+            // if(!isRed){
+            //     colorList[focusRowIndex].push("black")
+            // }
         })
-        setColorList([...colorList])
+        setColorList([...colorListClone])
     }
 
     const changeString = (newCharacter:string)=>{
@@ -88,7 +88,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         setIsDisplayAutoCorrects(false)
         setAutoCorrectsIndex(0)//add init condition
         // setAutoCorrectsIndex(0)
-        colorDistibution(wordList)
+        colorDistribution(wordList)
         // wordList.map((word)=>{
         //     let isRed = false
         //     for (let key in ChangeColorRegDatas){
@@ -105,8 +105,8 @@ export const EditerAndAutoCorrectModi = ()=>{
         //     if(!isRed){
         //         colorList[focusRowIndex].push("black")
         //     }
-        // })
-        setColorList([...colorList])
+        // // })
+        // setColorList([...colorList])
         
     }
 
