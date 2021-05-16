@@ -47,23 +47,25 @@ export const EditerAndAutoCorrectModi = ()=>{
     const wordDivide = (newCharacter:string) => {
         return newCharacter.split(" ")
     }
+    const isExistRegData = (word:string,key:string):boolean => {
+        const index = word.length - 1
+        if(ChangeColorRegDatas[key][index]===undefined){
+            return false
+        }
+        return true
+    }
 
-    const changeString = (newCharacter:string)=>{
-        updateSentences(newCharacter)
-        updateCopyWords(newCharacter)
-        // const strList = newCharacter.split(" ")
-        const wordsList = wordDivide(newCharacter)
-        initColorList()
-        setIsDisplayAutoCorrects(false)
-        setAutoCorrectsIndex(0)//add init condition
-        // setAutoCorrectsIndex(0)
-        wordsList.map((word)=>{
+    const colorDistibution = (wordList:string[]) => {
+        wordList.map((word)=>{
             let isRed = false
             for (let key in ChangeColorRegDatas){
-                const index = word.length - 1
-                if(ChangeColorRegDatas[key][index]===undefined){
+                if(!isExistRegData(word,key)){
                     continue
                 }
+                // const index = word.length - 1
+                // if(ChangeColorRegDatas[key][index]===undefined){
+                //     continue
+                // }
                 if(key === word || key.toLocaleLowerCase() === word){
                     colorList[focusRowIndex].push("red")
                     isRed = true
@@ -74,6 +76,36 @@ export const EditerAndAutoCorrectModi = ()=>{
                 colorList[focusRowIndex].push("black")
             }
         })
+        setColorList([...colorList])
+    }
+
+    const changeString = (newCharacter:string)=>{
+        updateSentences(newCharacter)
+        updateCopyWords(newCharacter)
+        // const strList = newCharacter.split(" ")
+        const wordList = wordDivide(newCharacter)
+        initColorList()
+        setIsDisplayAutoCorrects(false)
+        setAutoCorrectsIndex(0)//add init condition
+        // setAutoCorrectsIndex(0)
+        colorDistibution(wordList)
+        // wordList.map((word)=>{
+        //     let isRed = false
+        //     for (let key in ChangeColorRegDatas){
+        //         const index = word.length - 1
+        //         if(ChangeColorRegDatas[key][index]===undefined){
+        //             continue
+        //         }
+        //         if(key === word || key.toLocaleLowerCase() === word){
+        //             colorList[focusRowIndex].push("red")
+        //             isRed = true
+        //             break
+        //         }
+        //     }
+        //     if(!isRed){
+        //         colorList[focusRowIndex].push("black")
+        //     }
+        // })
         setColorList([...colorList])
         
     }

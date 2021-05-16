@@ -30,7 +30,7 @@ border:solid 1px black;
 white-space: pre-wrap;
 position:absolute;
 transform:translate(${props=>props.posi.x}px,${props=>props.posi.y}px);
-overflow: scroll;
+overflow: auto;
 background-color:black;
 z-index:6;
 `
