@@ -9,7 +9,7 @@ type Props ={
     color?:string
 }
 export const TailSpan:VFC<Props> = (props)=>{
-    const {id,fontSize=100,fontFamily='Meiryo',children=" ",color} = props
+    const {id,fontSize=15,fontFamily='Meiryo',children="",color} = props
     return (
         <STailSpan 
         id={id}

@@ -17,13 +17,21 @@ function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
   const fileName = "yeha"
+  const inputstyle:StyledType = {
+    outline:"solid",
+    
+    position:"absolute"
+  }
   return (
     <>
     <Button
     onClick={()=>setToggle(!toggle)}
     ></Button>
     {toggle ? (
-      <InputAndCopy/>
+      <InputAndCopy
+      tailId={1}
+      style={inputstyle}
+      />
     
       // autoCorrects={["hello worle","konnnithiha","ni-hao"]}
       // position={{x:100,y:100}}

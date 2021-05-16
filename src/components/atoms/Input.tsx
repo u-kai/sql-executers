@@ -51,6 +51,5 @@ outline:none;
 z-index:2;
 font-size:15px;
 overflow:auto;
-width:20px;
 ${props=>props.styles}
 `

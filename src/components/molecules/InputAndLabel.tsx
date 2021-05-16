@@ -19,8 +19,7 @@ export const InputAndLabel:VFC<Props> = (props)=>{
             <Input
             id={input.id}
             type={input.type}
-            fontSize={input.fontSize}
-            color={"black"}
+            
             />
             
         </SContener>

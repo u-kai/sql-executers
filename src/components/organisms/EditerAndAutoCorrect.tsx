@@ -410,7 +410,7 @@ const saveTextToFile = ()=>{
                                                                 // overflow="auto"
                                                                 type="text"
                                                                 autoComplete="off"
-                                                                fontSize={20}
+                                                                
                                                                 // width={"10px"}
                                                                 value={chars[rowNumber]}
                                                                 handleKeyDown={handleKey}
