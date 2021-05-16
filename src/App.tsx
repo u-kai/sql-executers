@@ -12,6 +12,7 @@ import {StyledType} from "components/styledTypes/styledType"
 import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
 import { SaveFileOnIcon } from "components/molecules/SaveFileOnIcon";
 import {AutoCorrects} from "components/molecules/AutoCorrects"
+import {InputAndCopy} from "components/molecules/InputAndCopy"
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
@@ -22,11 +23,12 @@ function App() {
     onClick={()=>setToggle(!toggle)}
     ></Button>
     {toggle ? (
-      <AutoCorrects
-      autoCorrects={["hello worle","konnnithiha","ni-hao"]}
-      position={{x:100,y:100}}
-      handleClick={(e)=>console.log(e)}
-      />
+      <InputAndCopy/>
+    
+      // autoCorrects={["hello worle","konnnithiha","ni-hao"]}
+      // position={{x:100,y:100}}
+      // handleClick={(e)=>console.log(e)}
+  
 
   
       // <SaveFileOnIcon

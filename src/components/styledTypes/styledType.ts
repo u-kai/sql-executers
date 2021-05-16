@@ -21,5 +21,9 @@ export type StyledType = {
     position?:"relative"|"absolute"
     left?:string
     top?:string
+    fontFamily?:string
     visibility?:"visible"|"hidden"|"collapse"
+    color?:string
+    outline?:string
+    fontSize?:string
 }
