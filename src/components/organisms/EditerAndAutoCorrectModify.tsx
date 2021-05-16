@@ -30,10 +30,16 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusIndex(Number(e.currentTarget.id.replace("input","")))
     })
 
-    const enterNewCharacter = (newCharacter:string) => {
+    const updateSentences = (newCharacter:string) => {
         sentences[focusRowIndex] = newCharacter
         setSentences([...sentences])
     } 
+
+    const updateCopyWords = (newCharacter:string) => {
+        const wordsList = newCharacter.split(" ")
+        copyWords[focusRowIndex] = wordsList
+        setCopyWords([...copyWords])
+    }
 
     const changeString = (newCharacter:string)=>{
     //     console.log("chars:",sentences)
@@ -41,11 +47,12 @@ export const EditerAndAutoCorrectModi = ()=>{
     // console.log("copyStr:",copyWords)
     // console.log("focusRowIndex:",focusRowIndex)
         
-        enterNewCharacter(newCharacter)
+        updateSentences(newCharacter)
+        updateCopyWords(newCharacter)
         const strList = newCharacter.split(" ")
-        let copyWordsClone = copyWords
-        copyWordsClone[focusRowIndex] = strList
-        setCopyWords(copyWordsClone)
+        // let copyWordsClone = copyWords
+        // copyWordsClone[focusRowIndex] = strList
+        // setCopyWords(copyWordsClone)
         let colorListClone = colorList
         colorListClone[focusRowIndex] = []
         setIsDisplayAutoCorrects(false)
