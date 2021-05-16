@@ -44,33 +44,27 @@ export const EditerAndAutoCorrectModi = ()=>{
     const initColorList = () => {
         colorList[focusRowIndex] = []
     }
+    const wordDivide = (newCharacter:string) => {
+        return newCharacter.split(" ")
+    }
 
     const changeString = (newCharacter:string)=>{
-    //     console.log("chars:",sentences)
-    // console.log("colorList:",colorList)
-    // console.log("copyStr:",copyWords)
-    // console.log("focusRowIndex:",focusRowIndex)
-        
         updateSentences(newCharacter)
         updateCopyWords(newCharacter)
-        const strList = newCharacter.split(" ")
-        // let copyWordsClone = copyWords
-        // copyWordsClone[focusRowIndex] = strList
-        // setCopyWords(copyWordsClone)
-        // let colorListClone = colorList
-        // colorListClone[focusRowIndex] = []
+        // const strList = newCharacter.split(" ")
+        const wordsList = wordDivide(newCharacter)
         initColorList()
         setIsDisplayAutoCorrects(false)
         setAutoCorrectsIndex(0)//add init condition
         // setAutoCorrectsIndex(0)
-        strList.map((str,i)=>{
+        wordsList.map((word)=>{
             let isRed = false
             for (let key in ChangeColorRegDatas){
-                const index = str.length - 1
+                const index = word.length - 1
                 if(ChangeColorRegDatas[key][index]===undefined){
                     continue
                 }
-                if(key === str || key.toLocaleLowerCase() === str){
+                if(key === word || key.toLocaleLowerCase() === word){
                     colorList[focusRowIndex].push("red")
                     isRed = true
                     break
