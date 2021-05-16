@@ -10,17 +10,22 @@ import {EditerAndAutoCorrect} from "components/organisms/EditerAndAutoCorrect"
 import { ImageToButton } from "components/molecules/ImageToButton";
 import {StyledType} from "components/styledTypes/styledType"
 import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
+import { SaveFileOnIcon } from "components/molecules/SaveFileOnIcon";
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
-  console.log(test)
+  const fileName = "yeha.sql"
   return (
     <>
     <Button
     onClick={()=>setToggle(!toggle)}
     ></Button>
     {toggle ? (
-      <EditerAndAutoCorrect></EditerAndAutoCorrect>
+      <SaveFileOnIcon
+      text={test[0]}
+      fileName={fileName}
+      ></SaveFileOnIcon>
+      // <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
     <FileReaderOnIcon
     texts={test}

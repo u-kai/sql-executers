@@ -8,13 +8,15 @@ import { returnStyle } from "functions/returnStyle"
 
 type Props = {
     src:string
+    hoverWord?:string
     imageStyle?:StyledType
     contenerStyle?:StyledType
-    children:JSX.Element
+    children?:JSX.Element
+    onClick?: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined
 }
 
 export const ImageToButton:VFC<Props> = (props) =>{
-    const {src,imageStyle,contenerStyle,children} = props
+    const {src,imageStyle,contenerStyle,children,onClick,hoverWord="ファイル読み取り"} = props
     const [isMouseEnter,setIsMouseEnter] = useState(false)
     let contenerStyles = ""
     if(contenerStyle){
@@ -23,6 +25,7 @@ export const ImageToButton:VFC<Props> = (props) =>{
     return (
         <>
         <Contener
+            onClick={onClick}
             styles={contenerStyles}
             onMouseLeave={(_)=>setIsMouseEnter(false)}
             onMouseEnter={(_)=>setIsMouseEnter(true)}>
@@ -33,7 +36,7 @@ export const ImageToButton:VFC<Props> = (props) =>{
             {children}
         </Contener>
         {isMouseEnter ? (
-            <p>ファイル読み取り</p>
+            <p>{hoverWord}</p>
         ):(
             null
         )}
