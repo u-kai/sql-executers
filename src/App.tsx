@@ -13,13 +13,6 @@ import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
-  const imageStyle:StyledType = {
-    width:"120px",
-    height:"100px",
-    position:"absolute",
-    top:"0px",
-    left:"0px"
-}
   console.log(test)
   return (
     <>
@@ -29,14 +22,9 @@ function App() {
     {toggle ? (
       <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
-      <ImageToButton
-      src={"../../../image/folder-blue-documents-icon.png"}
-      imageStyle={imageStyle}
-      >
-    <LabelAndFileReader
+    <FileReaderOnIcon
     texts={test}
-    setTexts={setTest}></LabelAndFileReader>
-      </ImageToButton>
+    setTexts={setTest}></FileReaderOnIcon>
     )}
     </>
   );

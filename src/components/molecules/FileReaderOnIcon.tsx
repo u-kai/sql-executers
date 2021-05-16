@@ -1,36 +1,26 @@
-import {ReadFile} from "../atoms/ReadFile"
 import styled from "styled-components"
-import { useState } from "react"
-import {Image} from "../atoms/Image"
 import {StyledType} from "../styledTypes/styledType"
+import {ImageToButton} from "../molecules/ImageToButton"
+import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
+import {VFC} from "react"
 
 
+type Props = {
+    texts:string[]
+    setTexts: (value: React.SetStateAction<string[]>) => void
+}
 
-
-export const FileReaderOnIcon = () =>{
-    const [texts,setTexts] = useState([""])
-    const [isMouseEnter,setIsMouseEnter] = useState(false)
+export const FileReaderOnIcon:VFC<Props>  = (props) =>{
+    const {texts,setTexts} = props
+    
     return (
-        <>
-        <Contener
-            onMouseLeave={(_)=>setIsMouseEnter(false)}
-            onMouseEnter={(_)=>setIsMouseEnter(true)}>
-            <Image
-            src="../../../image/folder-blue-documents-icon.png"
-            style={imageStyle}
-            ></Image>
-            <Label htmlFor={"readfile"}><ReadFile
-            texts={texts}
-            setTexts={setTexts}
-            ></ReadFile></Label>
-        </Contener>
-        {isMouseEnter ? (
-            <p>ファイル読み取り</p>
-        ):(
-            null
-        )}
-        
-        </>
+        <ImageToButton
+            src={"../../../image/folder-blue-documents-icon.png"}
+            imageStyle={imageStyle}>
+                <LabelAndFileReader
+                    texts={texts}
+                    setTexts={setTexts}/>
+        </ImageToButton>
     )
 }
 
