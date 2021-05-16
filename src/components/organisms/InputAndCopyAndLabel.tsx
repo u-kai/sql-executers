@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { Label } from "components/atoms/Label"
 import {StyledType} from "components/styledTypes/styledType"
 type Props = {
+    position?:number
     style?:StyledType
     index:number
     colorList:string[]
@@ -16,10 +17,11 @@ type Props = {
 }
 
 export const InputAndCopyAndLabel:VFC<Props> = (props) =>{
-    const {index,colorList,sentence,handleChange,handleKeyDown,onScroll,onClick,style} = props
+    const {index,colorList,sentence,handleChange,handleKeyDown,onScroll,onClick,style,position} = props
     return (
         <Contener>
             <Label
+                position={position}
                 gridColumn="1/3"
                 gridRow="1/2"
                 textContent={`${index}:`}
@@ -27,6 +29,9 @@ export const InputAndCopyAndLabel:VFC<Props> = (props) =>{
             <InputAndCopy
                 gridColumn="2/3"
                 gridRow="1/2"
+                handleKeyDown={handleKeyDown}
+                onScroll={onScroll}
+                onClick={onClick}
                 handleChange={handleChange}
                 sentence={sentence}
                 colorList={colorList}

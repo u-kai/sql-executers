@@ -27,6 +27,7 @@ export const InputAndCopy:VFC<Props> = (props) => {
         gridRow={gridRow}
         key={`inputContener${index}`}>
             <Input
+                autoComplete="off"
                 id={`input${index}`}
                 key={`input${index}`}
                 value={sentence}
