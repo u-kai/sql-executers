@@ -12,10 +12,9 @@ const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 export const TextareaCreateProps = () =>{
     
     type OneLineCells = {[key:string]:string}
-    type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     class MultiLineCellsClone {
         clone:OneLineCells[]
-        constructor(multiLineCells:OneLineCells[]){
+        constructor(multiLineCells:OneLineCells[],_:string){
             if(multiLineCells[0].DataName === ""){
                 this.clone = []
             }else{
@@ -51,7 +50,7 @@ export const TextareaCreateProps = () =>{
     return (
         <TextareaToSQL
         url={url}
-        constColumns={constColumns}
+        initColumns={constColumns}
         initState={initLine}
         CloneClass={MultiLineCellsClone}
         sqlType={"create"}

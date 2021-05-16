@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Button } from "../atoms/Button"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {Table} from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
 import {Results} from "../../types/tableTypes"
@@ -10,8 +10,8 @@ import {TransformInput} from "../atoms/TransformInput"
 
 type Props = {
     url:string
-    constColumns:string[]
-    initState:{
+    initColumns:string[]
+    initState?:{
         [key: string]: string;
     }
     CloneClass:any
@@ -19,10 +19,10 @@ type Props = {
 }
 
 // const url = "copyToCreate"
-// const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
+// const initColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 
 export const TextareaToSQL:VFC<Props> = (props) =>{
-    const {url,constColumns,CloneClass,sqlType,initState} = props
+    const {url,initColumns,CloneClass,sqlType,initState} = props
     type OneLineCells = {[key:string]:string}
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     class MultiLineCellsClone {
@@ -65,9 +65,15 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const [tableName,setTableName] = useState("") 
     const [isArea, setIsArea] = useState(true)
     const [results, setResults] = useState<Results>()
-    const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([initState])
+    const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
+    const [columns,setColumns] = useState(initColumns.slice())
     
+    useEffect(()=>{
+        if(initState){
+            setMultiLineCells([initState])
+        }
+    },[])
     const sendDataAndSetResults = () => {
         const sendDatas = {
                 tableName:tableName,
@@ -84,10 +90,13 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             return
         }
         const rows = e.target.value.split("\n")
-        const cloneClass = new CloneClass(multiLineCells)
+        const cloneClass = new CloneClass(multiLineCells,e.target.value)
         if(sqlType === "insert"){
+            console.log("setcolumns",rows[0].split("\t"))
+            setColumns(rows[0].split("\t"))
             rows.map((row,i)=>{
                 if(i!==0){
+                    console.log("row",row)
                     cloneClass.makeClone(row)
                 }
             })
@@ -96,7 +105,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 cloneClass.makeClone(row)
             })
         }
-        
+        console.log("fasdfasdfa",cloneClass.clone)
         setMultiLineCells(cloneClass.clone)
     }
     const handleChange = (e:CellChageEvent,index:number,column:string) => {
@@ -122,9 +131,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
 
     const addRows = () => {
         if(isDataExist()){
-            let newRow:OneLineCells = initState
+            let newRow:OneLineCells = Object.assign({},initState)
+            console.log("initstate",newRow)
             if(sqlType === "insert"){
-                constColumns.map((column)=>{
+                initColumns.map((column)=>{
                 newRow[column] = ""
                 })
             }
@@ -133,7 +143,9 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     }
     const resetAndChangeUI = () => {
         setIsArea(true)
-        setMultiLineCells([initState])
+        setColumns(initColumns.slice())
+        setMultiLineCells([Object.assign({},initState)])
+        
     }
     const cellChildren = (value:string,index:number,column:string) => {
         switch(column){
@@ -210,7 +222,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             </ResetButtonContener>
             <TableContener>
                 <Table
-                columns={constColumns}
+                columns={columns}
                 rows={multiLineCells}
                 cellElements={cellChildren}
                 headerKey={`header${sqlType}`}
@@ -247,7 +259,7 @@ overflow:auto;
 display:grid;
 width:100%;
 height:100%;
-grid-template-columns:300px 50px 400px;
+grid-template-columns:300px 50px 450px;
 grid-template-rows:100px 200px 70px 70px 1fr;
 `
 const InputContener = styled.div`
@@ -271,6 +283,9 @@ const TableContener = styled.div`
 grid-row: 5 / 6;
 grid-column: 1 / 4;
 overflow:auto;
+// display:flex;
+// justify-content:center;
+padding:10px;
 `
 const ButtonsContener = styled.div`
 grid-row: 4 / 5;

@@ -12,7 +12,6 @@ export const TextareaInsert = ()=>{
     const sendDataAndSetResults = ()=>{
         const sendDatas = {
                 tableName:tableName,
-                columns:columns,
                 columnsValues:columnsValues
         }
         postDataAndReturnResposeJson(sendDatas,url)

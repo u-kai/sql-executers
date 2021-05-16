@@ -17,13 +17,6 @@ export const TransformInput:VFC<Props> = (props)=>{
     const handleFocus = ()=>{
         setColor(lineColor)
     }
-    const handleChage =(event:React.ChangeEvent<HTMLInputElement>)=>{
-        if(event.target.value.length > 0){
-            setIsInput(true)
-        }else{
-            setIsInput(false)
-        }
-    }
     useEffect(()=>{
         if(value.length > 0){
             setIsInput(true)
