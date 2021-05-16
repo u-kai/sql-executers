@@ -1,6 +1,6 @@
 import {StyledType} from "../components/styledTypes/styledType"
 
-export const returnStyle = (props:StyledType | undefined) => {
+export const returnStyle = (props:StyledType | undefined):string|undefined => {
     if(props){
         return(
             `
@@ -33,7 +33,7 @@ export const returnStyle = (props:StyledType | undefined) => {
             `
         )
     }
-    return ""
+    return undefined
 
 }
 

@@ -9,7 +9,7 @@ type Props = {
 
 export const Image:VFC<Props> = (props) => {
     const {style,src} = props
-    let styles = ""
+    let styles:string | undefined 
     if(style){
         styles = returnStyle(style!)
     }
@@ -21,7 +21,7 @@ export const Image:VFC<Props> = (props) => {
 }
 
 
-const SImage = styled.img<{styles:string}>`
+const SImage = styled.img<{styles:string | undefined}>`
 width:120px;
 height:100px;
 position:absolute;

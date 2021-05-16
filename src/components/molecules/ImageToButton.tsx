@@ -18,10 +18,9 @@ type Props = {
 export const ImageToButton:VFC<Props> = (props) =>{
     const {src,imageStyle,contenerStyle,children,onClick,hoverWord="ファイル読み取り"} = props
     const [isMouseEnter,setIsMouseEnter] = useState(false)
-    let contenerStyles = ""
-    if(contenerStyle){
-        contenerStyles = returnStyle(contenerStyle)
-    }
+    let contenerStyles:string | undefined
+    
+    contenerStyles = returnStyle(contenerStyle)
     return (
         <>
         <Contener
@@ -45,7 +44,7 @@ export const ImageToButton:VFC<Props> = (props) =>{
     )
 }
 
-const Contener = styled.div<{styles:string}>`
+const Contener = styled.div<{styles:string | undefined}>`
 width:120px;
 height:80px;
 position:relative;

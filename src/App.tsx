@@ -13,14 +13,14 @@ import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
 import { SaveFileOnIcon } from "components/molecules/SaveFileOnIcon";
 import {AutoCorrects} from "components/molecules/AutoCorrects"
 import {InputAndCopy} from "components/molecules/InputAndCopy"
+import { InputAndCopyAndLabel } from "components/organisms/InputAndCopyAndLabel";
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
   const fileName = "yeha"
   const inputstyle:StyledType = {
     outline:"solid",
-    
-    position:"absolute"
+    // position:"absolute"
   }
   const [char,setChar] = useState("")
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
@@ -33,13 +33,20 @@ function App() {
     onClick={()=>setToggle(!toggle)}
     ></Button>
     {toggle ? (
-      <InputAndCopy
-      handleChange={handleChange}
-      sentence={char}
-      colorList={["red","black"]}
-      index={1}
+      <InputAndCopyAndLabel
       style={inputstyle}
-      />
+      index={1}
+      handleChange={handleChange}
+      colorList={["red","black"]}
+      sentence={char}
+      ></InputAndCopyAndLabel>
+      // <InputAndCopy
+      // handleChange={handleChange}
+      // sentence={char}
+      // colorList={["red","black"]}
+      // index={1}
+      // style={inputstyle}
+      // />
     
       // autoCorrects={["hello worle","konnnithiha","ni-hao"]}
       // position={{x:100,y:100}}

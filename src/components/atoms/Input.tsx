@@ -41,7 +41,7 @@ export const Input:VFC<Props> =(props)=>{
     )
 }
 
-const SInput = styled.input<{styles:string}>`
+const SInput = styled.input<{styles:string | undefined}>`
 ${InputAndCopyBoxStyle}
 background-color:transparent;
 position:absolute;

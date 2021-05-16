@@ -4,36 +4,41 @@ import styled from "styled-components"
 import {useState, VFC} from "react"
 import { CopySpan,Props as CopySpanProps } from "../atoms/CopySpan"
 import {StyledType} from "../styledTypes/styledType"
-import {returnStyle} from "../../functions/returnStyle"
 import {TailSpan} from "../atoms/TailSpan"
-type Props = {
+export type Props = {
     style?:StyledType
     index:number
     colorList:string[]
     sentence:string
-    handleChange:(e: React.ChangeEvent<HTMLInputElement>)=>void
-    // input:InputProps
-    // copyBox:CopyBoxProps
-    // copySpan:CopySpanProps
+    gridColumn?:string
+    gridRow?:string
+    handleKeyDown?:(e:React.KeyboardEvent<HTMLInputElement>)=>void
+    handleChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void
+    onClick?:(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void
+    onScroll?:(event: React.UIEvent<HTMLInputElement, UIEvent>) => void
 }
 
 export const InputAndCopy:VFC<Props> = (props) => {
-    const {style,index,colorList,sentence,handleChange} = props
-    console.log(sentence.split(" ").map((value)=>value))
-    console.log(colorList)
-    // const styles = returnStyle(style)
+    const {style,index,colorList,sentence,handleChange,handleKeyDown,onScroll,onClick,
+    gridColumn,gridRow} = props
     return(
-        <Contener key={`inputContener${index}`}>
+        <Contener 
+        gridColumn={gridColumn}
+        gridRow={gridRow}
+        key={`inputContener${index}`}>
             <Input
+                id={`input${index}`}
                 key={`input${index}`}
                 value={sentence}
+                handleKeyDown={handleKeyDown}
                 handleChange={handleChange}
+                onClick={onClick}
+                onScroll={onScroll}
                 style={style}
                 type="text"/>
-            <CopyBox id="testcok" key={`copyContener${index}`}>
+            <CopyBox  key={`copyContener${index}`}>
             {sentence.split(" ").map((phrase,pharaseIndex)=>(
                     <CopySpan
-                        id={phrase}
                         color={colorList[pharaseIndex]}
                         key={`copySpan${phrase}${index}${pharaseIndex}`}>
                         {phrase}
@@ -44,8 +49,10 @@ export const InputAndCopy:VFC<Props> = (props) => {
         </Contener>
     )
 }
-const Contener = styled.div`
+const Contener = styled.div<{gridColumn:string | undefined,gridRow:string | undefined}>`
 width:100%;
 height:100%;
 position:relative;
+grid-row:${props=>props.gridRow};
+grid-column:${props=>props.gridColumn};
 `
