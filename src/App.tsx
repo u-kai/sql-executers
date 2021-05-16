@@ -11,20 +11,28 @@ import { ImageToButton } from "components/molecules/ImageToButton";
 import {StyledType} from "components/styledTypes/styledType"
 import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
 import { SaveFileOnIcon } from "components/molecules/SaveFileOnIcon";
+import {AutoCorrects} from "components/molecules/AutoCorrects"
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
-  const fileName = "yeha.sql"
+  const fileName = "yeha"
   return (
     <>
     <Button
     onClick={()=>setToggle(!toggle)}
     ></Button>
     {toggle ? (
-      <SaveFileOnIcon
-      text={test[0]}
-      fileName={fileName}
-      ></SaveFileOnIcon>
+      <AutoCorrects
+      autoCorrects={["hello worle","konnnithiha","ni-hao"]}
+      position={{x:100,y:100}}
+      handleClick={(e)=>console.log(e)}
+      />
+
+  
+      // <SaveFileOnIcon
+      // text={test[0]}
+      // fileName={fileName}
+      // ></SaveFileOnIcon>
       // <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
     <FileReaderOnIcon

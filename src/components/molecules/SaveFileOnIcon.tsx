@@ -9,7 +9,7 @@ type Props = {
 export const SaveFileOnIcon:VFC<Props> = (props) => {
     const {text,fileName} = props
     const downloadFile = () =>{
-        const confirmSave = confirm("保存しますか？")
+        const confirmSave = true//confirm("保存しますか？")
         if(confirmSave){
             const blob = new Blob([text],{type:"text/plain"})
             const url = URL.createObjectURL(blob)
