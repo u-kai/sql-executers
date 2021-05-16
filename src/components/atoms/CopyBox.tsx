@@ -4,7 +4,7 @@ import {InputAndCopyBoxStyle} from "../commonStyles/AutoCorrectStyles"
 import { Overflow } from "../../types/StyleType"
 
 export type Props = {
-    id:string
+    id?:string
     children:ReactNode
     fontFamily?:string
     fontSize?:number

@@ -22,6 +22,11 @@ function App() {
     
     position:"absolute"
   }
+  const [char,setChar] = useState("")
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    console.log(e)
+    setChar(e.target.value)
+  }
   return (
     <>
     <Button
@@ -29,7 +34,10 @@ function App() {
     ></Button>
     {toggle ? (
       <InputAndCopy
-      tailId={1}
+      handleChange={handleChange}
+      sentence={char}
+      colorList={["red","black"]}
+      index={1}
       style={inputstyle}
       />
     

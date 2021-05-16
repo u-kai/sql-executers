@@ -8,35 +8,39 @@ import {returnStyle} from "../../functions/returnStyle"
 import {TailSpan} from "../atoms/TailSpan"
 type Props = {
     style?:StyledType
-    tailId:number
-    // char:string
+    index:number
+    colorList:string[]
+    sentence:string
+    handleChange:(e: React.ChangeEvent<HTMLInputElement>)=>void
     // input:InputProps
     // copyBox:CopyBoxProps
     // copySpan:CopySpanProps
 }
 
 export const InputAndCopy:VFC<Props> = (props) => {
-    const {style,tailId} = props
-    const styles = returnStyle(style)
-    const [char,setChar] = useState("")
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
-        setChar(e.target.value)
-    }
+    const {style,index,colorList,sentence,handleChange} = props
+    console.log(sentence.split(" ").map((value)=>value))
+    console.log(colorList)
+    // const styles = returnStyle(style)
     return(
-        <Contener>
+        <Contener key={`inputContener${index}`}>
             <Input
-                value={char}
+                key={`input${index}`}
+                value={sentence}
                 handleChange={handleChange}
                 style={style}
                 type="text"/>
-            <CopyBox id="box">
-                <CopySpan
-                    color={"red"}
-                    id={"span"}>
-                    {char}
-                </CopySpan>
-                <TailSpan id={`tailPosition${tailId}`}/>
+            <CopyBox id="testcok" key={`copyContener${index}`}>
+            {sentence.split(" ").map((phrase,pharaseIndex)=>(
+                    <CopySpan
+                        id={phrase}
+                        color={colorList[pharaseIndex]}
+                        key={`copySpan${phrase}${index}${pharaseIndex}`}>
+                        {phrase}
+                    </CopySpan>
+            ))}
             </CopyBox>
+                <TailSpan id={`tailPosition${index}`}/>
         </Contener>
     )
 }
