@@ -5,7 +5,7 @@ import {AutoCorrects} from "../molecules/AutoCorrects"
 import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseDisplayAutoCorrectsHandleKeyDown"
 import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
 import {focusElement} from "../../functions/focusElement"
-import styled from "styled-components" 
+import styled, { StyledInterface } from "styled-components" 
 
 export const EditerAndAutoCorrectModi = ()=>{
     const [position,setPosition] = useState({x:0,y:0})
@@ -57,7 +57,9 @@ export const EditerAndAutoCorrectModi = ()=>{
     const blackColorSet = (focusRowIndex:number,colorListClone:string[][]) => {
         colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
     }
-
+    // const setColorToWord = (color:string,focusRowIndex:number,wordIndex:number) => {
+    //     colorListClone
+    // }
     const isWordMatch = (key:string,word:string) => {
         return key === word || key.toLocaleLowerCase() === word
     }
@@ -65,9 +67,10 @@ export const EditerAndAutoCorrectModi = ()=>{
     const colorDistribution = (wordList:string[]) => {
         let colorListClone = [...colorList]
         wordList.map((word,wordIndex)=>{
-            blackColorSet(focusRowIndex,colorListClone)
+            // blackColorSet(focusRowIndex,colorListClone)
             // colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
             for (let key in ChangeColorRegDatas){
+                colorListClone[focusRowIndex][wordIndex] = "black"
                 if(!isExistRegData(word,key)){
                     continue
                 }
@@ -75,6 +78,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                     colorListClone[focusRowIndex][wordIndex] = "red"
                     break
                 }
+                
             }
         })
         setColorList([...colorListClone])
