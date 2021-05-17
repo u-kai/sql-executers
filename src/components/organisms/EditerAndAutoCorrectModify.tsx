@@ -165,9 +165,29 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
     }
 
+    const removeLastValue = (list:string[]) => {
+        return list.filter((_:string,i:number)=>i!==list.length-1)
+    }
+    const removeLastList = (list:string[][]) => {
+        return list.filter((_:string[],i:number)=>i!==list.length-1)
+    }
+
+    // const removeBeforeAutoCorrect = () =>{
+    //     let copyWordsClone = 
+    //     setCopyWords(removeLastValue(copyWords[focusRowIndex]))
+    //     let sentencesClone = sentences
+    //     sentencesClone[focusRowIndex] = 
+    //     setSentences(removeLastValue(sentences[focusRowIndex].split(" ")))
+    // }
+    // const changeToAutoCorrect = (selectedAutoCorrect:string) => {
+    //        removeBeforeAutoCorrect()
+    //        enterNewCharacters(selectedAutoCorrect)
+    // }
+
     const CaseDisplayAutoCorrectsHandleKeyDown = {
         downEnterKey:()=> {
-            const selectAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
+            const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
+    
 
         },
         downArrowUpKey:()=> {
