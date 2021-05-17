@@ -54,10 +54,8 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
         return true
     }
-    const blackColorSet = (focusRowIndex:number) => {
-        let colorListClone = [...colorList]
+    const blackColorSet = (focusRowIndex:number,colorListClone:string[][]) => {
         colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
-        return colorListClone
     }
 
     const isWordMatch = (key:string,word:string) => {
@@ -67,23 +65,17 @@ export const EditerAndAutoCorrectModi = ()=>{
     const colorDistribution = (wordList:string[]) => {
         let colorListClone = [...colorList]
         wordList.map((word,wordIndex)=>{
-            // let isRed = false
-            
-            colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
+            blackColorSet(focusRowIndex,colorListClone)
+            // colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
             for (let key in ChangeColorRegDatas){
                 if(!isExistRegData(word,key)){
                     continue
                 }
                 if(isWordMatch(key,word)){
-                    // colorList[focusRowIndex].push("red")
-                    // isRed = true
                     colorListClone[focusRowIndex][wordIndex] = "red"
                     break
                 }
             }
-            // if(!isRed){
-            //     colorList[focusRowIndex].push("black")
-            // }
         })
         setColorList([...colorListClone])
     }
