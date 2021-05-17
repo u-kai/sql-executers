@@ -14,7 +14,7 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [copyWords, setCopyWords] = useState<string[][]>([[]])
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
-    const [autoCorrectsIndex,setAutoCorrectsIndex] = useState(0)
+    const [focusAutoCorrectsIndex,setAutoCorrectsIndex] = useState(0)
     const [focusRowIndex,setFocusIndex] = useState(0)
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
@@ -165,6 +165,29 @@ export const EditerAndAutoCorrectModi = ()=>{
         setAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
     }
 
+    const CaseDisplayAutoCorrectsHandleKeyDown = {
+        downEnterKey:()=> {
+            const selectAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
+
+        },
+        downArrowUpKey:()=> {
+
+        },
+        downArrowDownKey:()=> {
+
+        },
+        downRightkey:() => {
+
+        },
+        downLeftkey:() => {
+
+        }
+    }
+
+    const downEnterKey = () => {
+
+    }
+
     const handleKey = (e:React.KeyboardEvent<HTMLInputElement>)=>{
         if(isDisplayAutoCorrects){
             const props = {
@@ -173,7 +196,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 autoCorrects:autoCorrects,
                 char:sentences[focusRowIndex],
                 changeString:enterNewCharacters,
-                autoCorrectsIndex:autoCorrectsIndex,
+                autoCorrectsIndex:focusAutoCorrectsIndex,
                 setAutoCorrectsIndex:setAutoCorrectsIndex
             }
             caseDisplayAutoCorrectsHandleKeyDown(props)
@@ -244,7 +267,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 <AutoCorrects
                 handleMouseDown={handleMouseDown}
                 setAutoCorrectFocusIndex={setAutoCorrectsIndex}
-                autoCorrectFocusIndex={autoCorrectsIndex}
+                autoCorrectFocusIndex={focusAutoCorrectsIndex}
                 handleClick={selectAutoCorrect}
                 position={position}
                 autoCorrects={autoCorrects}
