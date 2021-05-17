@@ -52,7 +52,13 @@ const useSentences = (focusRowIndexs:number) => {
         sentences[focusRowIndexs] = newCharacter
         setSentences([...sentences])
     } 
-    return { sentences, setSentences, updateSentences }
+    const addRowSentence = () => {
+        setSentences([...sentences,""])
+    }
+    const removeRowSentence = () => {
+        setSentences(removeLastValue(sentences))
+    }
+    return { sentences, addRowSentence, removeRowSentence, updateSentences }
 }
 const useColorList = (focusRowIndex:number) => {
     const [colorList, setColorList] = useState<string[][]>([[]])
@@ -62,7 +68,14 @@ const useColorList = (focusRowIndex:number) => {
         })
         setColorList([...colorList])
     }
-    return {colorList,setColorList,updateColorList}
+    const addRowColorList = () => {
+        setColorList([...colorList,[]])
+    }
+    const removeRowColorList = () => {
+        setColorList(removeLastList(colorList))
+    }
+
+    return {colorList, addRowColorList, removeRowColorList, updateColorList}
 }
 const useAutoCorrects = () => {
     
@@ -89,11 +102,19 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [focusRowIndex,setFocusIndex] = useState(0)
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
-    const {sentences, setSentences, updateSentences} = useSentences(focusRowIndex)
-    const {colorList,setColorList,updateColorList} = useColorList(focusRowIndex)
+    const {sentences, addRowSentence, removeRowSentence, updateSentences} = useSentences(focusRowIndex)
+    const {colorList,addRowColorList, removeRowColorList, updateColorList} = useColorList(focusRowIndex)
     const editerContenerHeight = 800
     const rowHeight = 30
   
+    const addRowDatas = () => {
+        addRowSentence()
+        addRowColorList()
+    }
+    const removeRowDatas = () => {
+        removeRowSentence()
+        removeRowColorList()
+    }
     const moveFocus =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
         focusElement(e.currentTarget.id)
         setFocusIndex(Number(e.currentTarget.id.replace("input","")))
@@ -265,8 +286,8 @@ export const EditerAndAutoCorrectModi = ()=>{
                 colorList:colorList,
                 sentences:sentences,
                 setFocusIndex:setFocusIndex,
-                setColorList:setColorList,
-                setSentences:setSentences
+                addRowDatas:addRowDatas,
+                removeRowDatas:removeRowDatas
             }
             caseNotDisplayAutoCorrectsHandleKeyDown(props)
 

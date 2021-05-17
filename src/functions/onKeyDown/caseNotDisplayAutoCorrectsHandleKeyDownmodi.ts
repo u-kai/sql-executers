@@ -5,9 +5,11 @@ type Props = {
     focusRowIndex:number
     setFocusIndex:(value: React.SetStateAction<number>) => void
     colorList:string[][]
-    setColorList:(value: React.SetStateAction<string[][]>) => void
+    // setColorList:(value: React.SetStateAction<string[][]>) => void
     sentences:string[]
-    setSentences:(value: React.SetStateAction<string[]>) => void
+    addRowDatas:()=>void
+    removeRowDatas:()=>void
+//     setSentences:(value: React.SetStateAction<string[]>) => void
 }
 
 
@@ -23,8 +25,8 @@ const removeLastList = (list:string[][]) => {
 export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
     const {e,focusRowIndex,
             setFocusIndex,
-            colorList,setColorList,
-            sentences,setSentences} = props
+            colorList,addRowDatas,
+            sentences,removeRowDatas} = props
 
             const focusRowSentencesIsNull = ():boolean =>{
                 return sentences[focusRowIndex] === "" 
@@ -36,26 +38,26 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             const focusRowIndexIsEnd = ():boolean => {
                 return focusRowIndex === sentences.length-1
             }
-            const removeRowSentence = () => {
-                setSentences(removeLastValue(sentences))
-            }
-            const removeRowColorList = () => {
-                setColorList(removeLastList(colorList))
-            }
-            const removeRowDatas = () => {
-                removeRowSentence()
-                removeRowColorList()
-            }
-            const addRowSentence = () => {
-                setSentences([...sentences,""])
-            }
-            const addRowColorList = () => {
-                setColorList([...colorList,[]])
-            }
-            const addRowDatas = () => {
-                addRowSentence()
-                addRowColorList()
-            }
+            // const removeRowSentence = () => {
+            //     setSentences(removeLastValue(sentences))
+            // }
+            // const removeRowColorList = () => {
+            //     setColorList(removeLastList(colorList))
+            // }
+            // const removeRowDatas = () => {
+            //     removeRowSentence()
+            //     removeRowColorList()
+            // }
+            // const addRowSentence = () => {
+            //     setSentences([...sentences,""])
+            // }
+            // const addRowColorList = () => {
+            //     setColorList([...colorList,[]])
+            // }
+            // const addRowDatas = () => {
+            //     addRowSentence()
+            //     addRowColorList()
+            // }
             
     switch(e.key){
         case "Enter":
