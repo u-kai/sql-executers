@@ -41,7 +41,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         setCopyWords([...copyWords])
     }
 
-    const initColorList = () => {
+    const initFocusRowColorList = () => {
         colorList[focusRowIndex] = []
     }
     const wordDivide = (newCharacter:string) => {
@@ -84,12 +84,12 @@ export const EditerAndAutoCorrectModi = ()=>{
         return colorListClone
     }
 
-    const changeString = (newCharacter:string)=>{
+    const enterNewCharacters = (newCharacter:string)=>{
         updateSentences(newCharacter)
         updateCopyWords(newCharacter)
         // const strList = newCharacter.split(" ")
         const wordList = wordDivide(newCharacter)
-        initColorList()
+        initFocusRowColorList()
         setIsDisplayAutoCorrects(false)
         setAutoCorrectsIndex(0)//add init condition
         // setAutoCorrectsIndex(0)
@@ -143,7 +143,7 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     const handleChanges = (e:React.ChangeEvent<HTMLInputElement>)=>{
         const newChar = e.target.value
-        changeString(newChar)
+        enterNewCharacters(newChar)
         const strList = newChar.split(" ")
         const lastStr = strList[strList.length - 1]
         sortAutoCorrect(lastStr)
@@ -154,7 +154,7 @@ export const EditerAndAutoCorrectModi = ()=>{
             const changeStr = e.currentTarget.textContent.replace("\n","")
             const currentStrList = sentences[focusRowIndex].split(" ")
             const removeMatchChar = currentStrList[currentStrList.length-1]
-            changeString(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
+            enterNewCharacters(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
             // setAutoCorrectsIndex(0)//add init condition
         }
         focusElement("input"+focusRowIndex.toString())
@@ -172,7 +172,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 setIsDisplayAutoCorrects:setIsDisplayAutoCorrects,
                 autoCorrects:autoCorrects,
                 char:sentences[focusRowIndex],
-                changeString:changeString,
+                changeString:enterNewCharacters,
                 autoCorrectsIndex:autoCorrectsIndex,
                 setAutoCorrectsIndex:setAutoCorrectsIndex
             }
