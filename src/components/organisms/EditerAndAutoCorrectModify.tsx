@@ -7,6 +7,28 @@ import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown
 import {focusElement} from "../../functions/focusElement"
 import styled, { StyledInterface } from "styled-components" 
 
+const wordDivide = (newCharacter:string) => {
+    return newCharacter.split(" ")
+}
+const isExistRegData = (word:string,key:string):boolean => {
+    const index = word.length - 1
+    if(ChangeColorRegDatas[key][index]===undefined){
+        return false
+    }
+    return true
+}
+
+const isWordMatch = (key:string,word:string) => {
+    return key === word || key.toLocaleLowerCase() === word
+}
+
+const removeLastValue = (list:string[]) => {
+    return list.filter((_:string,i:number)=>i!==list.length-1)
+}
+const removeLastList = (list:string[][]) => {
+    return list.filter((_:string[],i:number)=>i!==list.length-1)
+}
+
 export const EditerAndAutoCorrectModi = ()=>{
     const [position,setPosition] = useState({x:0,y:0})
     const [sentences, setSentences] = useState<string[]>([""])
@@ -30,26 +52,11 @@ export const EditerAndAutoCorrectModi = ()=>{
         setSentences([...sentences])
     } 
 
-    const initFocusRowColorList = () => {
-        colorList[focusRowIndex] = []
-    }
-    const wordDivide = (newCharacter:string) => {
-        return newCharacter.split(" ")
-    }
-    const isExistRegData = (word:string,key:string):boolean => {
-        const index = word.length - 1
-        if(ChangeColorRegDatas[key][index]===undefined){
-            return false
-        }
-        return true
-    }
+   
     const blackColorSet = (focusRowIndex:number,colorListClone:string[][]) => {
         colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
     }
 
-    const isWordMatch = (key:string,word:string) => {
-        return key === word || key.toLocaleLowerCase() === word
-    }
     const updateColorList = (wordList:string[]) =>{
         const colorListClone = colorDistribution(wordList)
         setColorList([...colorListClone])
@@ -76,7 +83,6 @@ export const EditerAndAutoCorrectModi = ()=>{
     const enterNewCharacters = (newCharacter:string)=>{
         updateSentences(newCharacter)
         const wordList = wordDivide(newCharacter)
-        initFocusRowColorList()
         setIsDisplayAutoCorrects(false)
         setFocusAutoCorrectsIndex(0)//add init condition
         updateColorList(wordList)
@@ -131,12 +137,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
     }
 
-    const removeLastValue = (list:string[]) => {
-        return list.filter((_:string,i:number)=>i!==list.length-1)
-    }
-    const removeLastList = (list:string[][]) => {
-        return list.filter((_:string[],i:number)=>i!==list.length-1)
-    }
+
 
     // const removeBeforeAutoCorrect = () =>{
     //     let copyWordsClone = 
