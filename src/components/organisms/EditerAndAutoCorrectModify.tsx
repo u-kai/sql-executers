@@ -80,11 +80,15 @@ export const EditerAndAutoCorrectModi = ()=>{
         return colorListClone
     }
 
-    const enterNewCharacters = (newCharacter:string)=>{
-        updateSentences(newCharacter)
-        const wordList = wordDivide(newCharacter)
+    const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
         setFocusAutoCorrectsIndex(0)//add init condition
+    } 
+
+    const enterNewCharacters = (newCharacter:string)=>{
+        initAutoCorrects()
+        updateSentences(newCharacter)
+        const wordList = wordDivide(newCharacter)
         updateColorList(wordList)
     }
 
