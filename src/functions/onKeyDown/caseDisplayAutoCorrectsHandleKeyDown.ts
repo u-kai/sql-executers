@@ -12,6 +12,7 @@ export const caseDisplayAutoCorrectsHandleKeyDown = (props:Props)=>{
     const {e,setIsDisplayAutoCorrects,
             autoCorrects,char,changeString,autoCorrectsIndex,
             setAutoCorrectsIndex} = props
+            console.log(e.key)
     switch(e.key){ 
         case "Enter":
             setIsDisplayAutoCorrects(false)
@@ -29,8 +30,13 @@ export const caseDisplayAutoCorrectsHandleKeyDown = (props:Props)=>{
                 setAutoCorrectsIndex(autoCorrectsIndex + 1)
             }
             break
-        case "ArrowRight" || "ArrowLeft":
+        case "ArrowRight" :
+                console.log("left")
                 setIsDisplayAutoCorrects(false)
+            break
+        case "ArrowLeft":
+            console.log("left")
+            setIsDisplayAutoCorrects(false)
             break
         default:
             break

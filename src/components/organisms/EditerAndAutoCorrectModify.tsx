@@ -64,7 +64,7 @@ export const EditerAndAutoCorrectModi = ()=>{
     //     setColorList([...colorListClone])
     // }
 
-    const whatWordColor = (word:string,wordIndex:number):string => {
+    const whatWordColor = (word:string):string => {
         for (let key in ChangeColorRegDatas){
             if(!isExistRegData(word,key)){
                 continue
@@ -77,12 +77,10 @@ export const EditerAndAutoCorrectModi = ()=>{
     }
 
     const updateColorList = (wordList:string[]) => {
-        // let colorListClone = [...colorList]
         wordList.map((word,wordIndex)=>{
-            colorList[focusRowIndex][wordIndex] = whatWordColor(word,wordIndex)
+            colorList[focusRowIndex][wordIndex] = whatWordColor(word)
         })
         setColorList([...colorList])
-        // return colorListClone
     }
 
     const initAutoCorrects = () => {
@@ -90,7 +88,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusAutoCorrectsIndex(0)//add init condition
     } 
 
-    const enterNewCharacters = (newCharacter:string)=>{
+    const didEnterNewCharacters = (newCharacter:string)=>{
         initAutoCorrects()
         updateSentences(newCharacter)
         const wordList = wordDivide(newCharacter)
@@ -125,7 +123,7 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     const handleChanges = (e:React.ChangeEvent<HTMLInputElement>)=>{
         const newChar = e.target.value
-        enterNewCharacters(newChar)
+        didEnterNewCharacters(newChar)
         const strList = newChar.split(" ")
         const lastStr = strList[strList.length - 1]
         sortAutoCorrect(lastStr)
@@ -136,7 +134,7 @@ export const EditerAndAutoCorrectModi = ()=>{
             const changeStr = e.currentTarget.textContent.replace("\n","")
             const currentStrList = sentences[focusRowIndex].split(" ")
             const removeMatchChar = currentStrList[currentStrList.length-1]
-            enterNewCharacters(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
+            didEnterNewCharacters(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
         }
         focusElement("input"+focusRowIndex.toString())
     }
@@ -157,45 +155,69 @@ export const EditerAndAutoCorrectModi = ()=>{
     // }
     // const changeToAutoCorrect = (selectedAutoCorrect:string) => {
     //        removeBeforeAutoCorrect()
-    //        enterNewCharacters(selectedAutoCorrect)
+    //        didEnterNewCharacters(selectedAutoCorrect)
     // }
+
+    const deleteLastWord = () => {
+        const words = wordDivide(sentences[focusRowIndex])
+        return removeLastValue(words).join(" ")
+    }
 
     const CaseDisplayAutoCorrectsHandleKeyDown = {
         downEnterKey:()=> {
             const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
-    
-
+            const beforeInsertAutoCorrect = deleteLastWord()
+            const newSentences = `${beforeInsertAutoCorrect} ${selectedAutoCorrect}`
+            didEnterNewCharacters(newSentences)
+            initAutoCorrects()
         },
         downArrowUpKey:()=> {
-
+            if(focusAutoCorrectsIndex > 0){
+                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)
+            }
         },
         downArrowDownKey:()=> {
-
+            if(focusAutoCorrectsIndex < autoCorrects.length -1){
+                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)
+            }
         },
-        downRightkey:() => {
-
+        downRightOrLeftKey:() => {
+            initAutoCorrects()
         },
-        downLeftkey:() => {
-
-        }
     }
 
-    const downEnterKey = () => {
-
-    }
 
     const handleKey = (e:React.KeyboardEvent<HTMLInputElement>)=>{
         if(isDisplayAutoCorrects){
-            const props = {
-                e:e,
-                setIsDisplayAutoCorrects:setIsDisplayAutoCorrects,
-                autoCorrects:autoCorrects,
-                char:sentences[focusRowIndex],
-                changeString:enterNewCharacters,
-                autoCorrectsIndex:focusAutoCorrectsIndex,
-                setAutoCorrectsIndex:setFocusAutoCorrectsIndex
+            switch(e.key){
+                case "Enter":
+                    CaseDisplayAutoCorrectsHandleKeyDown.downEnterKey()
+                    break
+                case "ArrowUp":
+                    CaseDisplayAutoCorrectsHandleKeyDown.downArrowUpKey()
+                    break
+                case "ArrowDown":
+                    CaseDisplayAutoCorrectsHandleKeyDown.downArrowDownKey()
+                    break
+                case "ArrowRight":
+                    CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
+                    break
+                case "ArrowLeft":
+                    CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
+                    break
+                default:
+                    break
             }
-            caseDisplayAutoCorrectsHandleKeyDown(props)
+            // const props = {
+            //     e:e,
+            //     setIsDisplayAutoCorrects:setIsDisplayAutoCorrects,
+            //     autoCorrects:autoCorrects,
+            //     char:sentences[focusRowIndex],
+            //     changeString:didEnterNewCharacters,
+            //     autoCorrectsIndex:focusAutoCorrectsIndex,
+            //     setAutoCorrectsIndex:setFocusAutoCorrectsIndex
+            // }
+            // caseDisplayAutoCorrectsHandleKeyDown(props)
         }else{
             const props = {
                 e:e,
