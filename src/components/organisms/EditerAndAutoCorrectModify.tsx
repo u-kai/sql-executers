@@ -29,6 +29,8 @@ const removeLastList = (list:string[][]) => {
     return list.filter((_:string[],i:number)=>i!==list.length-1)
 }
 
+// type Color = "black" | "red" pre
+
 export const EditerAndAutoCorrectModi = ()=>{
     const [position,setPosition] = useState({x:0,y:0})
     const [sentences, setSentences] = useState<string[]>([""])
@@ -57,27 +59,30 @@ export const EditerAndAutoCorrectModi = ()=>{
         colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
     }
 
-    const updateColorList = (wordList:string[]) =>{
-        const colorListClone = colorDistribution(wordList)
-        setColorList([...colorListClone])
-    }
-    const colorDistribution = (wordList:string[]) => {
-        let colorListClone = [...colorList]
-        wordList.map((word,wordIndex)=>{
-            // blackColorSet(focusRowIndex,colorListClone)
-            // colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
-            for (let key in ChangeColorRegDatas){
-                colorListClone[focusRowIndex][wordIndex] = "black"
-                if(!isExistRegData(word,key)){
-                    continue
-                }
-                if(isWordMatch(key,word)){
-                    colorListClone[focusRowIndex][wordIndex] = "red"
-                    break
-                }
+    // const updateColorList = (wordList:string[]) =>{
+    //     const colorListClone = colorDistribution(wordList)
+    //     setColorList([...colorListClone])
+    // }
+
+    const whatWordColor = (word:string,wordIndex:number):string => {
+        for (let key in ChangeColorRegDatas){
+            if(!isExistRegData(word,key)){
+                continue
             }
+            if(isWordMatch(key,word)){
+                return "red"
+            }
+        }
+        return "black"
+    }
+
+    const updateColorList = (wordList:string[]) => {
+        // let colorListClone = [...colorList]
+        wordList.map((word,wordIndex)=>{
+            colorList[focusRowIndex][wordIndex] = whatWordColor(word,wordIndex)
         })
-        return colorListClone
+        setColorList([...colorList])
+        // return colorListClone
     }
 
     const initAutoCorrects = () => {
