@@ -57,13 +57,14 @@ export const EditerAndAutoCorrectModi = ()=>{
     const blackColorSet = (focusRowIndex:number,colorListClone:string[][]) => {
         colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
     }
-    // const setColorToWord = (color:string,focusRowIndex:number,wordIndex:number) => {
-    //     colorListClone
-    // }
+
     const isWordMatch = (key:string,word:string) => {
         return key === word || key.toLocaleLowerCase() === word
     }
-
+    const updateColorList = (wordList:string[]) =>{
+        const colorListClone = colorDistribution(wordList)
+        setColorList([...colorListClone])
+    }
     const colorDistribution = (wordList:string[]) => {
         let colorListClone = [...colorList]
         wordList.map((word,wordIndex)=>{
@@ -78,10 +79,9 @@ export const EditerAndAutoCorrectModi = ()=>{
                     colorListClone[focusRowIndex][wordIndex] = "red"
                     break
                 }
-                
             }
         })
-        setColorList([...colorListClone])
+        return colorListClone
     }
 
     const changeString = (newCharacter:string)=>{
@@ -93,7 +93,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         setIsDisplayAutoCorrects(false)
         setAutoCorrectsIndex(0)//add init condition
         // setAutoCorrectsIndex(0)
-        colorDistribution(wordList)
+        updateColorList(wordList)
         // wordList.map((word)=>{
         //     let isRed = false
         //     for (let key in ChangeColorRegDatas){
