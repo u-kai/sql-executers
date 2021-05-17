@@ -60,6 +60,7 @@ const useSentences = (focusRowIndexs:number) => {
     }
     return { sentences, addRowSentence, removeRowSentence, updateSentences }
 }
+
 const useColorList = (focusRowIndex:number) => {
     const [colorList, setColorList] = useState<string[][]>([[]])
     const updateColorList = (wordList:string[]) => {
@@ -83,11 +84,11 @@ const useAutoCorrects = () => {
 const useFocusAutoCorrectsIndex = () => {
 
 }
-const useFocusRowIndex = () => {
+const useFocusRowIndex = (focusIdPrefix:string="input") => {
     const [focusRowIndex,setFocusIndex] = useState(0)
     const moveFocus =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
         focusElement(e.currentTarget.id)
-        setFocusIndex(Number(e.currentTarget.id.replace("input","")))
+        setFocusIndex(Number(e.currentTarget.id.replace(focusIdPrefix,"")))
     })
 }
 
@@ -120,30 +121,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusIndex(Number(e.currentTarget.id.replace("input","")))
     })
 
-    // const updateSentences = (newCharacter:string) => {
-    //     sentences[focusRowIndex] = newCharacter
-    //     setSentences([...sentences])
-    // } 
-
-   
-    const blackColorSet = (focusRowIndex:number,colorListClone:string[][]) => {
-        colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
-    }
-
-    // const updateColorList = (wordList:string[]) =>{
-    //     const colorListClone = colorDistribution(wordList)
-    //     setColorList([...colorListClone])
-    // }
-
     
-
-    // const updateColorList = (wordList:string[]) => {
-    //     wordList.map((word,wordIndex)=>{
-    //         colorList[focusRowIndex][wordIndex] = whatWordColor(word)
-    //     })
-    //     setColorList([...colorList])
-    // }
-
     const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
         setFocusAutoCorrectsIndex(0)//add init condition
@@ -197,27 +175,13 @@ export const EditerAndAutoCorrectModi = ()=>{
             const removeMatchChar = currentStrList[currentStrList.length-1]
             didEnterNewCharacters(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
         }
-        focusElement("input"+focusRowIndex.toString())
+        // focusElement("input"+focusRowIndex.toString())
     }
     
     const handleMouseDown = (e:React.MouseEvent<HTMLSpanElement>)=>{
         const hoverId = e.currentTarget.id    
         setFocusAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
     }
-
-
-
-    // const removeBeforeAutoCorrect = () =>{
-    //     let copyWordsClone = 
-    //     setCopyWords(removeLastValue(copyWords[focusRowIndex]))
-    //     let sentencesClone = sentences
-    //     sentencesClone[focusRowIndex] = 
-    //     setSentences(removeLastValue(sentences[focusRowIndex].split(" ")))
-    // }
-    // const changeToAutoCorrect = (selectedAutoCorrect:string) => {
-    //        removeBeforeAutoCorrect()
-    //        didEnterNewCharacters(selectedAutoCorrect)
-    // }
 
     const deleteLastWord = () => {
         const words = wordDivide(sentences[focusRowIndex])
