@@ -224,10 +224,8 @@ export const EditerAndAutoCorrectModi = ()=>{
             const props = {
                 e:e,
                 focusRowIndex:focusRowIndex,
-                copyWords:copyWords,
                 colorList:colorList,
                 sentences:sentences,
-                setCopyWords:setCopyWords,
                 setFocusIndex:setFocusIndex,
                 setColorList:setColorList,
                 setSentences:setSentences
