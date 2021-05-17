@@ -11,7 +11,6 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [position,setPosition] = useState({x:0,y:0})
     const [sentences, setSentences] = useState<string[]>([""])
     const [colorList, setColorList] = useState<string[][]>([[]])
-    const [copyWords, setCopyWords] = useState<string[][]>([[]])
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
     const [focusAutoCorrectsIndex,setFocusAutoCorrectsIndex] = useState(0)
@@ -20,13 +19,9 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [rowPosition,setRowPosition] = useState<number[]>([])
     const editerContenerHeight = 800
     const rowHeight = 30
-    // const addRow = ()=>{
-    //     // setMaxRowIndex(maxRowIndex + 1)
-    //     setFocusIndex(maxRowIndex + 1)
-    // }
+  
     const moveFocus =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
         focusElement(e.currentTarget.id)
-        // console.log(e.currentTarget.id)
         setFocusIndex(Number(e.currentTarget.id.replace("input","")))
     })
 
@@ -34,12 +29,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         sentences[focusRowIndex] = newCharacter
         setSentences([...sentences])
     } 
-
-    const updateCopyWords = (newCharacter:string) => {
-        const wordsList = newCharacter.split(" ")
-        copyWords[focusRowIndex] = wordsList
-        setCopyWords([...copyWords])
-    }
 
     const initFocusRowColorList = () => {
         colorList[focusRowIndex] = []
@@ -86,33 +75,11 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     const enterNewCharacters = (newCharacter:string)=>{
         updateSentences(newCharacter)
-        updateCopyWords(newCharacter)
-        // const strList = newCharacter.split(" ")
         const wordList = wordDivide(newCharacter)
         initFocusRowColorList()
         setIsDisplayAutoCorrects(false)
         setFocusAutoCorrectsIndex(0)//add init condition
-        // setAutoCorrectsIndex(0)
         updateColorList(wordList)
-        // wordList.map((word)=>{
-        //     let isRed = false
-        //     for (let key in ChangeColorRegDatas){
-        //         const index = word.length - 1
-        //         if(ChangeColorRegDatas[key][index]===undefined){
-        //             continue
-        //         }
-        //         if(key === word || key.toLocaleLowerCase() === word){
-        //             colorList[focusRowIndex].push("red")
-        //             isRed = true
-        //             break
-        //         }
-        //     }
-        //     if(!isRed){
-        //         colorList[focusRowIndex].push("black")
-        //     }
-        // // })
-        // setColorList([...colorList])
-        
     }
 
     const sortAutoCorrect = (testStr:string)=>{
@@ -155,7 +122,6 @@ export const EditerAndAutoCorrectModi = ()=>{
             const currentStrList = sentences[focusRowIndex].split(" ")
             const removeMatchChar = currentStrList[currentStrList.length-1]
             enterNewCharacters(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
-            // setAutoCorrectsIndex(0)//add init condition
         }
         focusElement("input"+focusRowIndex.toString())
     }
@@ -243,7 +209,7 @@ export const EditerAndAutoCorrectModi = ()=>{
             const disty = window.pageYOffset + (span.getBoundingClientRect().top) - 20//oukyuusyoti
             setPosition({x:distx,y:disty})
         }
-    },[copyWords[focusRowIndex]])
+    },[sentences[focusRowIndex]])
     
     useEffect(()=>{
         if(focusRowIndex<=rowPosition.length-1){
@@ -263,7 +229,7 @@ export const EditerAndAutoCorrectModi = ()=>{
             }
             setRowPosition(cloneRowPosition)
         }
-    },[copyWords.length])
+    },[sentences.length])
 
     useEffect(()=>{
         console.log(focusRowIndex)
