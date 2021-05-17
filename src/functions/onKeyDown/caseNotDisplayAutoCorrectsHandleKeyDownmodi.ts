@@ -56,22 +56,42 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             const removeRowDatas = () => {
                 removeRowSentence()
                 removeRowColorList()
-            } 
+            }
+            const addRowSentence = () => {
+                setSentences([...sentences,""])
+            }
+            const addRowColorList = () => {
+                setColorList([...colorList,[]])
+            }
+            const addRowDatas = () => {
+                addRowSentence()
+                addRowColorList()
+            }
+            
+            const onlyFocusMove = () =>{
+                if(!focusRowIndexIsEnd()){
 
+                }
+            }
     switch(e.key){
         case "Enter":
             setFocusIndex(focusRowIndex + 1)
-            if(focusRowIndex < copyWords.length - 1){
-                focusElement((focusRowIndex + 1).toString())
+            // if(focusRowIndex < sentences.length - 1){
+            //     focusElement((focusRowIndex + 1).toString())
+            //     break
+            // }
+            if(!focusRowIndexIsEnd()){
                 break
             }
-            let cloneCopyStr = copyWords
-            cloneCopyStr.push([])
-            setCopyWords(cloneCopyStr)
-            colorList.push([])
-            setColorList(colorList)
-            sentences.push("")
-            setSentences(sentences)
+            addRowDatas()
+
+            // let cloneCopyStr = copyWords
+            // cloneCopyStr.push([])
+            // setCopyWords(cloneCopyStr)
+            // colorList.push([])
+            // setColorList(colorList)
+            // sentences.push("")
+            // setSentences(sentences)
             break
         
         case "ArrowUp":
