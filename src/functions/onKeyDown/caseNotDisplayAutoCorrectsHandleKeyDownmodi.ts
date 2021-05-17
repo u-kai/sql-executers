@@ -6,7 +6,6 @@ type Props = {
     incrementFocusRowIndex:()=>void
     decrementFocusRowIndex:()=>void
     // setFocusIndex:(value: React.SetStateAction<number>) => void
-    colorList:string[][]
     // setColorList:(value: React.SetStateAction<string[][]>) => void
     sentences:string[]
     addRowDatas:()=>void
@@ -28,7 +27,7 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
     const {e,focusRowIndex,
             incrementFocusRowIndex,
             decrementFocusRowIndex,
-            colorList,addRowDatas,
+            addRowDatas,
             sentences,removeRowDatas} = props
 
             const focusRowSentencesIsNull = ():boolean =>{

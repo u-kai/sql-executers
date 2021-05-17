@@ -139,11 +139,8 @@ export const EditerAndAutoCorrectModi = ()=>{
         removeRowSentence()
         removeRowColorList()
     }
-    // const moveFocusToClickedElement =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
-    //     focusElement(e.currentTarget.id)
-    //     setFocusIndex(Number(e.currentTarget.id.replace("input","")))
-    // })
-
+    
+    
     
     const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
@@ -233,29 +230,61 @@ export const EditerAndAutoCorrectModi = ()=>{
             initAutoCorrects()
         },
     }
+    const test:{[key:string]:()=>void} = {
+        "Enter":()=> {
+            const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
+            const beforeInsertAutoCorrect = deleteLastWord()
+            const newSentences = `${beforeInsertAutoCorrect} ${selectedAutoCorrect}`
+            didEnterNewCharacters(newSentences)
+            initAutoCorrects()
+        },
+        "ArrowUp":()=> {
+            if(focusAutoCorrectsIndex > 0){
+                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)
+            }
+        },
+        "ArrowDown":()=> {
+            if(focusAutoCorrectsIndex < autoCorrects.length -1){
+                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)
+            }
+        },
+        "ArrowRight":() => {
+            initAutoCorrects()
+        },
+        "ArrowLeft":() => {
+            initAutoCorrects()
+        },
+
+    }
 
 
     const handleKey = (e:React.KeyboardEvent<HTMLInputElement>)=>{
         if(isDisplayAutoCorrects){
-            switch(e.key){
-                case "Enter":
-                    CaseDisplayAutoCorrectsHandleKeyDown.downEnterKey()
-                    break
-                case "ArrowUp":
-                    CaseDisplayAutoCorrectsHandleKeyDown.downArrowUpKey()
-                    break
-                case "ArrowDown":
-                    CaseDisplayAutoCorrectsHandleKeyDown.downArrowDownKey()
-                    break
-                case "ArrowRight":
-                    CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
-                    break
-                case "ArrowLeft":
-                    CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
-                    break
-                default:
-                    break
+            try{
+                test[e.key]()
+            }catch(e){
+                console.log(e)
             }
+            
+            // switch(e.key){
+            //     case "Enter":
+            //         CaseDisplayAutoCorrectsHandleKeyDown.downEnterKey()
+            //         break
+            //     case "ArrowUp":
+            //         CaseDisplayAutoCorrectsHandleKeyDown.downArrowUpKey()
+            //         break
+            //     case "ArrowDown":
+            //         CaseDisplayAutoCorrectsHandleKeyDown.downArrowDownKey()
+            //         break
+            //     case "ArrowRight":
+            //         CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
+            //         break
+            //     case "ArrowLeft":
+            //         CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
+            //         break
+            //     default:
+            //         break
+            // }
             // const props = {
             //     e:e,
             //     setIsDisplayAutoCorrects:setIsDisplayAutoCorrects,
@@ -270,7 +299,6 @@ export const EditerAndAutoCorrectModi = ()=>{
             const props = {
                 e:e,
                 focusRowIndex:focusRowIndex,
-                colorList:colorList,
                 sentences:sentences,
                 incrementFocusRowIndex:incrementFocusRowIndex,
                 decrementFocusRowIndex:decrementFocusRowIndex,
