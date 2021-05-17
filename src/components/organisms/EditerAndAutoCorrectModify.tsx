@@ -54,6 +54,15 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
         return true
     }
+    const blackColorSet = (focusRowIndex:number) => {
+        let colorListClone = [...colorList]
+        colorListClone[focusRowIndex] = [...colorListClone[focusRowIndex],"black"]
+        return colorListClone
+    }
+
+    const isWordMatch = (key:string,word:string) => {
+        return key === word || key.toLocaleLowerCase() === word
+    }
 
     const colorDistribution = (wordList:string[]) => {
         let colorListClone = [...colorList]
@@ -65,7 +74,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 if(!isExistRegData(word,key)){
                     continue
                 }
-                if(key === word || key.toLocaleLowerCase() === word){
+                if(isWordMatch(key,word)){
                     // colorList[focusRowIndex].push("red")
                     // isRed = true
                     colorListClone[focusRowIndex][wordIndex] = "red"
