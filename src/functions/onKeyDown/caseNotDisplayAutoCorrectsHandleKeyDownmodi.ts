@@ -95,19 +95,19 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             break
         
         case "ArrowUp":
-            if(focusRowIndex<=0){
+            if(focusRowIndexIsInit()){
                 break
             }
             setFocusIndex(focusRowIndex - 1)
-            focusElement("input" + (focusRowIndex - 1).toString())
+            // focusElement("input" + (focusRowIndex - 1).toString())
             break
         
         case "ArrowDown":
-            if(focusRowIndex === copyWords.length-1){
+            if(focusRowIndexIsEnd()){
                 break
             }
             setFocusIndex(focusRowIndex + 1)
-            focusElement((focusRowIndex + 1).toString())
+            // focusElement("input" + (focusRowIndex - 1).toString())
             // console.log("ArrowDown")
             // console.log("focusIndxe",focusRowIndex + 1)
             break
