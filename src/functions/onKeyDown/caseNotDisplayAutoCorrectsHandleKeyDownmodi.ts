@@ -21,6 +21,14 @@ const focusElement =(id:string):void=>{
     }
     
 }
+const removeLastValue = (list:string[]) => {
+    return list.filter((_:string,i:number)=>i!==list.length-1)
+}
+const removeLastList = (list:string[][]) => {
+    return list.filter((_:string[],i:number)=>i!==list.length-1)
+}
+
+
 
 export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
     const {e,focusRowIndex,
@@ -28,6 +36,28 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             setCopyWords,copyWords,
             colorList,setColorList,
             sentences,setSentences} = props
+
+            const focusRowSentencesIsNull = ():boolean =>{
+                return sentences[focusRowIndex] === "" 
+            }
+
+            const focusRowIndexIsInit = ():boolean => {
+                return focusRowIndex === 0
+            }
+            const focusRowIndexIsEnd = ():boolean => {
+                return focusRowIndex === sentences.length-1
+            }
+            const removeRowSentence = () => {
+                setSentences(removeLastValue(sentences))
+            }
+            const removeRowColorList = () => {
+                setColorList(removeLastList(colorList))
+            }
+            const removeRowDatas = () => {
+                removeRowSentence()
+                removeRowColorList()
+            } 
+
     switch(e.key){
         case "Enter":
             setFocusIndex(focusRowIndex + 1)
@@ -49,7 +79,7 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
                 break
             }
             setFocusIndex(focusRowIndex - 1)
-            focusElement((focusRowIndex - 1).toString())
+            focusElement("input" + (focusRowIndex - 1).toString())
             break
         
         case "ArrowDown":
@@ -63,17 +93,24 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             break
         
         case "Backspace":
-            if(copyWords[focusRowIndex][0] === "" || copyWords[focusRowIndex].length === 0){
-                if(focusRowIndex>0){
-                    setFocusIndex(focusRowIndex - 1)
-                    if(focusRowIndex === copyWords.length-1){
-                        copyWords.pop()
-                        colorList.pop()
-                        setCopyWords(copyWords)
-                        setColorList(colorList)
-                    }
+            if(focusRowSentencesIsNull() && !focusRowIndexIsInit()){
+                if(focusRowIndexIsEnd()){
+                    removeRowDatas()
                 }
+                setFocusIndex(focusRowIndex - 1)
             }
+        // case "Backspace":
+        //     if(copyWords[focusRowIndex][0] === "" || copyWords[focusRowIndex].length === 0){
+        //         if(focusRowIndex>0){
+        //             setFocusIndex(focusRowIndex - 1)
+        //             if(focusRowIndex === copyWords.length-1){
+        //                 copyWords.pop()
+        //                 colorList.pop()
+        //                 setCopyWords(copyWords)
+        //                 setColorList(colorList)
+        //             }
+        //         }
+        //     }
             break
         default:
             break

@@ -274,7 +274,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         const input = document.getElementById(`input${focusRowIndex}`)
         if(scroll && input){
             let disty = rowPosition[focusRowIndex]
-            scroll.scroll(-3000,disty)
+            scroll.scroll(0,disty)
         }
     },[focusRowIndex])
 
@@ -294,14 +294,14 @@ export const EditerAndAutoCorrectModi = ()=>{
             ):(
                 null
             )}
-            {copyWords.map((sentence,rowIndex)=>(
+            {sentences.map((sentence,rowIndex)=>(
                 <InputAndCopyAndLabel
                 handleChange={handleChanges}
                 position={labelPosition}
                 style={{outline:"solid"}}
                 handleKeyDown={handleKey}
                 onClick={moveFocus}
-                sentence={sentences[rowIndex]}
+                sentence={sentence}
                 colorList={colorList[rowIndex]}
                 index={rowIndex}/>
             ))}
