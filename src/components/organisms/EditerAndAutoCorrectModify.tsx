@@ -54,8 +54,15 @@ const useSentences = (focusRowIndexs:number) => {
     } 
     return { sentences, setSentences, updateSentences }
 }
-const useColorList = () => {
-
+const useColorList = (focusRowIndex:number) => {
+    const [colorList, setColorList] = useState<string[][]>([[]])
+    const updateColorList = (wordList:string[]) => {
+        wordList.map((word,wordIndex)=>{
+            colorList[focusRowIndex][wordIndex] = whatWordColor(word)
+        })
+        setColorList([...colorList])
+    }
+    return {colorList,setColorList,updateColorList}
 }
 const useAutoCorrects = () => {
     
@@ -64,22 +71,26 @@ const useFocusAutoCorrectsIndex = () => {
 
 }
 const useFocusRowIndex = () => {
-    
+    const [focusRowIndex,setFocusIndex] = useState(0)
+    const moveFocus =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
+        focusElement(e.currentTarget.id)
+        setFocusIndex(Number(e.currentTarget.id.replace("input","")))
+    })
 }
 
 export const EditerAndAutoCorrectModi = ()=>{
     
     const [position,setPosition] = useState({x:0,y:0})
     // const [sentences, setSentences] = useState<string[]>([""])
-    const [colorList, setColorList] = useState<string[][]>([[]])
+    // const [colorList, setColorList] = useState<string[][]>([[]])
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
     const [focusAutoCorrectsIndex,setFocusAutoCorrectsIndex] = useState(0)
     const [focusRowIndex,setFocusIndex] = useState(0)
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
-    console.log(useSentences(focusRowIndex))
     const {sentences, setSentences, updateSentences} = useSentences(focusRowIndex)
+    const {colorList,setColorList,updateColorList} = useColorList(focusRowIndex)
     const editerContenerHeight = 800
     const rowHeight = 30
   
@@ -105,12 +116,12 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     
 
-    const updateColorList = (wordList:string[]) => {
-        wordList.map((word,wordIndex)=>{
-            colorList[focusRowIndex][wordIndex] = whatWordColor(word)
-        })
-        setColorList([...colorList])
-    }
+    // const updateColorList = (wordList:string[]) => {
+    //     wordList.map((word,wordIndex)=>{
+    //         colorList[focusRowIndex][wordIndex] = whatWordColor(word)
+    //     })
+    //     setColorList([...colorList])
+    // }
 
     const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
