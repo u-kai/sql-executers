@@ -31,9 +31,46 @@ const removeLastList = (list:string[][]) => {
 
 // type Color = "black" | "red" pre
 
-export const EditerAndAutoCorrectModi = ()=>{
-    const [position,setPosition] = useState({x:0,y:0})
+const whatWordColor = (word:string):string => {
+    for (let key in ChangeColorRegDatas){
+        if(!isExistRegData(word,key)){
+            continue
+        }
+        if(isWordMatch(key,word)){
+            return "red"
+        }
+    }
+    return "black"
+}
+
+const usePosition = () => {
+
+}
+const useSentences = (focusRowIndexs:number) => {
     const [sentences, setSentences] = useState<string[]>([""])
+    const updateSentences = (newCharacter:string) => {
+        sentences[focusRowIndexs] = newCharacter
+        setSentences([...sentences])
+    } 
+    return { sentences, setSentences, updateSentences }
+}
+const useColorList = () => {
+
+}
+const useAutoCorrects = () => {
+    
+}
+const useFocusAutoCorrectsIndex = () => {
+
+}
+const useFocusRowIndex = () => {
+    
+}
+
+export const EditerAndAutoCorrectModi = ()=>{
+    
+    const [position,setPosition] = useState({x:0,y:0})
+    // const [sentences, setSentences] = useState<string[]>([""])
     const [colorList, setColorList] = useState<string[][]>([[]])
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
@@ -41,6 +78,8 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [focusRowIndex,setFocusIndex] = useState(0)
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
+    console.log(useSentences(focusRowIndex))
+    const {sentences, setSentences, updateSentences} = useSentences(focusRowIndex)
     const editerContenerHeight = 800
     const rowHeight = 30
   
@@ -49,10 +88,10 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusIndex(Number(e.currentTarget.id.replace("input","")))
     })
 
-    const updateSentences = (newCharacter:string) => {
-        sentences[focusRowIndex] = newCharacter
-        setSentences([...sentences])
-    } 
+    // const updateSentences = (newCharacter:string) => {
+    //     sentences[focusRowIndex] = newCharacter
+    //     setSentences([...sentences])
+    // } 
 
    
     const blackColorSet = (focusRowIndex:number,colorListClone:string[][]) => {
@@ -64,17 +103,7 @@ export const EditerAndAutoCorrectModi = ()=>{
     //     setColorList([...colorListClone])
     // }
 
-    const whatWordColor = (word:string):string => {
-        for (let key in ChangeColorRegDatas){
-            if(!isExistRegData(word,key)){
-                continue
-            }
-            if(isWordMatch(key,word)){
-                return "red"
-            }
-        }
-        return "black"
-    }
+    
 
     const updateColorList = (wordList:string[]) => {
         wordList.map((word,wordIndex)=>{
