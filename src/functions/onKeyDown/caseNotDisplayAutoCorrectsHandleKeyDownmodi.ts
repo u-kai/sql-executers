@@ -3,7 +3,9 @@
 type Props = {
     e:React.KeyboardEvent<HTMLInputElement>
     focusRowIndex:number
-    setFocusIndex:(value: React.SetStateAction<number>) => void
+    incrementFocusRowIndex:()=>void
+    decrementFocusRowIndex:()=>void
+    // setFocusIndex:(value: React.SetStateAction<number>) => void
     colorList:string[][]
     // setColorList:(value: React.SetStateAction<string[][]>) => void
     sentences:string[]
@@ -24,7 +26,8 @@ const removeLastList = (list:string[][]) => {
 
 export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
     const {e,focusRowIndex,
-            setFocusIndex,
+            incrementFocusRowIndex,
+            decrementFocusRowIndex,
             colorList,addRowDatas,
             sentences,removeRowDatas} = props
 
@@ -61,7 +64,7 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             
     switch(e.key){
         case "Enter":
-            setFocusIndex(focusRowIndex + 1)
+            incrementFocusRowIndex()
             if(!focusRowIndexIsEnd()){
                 break
             }
@@ -72,14 +75,14 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             if(focusRowIndexIsInit()){
                 break
             }
-            setFocusIndex(focusRowIndex - 1)
+            decrementFocusRowIndex()
             break
         
         case "ArrowDown":
             if(focusRowIndexIsEnd()){
                 break
             }
-            setFocusIndex(focusRowIndex + 1)
+            incrementFocusRowIndex()
             break
         
         case "Backspace":
@@ -87,7 +90,7 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
                 if(focusRowIndexIsEnd()){
                     removeRowDatas()
                 }
-                setFocusIndex(focusRowIndex - 1)
+                decrementFocusRowIndex()
             }
             break
         default:

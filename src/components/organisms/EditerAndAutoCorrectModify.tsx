@@ -4,7 +4,7 @@ import {InputAndCopyAndLabel} from "../organisms/InputAndCopyAndLabel"
 import {AutoCorrects} from "../molecules/AutoCorrects"
 import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseDisplayAutoCorrectsHandleKeyDown"
 import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
-import {focusElement} from "../../functions/focusElement"
+// import {focusElement} from "../../functions/focusElement"
 import styled, { StyledInterface } from "styled-components" 
 
 const wordDivide = (newCharacter:string) => {
@@ -84,13 +84,31 @@ const useAutoCorrects = () => {
 const useFocusAutoCorrectsIndex = () => {
 
 }
+
 const useFocusRowIndex = (focusIdPrefix:string="input") => {
     const [focusRowIndex,setFocusIndex] = useState(0)
-    const moveFocus =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
+    const focusElement =(id:string):void=>{
+        const focusElement = document.getElementById(id)
+        if(focusElement){
+            focusElement.focus()
+        }else{
+            console.log("not found")
+        }
+    }
+    const moveFocusToClickedElement =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
         focusElement(e.currentTarget.id)
         setFocusIndex(Number(e.currentTarget.id.replace(focusIdPrefix,"")))
     })
+    const incrementFocusRowIndex = () => {
+        setFocusIndex(focusRowIndex + 1)
+    }
+    const decrementFocusRowIndex = () => {
+        setFocusIndex(focusRowIndex - 1)
+    }
+    return {focusRowIndex,focusElement,moveFocusToClickedElement,incrementFocusRowIndex,decrementFocusRowIndex}
 }
+    
+
 
 export const EditerAndAutoCorrectModi = ()=>{
     
@@ -100,7 +118,12 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
     const [focusAutoCorrectsIndex,setFocusAutoCorrectsIndex] = useState(0)
-    const [focusRowIndex,setFocusIndex] = useState(0)
+    // const [focusRowIndex,setFocusIndex] = useState(0)
+    const {focusRowIndex, 
+        incrementFocusRowIndex, 
+        decrementFocusRowIndex,
+        moveFocusToClickedElement,
+        focusElement} = useFocusRowIndex()
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
     const {sentences, addRowSentence, removeRowSentence, updateSentences} = useSentences(focusRowIndex)
@@ -116,10 +139,10 @@ export const EditerAndAutoCorrectModi = ()=>{
         removeRowSentence()
         removeRowColorList()
     }
-    const moveFocus =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
-        focusElement(e.currentTarget.id)
-        setFocusIndex(Number(e.currentTarget.id.replace("input","")))
-    })
+    // const moveFocusToClickedElement =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
+    //     focusElement(e.currentTarget.id)
+    //     setFocusIndex(Number(e.currentTarget.id.replace("input","")))
+    // })
 
     
     const initAutoCorrects = () => {
@@ -249,7 +272,8 @@ export const EditerAndAutoCorrectModi = ()=>{
                 focusRowIndex:focusRowIndex,
                 colorList:colorList,
                 sentences:sentences,
-                setFocusIndex:setFocusIndex,
+                incrementFocusRowIndex:incrementFocusRowIndex,
+                decrementFocusRowIndex:decrementFocusRowIndex,
                 addRowDatas:addRowDatas,
                 removeRowDatas:removeRowDatas
             }
@@ -321,7 +345,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 position={labelPosition}
                 style={{outline:"solid"}}
                 handleKeyDown={handleKey}
-                onClick={moveFocus}
+                onClick={moveFocusToClickedElement}
                 sentence={sentence}
                 colorList={colorList[rowIndex]}
                 index={rowIndex}/>
