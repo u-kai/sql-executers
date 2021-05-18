@@ -8,7 +8,7 @@ type Props = {
     // setFocusIndex:(value: React.SetStateAction<number>) => void
     // setColorList:(value: React.SetStateAction<string[][]>) => void
     sentences:string[]
-    addRowDatas:()=>void
+    addInitRowDatas:()=>void
     removeRowDatas:()=>void
 //     setSentences:(value: React.SetStateAction<string[]>) => void
 }
@@ -27,7 +27,7 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
     const {e,focusRowIndex,
             incrementFocusRowIndex,
             decrementFocusRowIndex,
-            addRowDatas,
+            addInitRowDatas,
             sentences,removeRowDatas} = props
 
             const focusRowSentencesIsNull = ():boolean =>{
@@ -67,7 +67,7 @@ export const caseNotDisplayAutoCorrectsHandleKeyDown =(props:Props)=>{
             if(!focusRowIndexIsEnd()){
                 break
             }
-            addRowDatas()
+            addInitRowDatas()
             break
         
         case "ArrowUp":

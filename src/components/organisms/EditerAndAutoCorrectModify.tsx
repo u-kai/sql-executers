@@ -111,7 +111,6 @@ const useFocusRowIndex = (focusIdPrefix:string="input") => {
 
 
 export const EditerAndAutoCorrectModi = ()=>{
-    
     const [position,setPosition] = useState({x:0,y:0})
     // const [sentences, setSentences] = useState<string[]>([""])
     // const [colorList, setColorList] = useState<string[][]>([[]])
@@ -130,8 +129,9 @@ export const EditerAndAutoCorrectModi = ()=>{
     const {colorList,addRowColorList, removeRowColorList, updateColorList} = useColorList(focusRowIndex)
     const editerContenerHeight = 800
     const rowHeight = 30
+    console.log(focusRowIndex)
   
-    const addRowDatas = () => {
+    const addInitRowDatas = () => {
         addRowSentence()
         addRowColorList()
     }
@@ -140,7 +140,43 @@ export const EditerAndAutoCorrectModi = ()=>{
         removeRowColorList()
     }
     
-    
+    const isFocusRowSentencesNull = ():boolean =>{
+        return sentences[focusRowIndex] === "" 
+    }
+
+    const isFocusRowIndexInit = ():boolean => {
+        return focusRowIndex === 0
+    }
+    const isFocusRowIndexEnd = ():boolean => {
+        return focusRowIndex === sentences.length-1
+    }
+
+    const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
+        "Enter":()=>{
+            if(isFocusRowIndexEnd()){
+                addInitRowDatas()
+            }
+            incrementFocusRowIndex()
+        },
+        "ArrowUp":()=>{
+            if(!isFocusRowIndexInit()){
+                decrementFocusRowIndex()
+            }
+        },
+        "ArrowDown":()=>{
+            if(!isFocusRowIndexEnd()){
+                incrementFocusRowIndex()
+            }
+        },
+        "Backspace":()=>{
+            if(isFocusRowSentencesNull() && !isFocusRowIndexInit()){
+                if(isFocusRowIndexEnd()){
+                    removeRowDatas()
+                }
+                decrementFocusRowIndex()
+            }
+        }
+    }
     
     const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
@@ -208,29 +244,29 @@ export const EditerAndAutoCorrectModi = ()=>{
         return removeLastValue(words).join(" ")
     }
 
-    const CaseDisplayAutoCorrectsHandleKeyDown = {
-        downEnterKey:()=> {
-            const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
-            const beforeInsertAutoCorrect = deleteLastWord()
-            const newSentences = `${beforeInsertAutoCorrect} ${selectedAutoCorrect}`
-            didEnterNewCharacters(newSentences)
-            initAutoCorrects()
-        },
-        downArrowUpKey:()=> {
-            if(focusAutoCorrectsIndex > 0){
-                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)
-            }
-        },
-        downArrowDownKey:()=> {
-            if(focusAutoCorrectsIndex < autoCorrects.length -1){
-                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)
-            }
-        },
-        downRightOrLeftKey:() => {
-            initAutoCorrects()
-        },
-    }
-    const test:{[key:string]:()=>void} = {
+    // const CaseDisplayAutoCorrectsHandleKeyDown = {
+    //     downEnterKey:()=> {
+    //         const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
+    //         const beforeInsertAutoCorrect = deleteLastWord()
+    //         const newSentences = `${beforeInsertAutoCorrect} ${selectedAutoCorrect}`
+    //         didEnterNewCharacters(newSentences)
+    //         initAutoCorrects()
+    //     },
+    //     downArrowUpKey:()=> {
+    //         if(focusAutoCorrectsIndex > 0){
+    //             setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)
+    //         }
+    //     },
+    //     downArrowDownKey:()=> {
+    //         if(focusAutoCorrectsIndex < autoCorrects.length -1){
+    //             setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)
+    //         }
+    //     },
+    //     downRightOrLeftKey:() => {
+    //         initAutoCorrects()
+    //     },
+    // }
+    const CaseDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=> {
             const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
             const beforeInsertAutoCorrect = deleteLastWord()
@@ -254,17 +290,21 @@ export const EditerAndAutoCorrectModi = ()=>{
         "ArrowLeft":() => {
             initAutoCorrects()
         },
-
     }
 
 
+
     const handleKey = (e:React.KeyboardEvent<HTMLInputElement>)=>{
-        if(isDisplayAutoCorrects){
-            try{
-                test[e.key]()
-            }catch(e){
-                console.log(e)
+        try{
+            if(isDisplayAutoCorrects){
+                CaseDisplayAutoCorrectsHandleKeyDown[e.key]()
+            }else{
+                CaseNotDisplayAutoCorrectsHandleKeyDown[e.key]()
             }
+        }catch(e){
+            console.log(e)
+        }
+    }
             
             // switch(e.key){
             //     case "Enter":
@@ -295,20 +335,20 @@ export const EditerAndAutoCorrectModi = ()=>{
             //     setAutoCorrectsIndex:setFocusAutoCorrectsIndex
             // }
             // caseDisplayAutoCorrectsHandleKeyDown(props)
-        }else{
-            const props = {
-                e:e,
-                focusRowIndex:focusRowIndex,
-                sentences:sentences,
-                incrementFocusRowIndex:incrementFocusRowIndex,
-                decrementFocusRowIndex:decrementFocusRowIndex,
-                addRowDatas:addRowDatas,
-                removeRowDatas:removeRowDatas
-            }
-            caseNotDisplayAutoCorrectsHandleKeyDown(props)
+    //     }else{
+    //         const props = {
+    //             e:e,
+    //             focusRowIndex:focusRowIndex,
+    //             sentences:sentences,
+    //             incrementFocusRowIndex:incrementFocusRowIndex,
+    //             decrementFocusRowIndex:decrementFocusRowIndex,
+    //             addInitRowDatas:addInitRowDatas,
+    //             removeRowDatas:removeRowDatas
+    //         }
+    //         caseNotDisplayAutoCorrectsHandleKeyDown(props)
 
-        }
-    }
+    //     }
+    // }
 
     useEffect(()=>{
         const span = document.getElementById(`tailPosition${focusRowIndex}`)
