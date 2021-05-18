@@ -131,12 +131,9 @@ const useFocusAutoCorrectsIndex = () => {
 
 export const EditerAndAutoCorrectModi = ()=>{
     const [position,setPosition] = useState({x:0,y:0})
-    // const [sentences, setSentences] = useState<string[]>([""])
-    // const [colorList, setColorList] = useState<string[][]>([[]])
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
     const [focusAutoCorrectsIndex,setFocusAutoCorrectsIndex] = useState(0)
-    // const [focusRowIndex,setFocusIndex] = useState(0)
     const {sentences, colorList, focusRowIndex,
         updateSentences, updateColorList, 
         addInitRowDatas, removeRowDatas,
@@ -145,21 +142,8 @@ export const EditerAndAutoCorrectModi = ()=>{
         isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer()
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
-    // const {sentences, addRowSentence, removeRowSentence, updateSentences} = useSentences()
-    // const {colorList,addRowColorList, removeRowColorList, updateColorList} = useColorList(focusRowIndex)
     const editerContenerHeight = 800
     const rowHeight = 30
-    console.log(focusRowIndex)
-  
-    // const addInitRowDatas = () => {
-    //     addRowSentence()
-    //     addRowColorList()
-    // }
-    // const removeRowDatas = () => {
-    //     removeRowSentence()
-    //     removeRowColorList()
-    // }
-    
     
     const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
@@ -251,17 +235,6 @@ export const EditerAndAutoCorrectModi = ()=>{
             initAutoCorrects()
         },
     }
-
-    // const isFocusRowSentencesNull = ():boolean =>{
-    //     return sentences[focusRowIndex] === "" 
-    // }
-
-    // const isFocusRowIndexInit = ():boolean => {
-    //     return focusRowIndex === 0
-    // }
-    // const isFocusRowIndexEnd = ():boolean => {
-    //     return focusRowIndex === sentences.length-1
-    // }
 
     const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=>{
