@@ -6,78 +6,118 @@ import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/ca
 import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
 // import {focusElement} from "../../functions/focusElement"
 import styled, { StyledInterface } from "styled-components" 
+import { useEditer } from "hocks/useEditer"
+// import {useFocusRowIndex} from "./useFocusRowIndex"
+// import {useSentences} from "./useSentences"
 
 const wordDivide = (newCharacter:string) => {
     return newCharacter.split(" ")
 }
-const isExistRegData = (word:string,key:string):boolean => {
-    const index = word.length - 1
-    if(ChangeColorRegDatas[key][index]===undefined){
-        return false
-    }
-    return true
-}
+// const isExistRegData = (word:string,key:string):boolean => {
+//     const index = word.length - 1
+//     if(ChangeColorRegDatas[key][index]===undefined){
+//         return false
+//     }
+//     return true
+// }
 
-const isWordMatch = (key:string,word:string) => {
-    return key === word || key.toLocaleLowerCase() === word
-}
+// const isWordMatch = (key:string,word:string) => {
+//     return key === word || key.toLocaleLowerCase() === word
+// }
 
 const removeLastValue = (list:string[]) => {
     return list.filter((_:string,i:number)=>i!==list.length-1)
 }
-const removeLastList = (list:string[][]) => {
-    return list.filter((_:string[],i:number)=>i!==list.length-1)
-}
+// }
+// const removeLastList = (list:string[][]) => {
+//     return list.filter((_:string[],i:number)=>i!==list.length-1)
+// }
 
 // type Color = "black" | "red" pre
 
-const whatWordColor = (word:string):string => {
-    for (let key in ChangeColorRegDatas){
-        if(!isExistRegData(word,key)){
-            continue
-        }
-        if(isWordMatch(key,word)){
-            return "red"
-        }
-    }
-    return "black"
-}
+// const whatWordColor = (word:string):string => {
+//     for (let key in ChangeColorRegDatas){
+//         if(!isExistRegData(word,key)){
+//             continue
+//         }
+//         if(isWordMatch(key,word)){
+//             return "red"
+//         }
+//     }
+//     return "black"
+// }
 
 const usePosition = () => {
 
 }
-const useSentences = (focusRowIndexs:number) => {
-    const [sentences, setSentences] = useState<string[]>([""])
-    const updateSentences = (newCharacter:string) => {
-        sentences[focusRowIndexs] = newCharacter
-        setSentences([...sentences])
-    } 
-    const addRowSentence = () => {
-        setSentences([...sentences,""])
-    }
-    const removeRowSentence = () => {
-        setSentences(removeLastValue(sentences))
-    }
-    return { sentences, addRowSentence, removeRowSentence, updateSentences }
-}
+// const useFocusRowIndex = (focusIdPrefix:string="input") => {
+//     const [focusRowIndex,setFocusIndex] = useState(0)
+//     const focusElement =(id:string):void=>{
+//         const focusElement = document.getElementById(id)
+//         if(focusElement){
+//             focusElement.focus()
+//         }else{
+//             console.log("not found")
+//         }
+//     }
+//     const moveFocusToClickedElement =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
+//         focusElement(e.currentTarget.id)
+//         setFocusIndex(Number(e.currentTarget.id.replace(focusIdPrefix,"")))
+//     })
+//     const incrementFocusRowIndex = () => {
+//         setFocusIndex(focusRowIndex + 1)
+//     }
+//     const decrementFocusRowIndex = () => {
+//         setFocusIndex(focusRowIndex - 1)
+//     }
+//     return {focusRowIndex,focusElement,moveFocusToClickedElement,incrementFocusRowIndex,decrementFocusRowIndex}
+// }
+    
+// const useSentences = () => {
+//     const [sentences, setSentences] = useState<string[]>([""])
+//     const [focusRowIndex, setFocusRowIndex] = useState(0)
 
-const useColorList = (focusRowIndex:number) => {
-    const [colorList, setColorList] = useState<string[][]>([[]])
-    const updateColorList = (wordList:string[]) => {
-        wordList.map((word,wordIndex)=>{
-            colorList[focusRowIndex][wordIndex] = whatWordColor(word)
-        })
-        setColorList([...colorList])
-    }
-    const addRowColorList = () => {
-        setColorList([...colorList,[]])
-    }
-    const removeRowColorList = () => {
-        setColorList(removeLastList(colorList))
-    }
+//     const updateSentences = (newCharacter:string) => {
+//         sentences[focusRowIndex] = newCharacter
+//         setSentences([...sentences])
+//     } 
+//     const addRowSentence = () => {
+//         setSentences([...sentences,""])
+//     }
+//     const removeRowSentence = () => {
+//         setSentences(removeLastValue(sentences))
+//     }
+//     return { sentences, addRowSentence, removeRowSentence, updateSentences }
+// }
 
-    return {colorList, addRowColorList, removeRowColorList, updateColorList}
-}
+// const isFocusRowSentencesNull = ():boolean =>{
+//     return sentences[focusRowIndex] === "" 
+// }
+
+// const isFocusRowIndexInit = ():boolean => {
+//     return focusRowIndex === 0
+// }
+// const isFocusRowIndexEnd = ():boolean => {
+//     return focusRowIndex === sentences.length-1
+// }
+
+// const useColorList = (focusRowIndex:number) => {
+//     const [colorList, setColorList] = useState<string[][]>([[]])
+//     const updateColorList = (wordList:string[]) => {
+//         wordList.map((word,wordIndex)=>{
+//             colorList[focusRowIndex][wordIndex] = whatWordColor(word)
+//         })
+//         setColorList([...colorList])
+//     }
+//     const addRowColorList = () => {
+//         setColorList([...colorList,[]])
+//     }
+//     const removeRowColorList = () => {
+//         setColorList(removeLastList(colorList))
+//     }
+
+//     return {colorList, addRowColorList, removeRowColorList, updateColorList}
+// }
 const useAutoCorrects = () => {
     
 }
@@ -85,28 +125,7 @@ const useFocusAutoCorrectsIndex = () => {
 
 }
 
-const useFocusRowIndex = (focusIdPrefix:string="input") => {
-    const [focusRowIndex,setFocusIndex] = useState(0)
-    const focusElement =(id:string):void=>{
-        const focusElement = document.getElementById(id)
-        if(focusElement){
-            focusElement.focus()
-        }else{
-            console.log("not found")
-        }
-    }
-    const moveFocusToClickedElement =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
-        focusElement(e.currentTarget.id)
-        setFocusIndex(Number(e.currentTarget.id.replace(focusIdPrefix,"")))
-    })
-    const incrementFocusRowIndex = () => {
-        setFocusIndex(focusRowIndex + 1)
-    }
-    const decrementFocusRowIndex = () => {
-        setFocusIndex(focusRowIndex - 1)
-    }
-    return {focusRowIndex,focusElement,moveFocusToClickedElement,incrementFocusRowIndex,decrementFocusRowIndex}
-}
+
     
 
 
@@ -118,27 +137,28 @@ export const EditerAndAutoCorrectModi = ()=>{
     const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
     const [focusAutoCorrectsIndex,setFocusAutoCorrectsIndex] = useState(0)
     // const [focusRowIndex,setFocusIndex] = useState(0)
-    const {focusRowIndex, 
-        incrementFocusRowIndex, 
-        decrementFocusRowIndex,
-        moveFocusToClickedElement,
-        focusElement} = useFocusRowIndex()
+    const {sentences, colorList, focusRowIndex,
+        updateSentences, updateColorList, 
+        addInitRowDatas, removeRowDatas,
+        focusElement, moveFocusToClickedElement,
+        incrementFocusRowIndex, decrementFocusRowIndex,
+        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer()
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
-    const {sentences, addRowSentence, removeRowSentence, updateSentences} = useSentences(focusRowIndex)
-    const {colorList,addRowColorList, removeRowColorList, updateColorList} = useColorList(focusRowIndex)
+    // const {sentences, addRowSentence, removeRowSentence, updateSentences} = useSentences()
+    // const {colorList,addRowColorList, removeRowColorList, updateColorList} = useColorList(focusRowIndex)
     const editerContenerHeight = 800
     const rowHeight = 30
     console.log(focusRowIndex)
   
-    const addInitRowDatas = () => {
-        addRowSentence()
-        addRowColorList()
-    }
-    const removeRowDatas = () => {
-        removeRowSentence()
-        removeRowColorList()
-    }
+    // const addInitRowDatas = () => {
+    //     addRowSentence()
+    //     addRowColorList()
+    // }
+    // const removeRowDatas = () => {
+    //     removeRowSentence()
+    //     removeRowColorList()
+    // }
     
     
     const initAutoCorrects = () => {
@@ -148,9 +168,9 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     const didEnterNewCharacters = (newCharacter:string)=>{
         initAutoCorrects()
-        updateSentences(newCharacter)
+        updateSentences(newCharacter,focusRowIndex)
         const wordList = wordDivide(newCharacter)
-        updateColorList(wordList)
+        updateColorList(wordList,focusRowIndex)
     }
 
     const sortAutoCorrect = (testStr:string)=>{
@@ -201,15 +221,15 @@ export const EditerAndAutoCorrectModi = ()=>{
         setFocusAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
     }
 
-    const deleteLastWord = () => {
-        const words = wordDivide(sentences[focusRowIndex])
+    const deleteLastWord = (sentence:string) => {
+        const words = wordDivide(sentence)
         return removeLastValue(words).join(" ")
     }
 
     const CaseDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=> {
             const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
-            const beforeInsertAutoCorrect = deleteLastWord()
+            const beforeInsertAutoCorrect = deleteLastWord(sentences[focusRowIndex])
             const newSentences = `${beforeInsertAutoCorrect} ${selectedAutoCorrect}`
             didEnterNewCharacters(newSentences)
             initAutoCorrects()
@@ -232,16 +252,16 @@ export const EditerAndAutoCorrectModi = ()=>{
         },
     }
 
-    const isFocusRowSentencesNull = ():boolean =>{
-        return sentences[focusRowIndex] === "" 
-    }
+    // const isFocusRowSentencesNull = ():boolean =>{
+    //     return sentences[focusRowIndex] === "" 
+    // }
 
-    const isFocusRowIndexInit = ():boolean => {
-        return focusRowIndex === 0
-    }
-    const isFocusRowIndexEnd = ():boolean => {
-        return focusRowIndex === sentences.length-1
-    }
+    // const isFocusRowIndexInit = ():boolean => {
+    //     return focusRowIndex === 0
+    // }
+    // const isFocusRowIndexEnd = ():boolean => {
+    //     return focusRowIndex === sentences.length-1
+    // }
 
     const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=>{
