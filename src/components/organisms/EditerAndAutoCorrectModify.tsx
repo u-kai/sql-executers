@@ -16,11 +16,6 @@ const removeLastValue = (list:string[]) => {
     return list.filter((_:string,i:number)=>i!==list.length-1)
 }
 
-
-
-
-
-
 export const EditerAndAutoCorrectModi = ()=>{
     const [position,setPosition] = useState({x:0,y:0})
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
