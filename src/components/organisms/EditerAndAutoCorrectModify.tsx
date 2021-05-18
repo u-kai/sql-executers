@@ -140,43 +140,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         removeRowColorList()
     }
     
-    const isFocusRowSentencesNull = ():boolean =>{
-        return sentences[focusRowIndex] === "" 
-    }
-
-    const isFocusRowIndexInit = ():boolean => {
-        return focusRowIndex === 0
-    }
-    const isFocusRowIndexEnd = ():boolean => {
-        return focusRowIndex === sentences.length-1
-    }
-
-    const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
-        "Enter":()=>{
-            if(isFocusRowIndexEnd()){
-                addInitRowDatas()
-            }
-            incrementFocusRowIndex()
-        },
-        "ArrowUp":()=>{
-            if(!isFocusRowIndexInit()){
-                decrementFocusRowIndex()
-            }
-        },
-        "ArrowDown":()=>{
-            if(!isFocusRowIndexEnd()){
-                incrementFocusRowIndex()
-            }
-        },
-        "Backspace":()=>{
-            if(isFocusRowSentencesNull() && !isFocusRowIndexInit()){
-                if(isFocusRowIndexEnd()){
-                    removeRowDatas()
-                }
-                decrementFocusRowIndex()
-            }
-        }
-    }
     
     const initAutoCorrects = () => {
         setIsDisplayAutoCorrects(false)
@@ -231,10 +194,9 @@ export const EditerAndAutoCorrectModi = ()=>{
             const removeMatchChar = currentStrList[currentStrList.length-1]
             didEnterNewCharacters(sentences[focusRowIndex].slice(0,(sentences[focusRowIndex].length - removeMatchChar.length)) + changeStr)
         }
-        // focusElement("input"+focusRowIndex.toString())
     }
     
-    const handleMouseDown = (e:React.MouseEvent<HTMLSpanElement>)=>{
+    const handleMouseDownToSelectAutoCorrect = (e:React.MouseEvent<HTMLSpanElement>)=>{
         const hoverId = e.currentTarget.id    
         setFocusAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
     }
@@ -244,28 +206,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         return removeLastValue(words).join(" ")
     }
 
-    // const CaseDisplayAutoCorrectsHandleKeyDown = {
-    //     downEnterKey:()=> {
-    //         const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
-    //         const beforeInsertAutoCorrect = deleteLastWord()
-    //         const newSentences = `${beforeInsertAutoCorrect} ${selectedAutoCorrect}`
-    //         didEnterNewCharacters(newSentences)
-    //         initAutoCorrects()
-    //     },
-    //     downArrowUpKey:()=> {
-    //         if(focusAutoCorrectsIndex > 0){
-    //             setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)
-    //         }
-    //     },
-    //     downArrowDownKey:()=> {
-    //         if(focusAutoCorrectsIndex < autoCorrects.length -1){
-    //             setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)
-    //         }
-    //     },
-    //     downRightOrLeftKey:() => {
-    //         initAutoCorrects()
-    //     },
-    // }
     const CaseDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=> {
             const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
@@ -292,9 +232,45 @@ export const EditerAndAutoCorrectModi = ()=>{
         },
     }
 
+    const isFocusRowSentencesNull = ():boolean =>{
+        return sentences[focusRowIndex] === "" 
+    }
 
+    const isFocusRowIndexInit = ():boolean => {
+        return focusRowIndex === 0
+    }
+    const isFocusRowIndexEnd = ():boolean => {
+        return focusRowIndex === sentences.length-1
+    }
 
-    const handleKey = (e:React.KeyboardEvent<HTMLInputElement>)=>{
+    const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
+        "Enter":()=>{
+            if(isFocusRowIndexEnd()){
+                addInitRowDatas()
+            }
+            incrementFocusRowIndex()
+        },
+        "ArrowUp":()=>{
+            if(!isFocusRowIndexInit()){
+                decrementFocusRowIndex()
+            }
+        },
+        "ArrowDown":()=>{
+            if(!isFocusRowIndexEnd()){
+                incrementFocusRowIndex()
+            }
+        },
+        "Backspace":()=>{
+            if(isFocusRowSentencesNull() && !isFocusRowIndexInit()){
+                if(isFocusRowIndexEnd()){
+                    removeRowDatas()
+                }
+                decrementFocusRowIndex()
+            }
+        }
+    }
+
+    const handleAnyKeyOnInput = (e:React.KeyboardEvent<HTMLInputElement>)=>{
         try{
             if(isDisplayAutoCorrects){
                 CaseDisplayAutoCorrectsHandleKeyDown[e.key]()
@@ -306,49 +282,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
     }
             
-            // switch(e.key){
-            //     case "Enter":
-            //         CaseDisplayAutoCorrectsHandleKeyDown.downEnterKey()
-            //         break
-            //     case "ArrowUp":
-            //         CaseDisplayAutoCorrectsHandleKeyDown.downArrowUpKey()
-            //         break
-            //     case "ArrowDown":
-            //         CaseDisplayAutoCorrectsHandleKeyDown.downArrowDownKey()
-            //         break
-            //     case "ArrowRight":
-            //         CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
-            //         break
-            //     case "ArrowLeft":
-            //         CaseDisplayAutoCorrectsHandleKeyDown.downRightOrLeftKey()
-            //         break
-            //     default:
-            //         break
-            // }
-            // const props = {
-            //     e:e,
-            //     setIsDisplayAutoCorrects:setIsDisplayAutoCorrects,
-            //     autoCorrects:autoCorrects,
-            //     char:sentences[focusRowIndex],
-            //     changeString:didEnterNewCharacters,
-            //     autoCorrectsIndex:focusAutoCorrectsIndex,
-            //     setAutoCorrectsIndex:setFocusAutoCorrectsIndex
-            // }
-            // caseDisplayAutoCorrectsHandleKeyDown(props)
-    //     }else{
-    //         const props = {
-    //             e:e,
-    //             focusRowIndex:focusRowIndex,
-    //             sentences:sentences,
-    //             incrementFocusRowIndex:incrementFocusRowIndex,
-    //             decrementFocusRowIndex:decrementFocusRowIndex,
-    //             addInitRowDatas:addInitRowDatas,
-    //             removeRowDatas:removeRowDatas
-    //         }
-    //         caseNotDisplayAutoCorrectsHandleKeyDown(props)
-
-    //     }
-    // }
 
     useEffect(()=>{
         const span = document.getElementById(`tailPosition${focusRowIndex}`)
@@ -358,19 +291,16 @@ export const EditerAndAutoCorrectModi = ()=>{
             const disty = window.pageYOffset + (span.getBoundingClientRect().top) - 20//oukyuusyoti
             setPosition({x:distx,y:disty})
         }
-    },[sentences[focusRowIndex]])
+    },[sentences])
     
     useEffect(()=>{
         if(focusRowIndex<=rowPosition.length-1){
             return 
         }
-        console.log(rowPosition,focusRowIndex)
         const scroll = document.getElementById("contener")
         const input = document.getElementById(`input${focusRowIndex}`)
         let cloneRowPosition = rowPosition
         if(input && scroll){
-            console.log(scroll.scrollHeight)
-            console.log("input",input.getBoundingClientRect().top)
             if(editerContenerHeight>input.getBoundingClientRect().top){
                 cloneRowPosition.push(input.getBoundingClientRect().top)
             }else{
@@ -380,8 +310,8 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
     },[sentences.length])
 
+
     useEffect(()=>{
-        console.log(focusRowIndex)
         focusElement("input"+focusRowIndex.toString())
         const scroll = document.getElementById("contener")
         const input = document.getElementById(`input${focusRowIndex}`)
@@ -398,7 +328,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         onScroll={(e)=>setLabelPosition(e.currentTarget.scrollLeft)}>
             {isDisplayAutoCorrects ? (
                 <AutoCorrects
-                handleMouseDown={handleMouseDown}
+                handleMouseDown={handleMouseDownToSelectAutoCorrect}
                 focusAutoCorrectsIndex={focusAutoCorrectsIndex}
                 handleClick={selectAutoCorrect}
                 position={position}
@@ -412,7 +342,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 handleChange={handleChanges}
                 position={labelPosition}
                 style={{outline:"solid"}}
-                handleKeyDown={handleKey}
+                handleKeyDown={handleAnyKeyOnInput}
                 onClick={moveFocusToClickedElement}
                 sentence={sentence}
                 colorList={colorList[rowIndex]}
