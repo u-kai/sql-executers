@@ -5,12 +5,12 @@ import {useAutoCorrectPosition} from "./useAutoCorrectPosition"
 
 
 export const useAutoCorrecters = () =>{
-    const {isDisplayAutoCorrects, notDisplayAutoCorrects} = useIsDisplayAutoCorrects()
+    const {isDisplayAutoCorrects, notDisplayAutoCorrects, displayAutoCorrects} = useIsDisplayAutoCorrects()
     const { focusAutoCorrectsIndex, initFocusAutoCorrectsIndex} = useFocusAutoCorrectIndex()
     const initAutoCorrects = () => {
         notDisplayAutoCorrects()
         initFocusAutoCorrectsIndex()
     } 
-    
+
     return {}
 }
