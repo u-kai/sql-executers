@@ -1,4 +1,3 @@
-import {useState} from "react"
 import { useColorList } from "./useColorList"
 import {useFocusRowIndex} from "./useFocusRowIndex"
 import {useSentences} from "./useSentences"

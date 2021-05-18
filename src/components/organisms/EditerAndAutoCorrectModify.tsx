@@ -4,129 +4,21 @@ import {InputAndCopyAndLabel} from "../organisms/InputAndCopyAndLabel"
 import {AutoCorrects} from "../molecules/AutoCorrects"
 import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseDisplayAutoCorrectsHandleKeyDown"
 import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
-// import {focusElement} from "../../functions/focusElement"
 import styled, { StyledInterface } from "styled-components" 
 import { useEditer } from "hocks/useEditer"
-// import {useFocusRowIndex} from "./useFocusRowIndex"
-// import {useSentences} from "./useSentences"
+
 
 const wordDivide = (newCharacter:string) => {
     return newCharacter.split(" ")
 }
-// const isExistRegData = (word:string,key:string):boolean => {
-//     const index = word.length - 1
-//     if(ChangeColorRegDatas[key][index]===undefined){
-//         return false
-//     }
-//     return true
-// }
-
-// const isWordMatch = (key:string,word:string) => {
-//     return key === word || key.toLocaleLowerCase() === word
-// }
 
 const removeLastValue = (list:string[]) => {
     return list.filter((_:string,i:number)=>i!==list.length-1)
 }
-// }
-// const removeLastList = (list:string[][]) => {
-//     return list.filter((_:string[],i:number)=>i!==list.length-1)
-// }
-
-// type Color = "black" | "red" pre
-
-// const whatWordColor = (word:string):string => {
-//     for (let key in ChangeColorRegDatas){
-//         if(!isExistRegData(word,key)){
-//             continue
-//         }
-//         if(isWordMatch(key,word)){
-//             return "red"
-//         }
-//     }
-//     return "black"
-// }
-
-const usePosition = () => {
-
-}
-// const useFocusRowIndex = (focusIdPrefix:string="input") => {
-//     const [focusRowIndex,setFocusIndex] = useState(0)
-//     const focusElement =(id:string):void=>{
-//         const focusElement = document.getElementById(id)
-//         if(focusElement){
-//             focusElement.focus()
-//         }else{
-//             console.log("not found")
-//         }
-//     }
-//     const moveFocusToClickedElement =((e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
-//         focusElement(e.currentTarget.id)
-//         setFocusIndex(Number(e.currentTarget.id.replace(focusIdPrefix,"")))
-//     })
-//     const incrementFocusRowIndex = () => {
-//         setFocusIndex(focusRowIndex + 1)
-//     }
-//     const decrementFocusRowIndex = () => {
-//         setFocusIndex(focusRowIndex - 1)
-//     }
-//     return {focusRowIndex,focusElement,moveFocusToClickedElement,incrementFocusRowIndex,decrementFocusRowIndex}
-// }
-    
-// const useSentences = () => {
-//     const [sentences, setSentences] = useState<string[]>([""])
-//     const [focusRowIndex, setFocusRowIndex] = useState(0)
-
-//     const updateSentences = (newCharacter:string) => {
-//         sentences[focusRowIndex] = newCharacter
-//         setSentences([...sentences])
-//     } 
-//     const addRowSentence = () => {
-//         setSentences([...sentences,""])
-//     }
-//     const removeRowSentence = () => {
-//         setSentences(removeLastValue(sentences))
-//     }
-//     return { sentences, addRowSentence, removeRowSentence, updateSentences }
-// }
-
-// const isFocusRowSentencesNull = ():boolean =>{
-//     return sentences[focusRowIndex] === "" 
-// }
-
-// const isFocusRowIndexInit = ():boolean => {
-//     return focusRowIndex === 0
-// }
-// const isFocusRowIndexEnd = ():boolean => {
-//     return focusRowIndex === sentences.length-1
-// }
-
-// const useColorList = (focusRowIndex:number) => {
-//     const [colorList, setColorList] = useState<string[][]>([[]])
-//     const updateColorList = (wordList:string[]) => {
-//         wordList.map((word,wordIndex)=>{
-//             colorList[focusRowIndex][wordIndex] = whatWordColor(word)
-//         })
-//         setColorList([...colorList])
-//     }
-//     const addRowColorList = () => {
-//         setColorList([...colorList,[]])
-//     }
-//     const removeRowColorList = () => {
-//         setColorList(removeLastList(colorList))
-//     }
-
-//     return {colorList, addRowColorList, removeRowColorList, updateColorList}
-// }
-const useAutoCorrects = () => {
-    
-}
-const useFocusAutoCorrectsIndex = () => {
-
-}
 
 
-    
+
+
 
 
 export const EditerAndAutoCorrectModi = ()=>{
