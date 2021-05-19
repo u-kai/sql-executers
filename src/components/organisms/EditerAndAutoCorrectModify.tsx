@@ -7,18 +7,17 @@ import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown
 import styled, { StyledInterface } from "styled-components" 
 import { useEditer } from "hocks/useEditer"
 import {useAutoCorrecters} from "hocks/useAutoCorrecters"
+import {wordDivide,removeLastValue, deleteLastWord} from "functions/editerFucntions"
 
+// const wordDivide = (newCharacter:string) => {
+//     return newCharacter.split(" ")
+// }
 
-const wordDivide = (newCharacter:string) => {
-    return newCharacter.split(" ")
-}
-
-const removeLastValue = (list:string[]) => {
-    return list.filter((_:string,i:number)=>i!==list.length-1)
-}
+// const removeLastValue = (list:string[]) => {
+//     return list.filter((_:string,i:number)=>i!==list.length-1)
+// }
 
 export const EditerAndAutoCorrectModi = ()=>{
-    // const [position,setPosition] = useState({x:0,y:0})
     const {sentences, colorList, focusRowIndex,
         updateSentences, updateColorList, 
         addInitRowDatas, removeRowDatas,
@@ -33,8 +32,6 @@ export const EditerAndAutoCorrectModi = ()=>{
     const editerContenerHeight = 800
     const rowHeight = 30
     
-    console.log(isDisplayAutoCorrects)
-
     const didEnterNewCharacters = (newCharacter:string)=>{
         initAutoCorrects()
         updateSentences(newCharacter,focusRowIndex)
@@ -49,7 +46,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         const wordList = wordDivide(e.target.value)
         const lastWord = wordList[wordList.length - 1]
         setIsDisplayAutoCorrects(sortAutoCorrect(lastWord))
-        
      }
 
     const selectAutoCorrect = (e:React.MouseEvent<HTMLSpanElement, MouseEvent>)=>{
@@ -63,10 +59,10 @@ export const EditerAndAutoCorrectModi = ()=>{
     
    
 
-    const deleteLastWord = (sentence:string) => {
-        const words = wordDivide(sentence)
-        return removeLastValue(words).join(" ")
-    }
+    // const deleteLastWord = (sentence:string) => {
+    //     const words = wordDivide(sentence)
+    //     return removeLastValue(words).join(" ")
+    // }
 
     const CaseDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=> {
@@ -136,13 +132,6 @@ export const EditerAndAutoCorrectModi = ()=>{
 
     useEffect(()=>{
         getAndSetAutoCorrectsPosition(focusRowIndex)
-        // const span = document.getElementById(`tailPosition${focusRowIndex}`)
-        // if(span){
-        //     console.log("tail",span.getBoundingClientRect().left)
-        //     const distx = window.pageXOffset + (span.getBoundingClientRect().left)
-        //     const disty = window.pageYOffset + (span.getBoundingClientRect().top) - 20//oukyuusyoti
-        //     setPosition({x:distx,y:disty})
-        // }
     },[sentences])
     
     useEffect(()=>{
