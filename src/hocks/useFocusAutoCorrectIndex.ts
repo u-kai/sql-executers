@@ -7,8 +7,8 @@ export const useFocusAutoCorrectIndex = () => {
         const hoverId = e.currentTarget.id    
         setFocusAutoCorrectsIndex(parseInt(hoverId.replace(id,"")))
     }
-    const incrementFocusAutoCorrectsIndex = ()=>{setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)}
-    const decrementFocusAutoCorrectsIndex = ()=>{setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)}
+    const incrementFocusAutoCorrectsIndex = ()=>{setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)}
+    const decrementFocusAutoCorrectsIndex = ()=>{setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)}
     return { focusAutoCorrectsIndex, initFocusAutoCorrectsIndex, 
             incrementFocusAutoCorrectsIndex, decrementFocusAutoCorrectsIndex,
             handleMouseDownToSelectAutoCorrect}

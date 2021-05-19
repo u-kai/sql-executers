@@ -4,18 +4,11 @@ import {InputAndCopyAndLabel} from "../organisms/InputAndCopyAndLabel"
 import {AutoCorrects} from "../molecules/AutoCorrects"
 import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseDisplayAutoCorrectsHandleKeyDown"
 import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
-import styled, { StyledInterface } from "styled-components" 
+import styled from "styled-components" 
 import { useEditer } from "hocks/useEditer"
 import {useAutoCorrecters} from "hocks/useAutoCorrecters"
-import {wordDivide,removeLastValue, deleteLastWord} from "functions/editerFucntions"
+import {wordDivide, deleteLastWord} from "functions/editerFucntions"
 
-// const wordDivide = (newCharacter:string) => {
-//     return newCharacter.split(" ")
-// }
-
-// const removeLastValue = (list:string[]) => {
-//     return list.filter((_:string,i:number)=>i!==list.length-1)
-// }
 
 export const EditerAndAutoCorrectModi = ()=>{
     const {sentences, colorList, focusRowIndex,
@@ -39,8 +32,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         updateColorList(wordList,focusRowIndex)
     }
 
-    
-
     const handleChanges = (e:React.ChangeEvent<HTMLInputElement>)=>{
         didEnterNewCharacters(e.target.value)
         const wordList = wordDivide(e.target.value)
@@ -57,13 +48,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
     }
     
-   
-
-    // const deleteLastWord = (sentence:string) => {
-    //     const words = wordDivide(sentence)
-    //     return removeLastValue(words).join(" ")
-    // }
-
     const CaseDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=> {
             const selectedAutoCorrect = autoCorrects[focusAutoCorrectsIndex]
@@ -151,7 +135,6 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
     },[sentences.length])
 
-
     useEffect(()=>{
         focusElement("input"+focusRowIndex.toString())
         const scroll = document.getElementById("contener")
@@ -161,7 +144,7 @@ export const EditerAndAutoCorrectModi = ()=>{
             scroll.scroll(0,disty)
         }
     },[focusRowIndex])
-
+    console.log(focusAutoCorrectsIndex)
     return (
         <Contener 
         height={editerContenerHeight}
