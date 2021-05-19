@@ -17,10 +17,10 @@ export const useColorList = () => {
         setColorList([...colorList])
     }
 
-    return {colorList, addRowColorList, removeRowColorList, updateColorList}
+    return {colorList, addRowColorList, removeRowColorList, updateColorList ,setColorList}
 }
 
-const whatWordColor = (word:string):string => {
+export const whatWordColor = (word:string):string => {
     for (let key in ChangeColorRegDatas){
         if(!isExistRegData(word,key)){
             continue

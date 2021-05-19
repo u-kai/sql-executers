@@ -10,13 +10,14 @@ import {useAutoCorrecters} from "hocks/useAutoCorrecters"
 import {wordDivide, deleteLastWord} from "functions/editerFucntions"
 import {useSentences, UseSentences} from "hocks/useSentences"
 import {VFC} from "react"
-
+import { ContactSupportOutlined } from "@material-ui/icons"
+import { whatWordColor } from "hocks/useColorList"
 type Props = {
                 sentences: string[];
                 setSentences:React.Dispatch<React.SetStateAction<string[]>>
                 // addRowSentence: () => void;
                 // removeRowSentence: () => void;
-                // updateSentences: (newCharacter: string, index: number) => void;
+                // updateSentences: (newSenetence: string, index: number) => void;
             }
 
 
@@ -24,7 +25,7 @@ export const EditerAndAutoCorrectModi:VFC<Props> = (props)=>{
     const {sentences,setSentences} = props
     const { colorList, focusRowIndex, updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
-        focusElement, moveFocusToClickedElement,
+        focusElement, moveFocusToClickedElement,setColorList,
         incrementFocusRowIndex, decrementFocusRowIndex,
         isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer(sentences,setSentences)
     const {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,
@@ -35,10 +36,24 @@ export const EditerAndAutoCorrectModi:VFC<Props> = (props)=>{
     const editerContenerHeight = 800
     const rowHeight = 30
     
-    const didEnterNewCharacters = (newCharacter:string)=>{
+    // useEffect(()=>{
+    //     console.log("senteneces",sentences)
+    //     console.log("colorList",colorList)
+    //     console.log("useEffect!")
+    //     sentences.map((sentence,index)=>{
+    //         const wordList = wordDivide(sentence)
+    //         wordList.map((word,wordIndex)=>{
+    //             colorList[index][wordIndex] = whatWordColor(word)
+    //         })
+    //     })
+    //     setColorList([...colorList])
+        
+    // },[sentences.length])
+
+    const didEnterNewCharacters = (newSenetence:string)=>{
         initAutoCorrects()
-        updateSentences(newCharacter,focusRowIndex)
-        const wordList = wordDivide(newCharacter)
+        updateSentences(newSenetence,focusRowIndex)
+        const wordList = wordDivide(newSenetence)
         updateColorList(wordList,focusRowIndex)
     }
 
@@ -119,7 +134,7 @@ export const EditerAndAutoCorrectModi:VFC<Props> = (props)=>{
                 CaseNotDisplayAutoCorrectsHandleKeyDown[e.key]()
             }
         }catch(e){
-            console.log(e)
+            //console.log(e)
         }
     }
             

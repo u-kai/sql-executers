@@ -16,14 +16,16 @@ export const ReadFile:VFC<Props> = (props) => {
             reader.addEventListener("load",()=>{
                 if(typeof reader.result === "string"){
                     setTexts(reader.result!.split("\n"))
+                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     console.log(reader.result!.split("\n"))
                 }else{
                     console.log("notstring")
                 }
             })
-            if(file.files![0]){
-                reader.readAsText(file.files![0],"UTF-8")
-                console.log(file.files![0])
+            if(file.files){
+                reader.readAsText(file.files[0],"UTF-8")
+                // console.log("text",texts)
+                // console.log(file.files![0])
             }
         }
     }

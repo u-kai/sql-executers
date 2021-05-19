@@ -19,6 +19,7 @@ export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.S
         setSentences([...sentences])
     }     
     const { colorList, 
+            setColorList,
             addRowColorList, 
             removeRowColorList,
             updateColorList
@@ -49,7 +50,7 @@ export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.S
     }
 
     return {sentences, colorList, focusRowIndex,
-            updateSentences, updateColorList, 
+            updateSentences, updateColorList, setColorList,
             addInitRowDatas, removeRowDatas,
             focusElement, moveFocusToClickedElement,
             incrementFocusRowIndex, decrementFocusRowIndex,

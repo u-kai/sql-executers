@@ -23,7 +23,6 @@ export const useAutoCorrects = () => {
     const sortAutoCorrect = (word:string) => {
         const matchAutoCorrects = findAutoCorrect(word)
         if(matchAutoCorrects.length !== 0){
-            console.log("match")
             let primaryList:string[] = []
             let noPrimaryList:string[] = []
             const reg = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "i")
