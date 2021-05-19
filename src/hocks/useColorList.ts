@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {ChangeColorRegDatas} from "../datas/Datas"
 
-export const useColorList = () => {
-    const [colorList, setColorList] = useState<string[][]>([[]])
+export const useColorList = (colorList:string[][],setColorList:React.Dispatch<React.SetStateAction<string[][]>>) => {
+    // const [colorList, setColorList] = useState<string[][]>([[]])
 
     const addRowColorList = () => {
         setColorList([...colorList,[]])

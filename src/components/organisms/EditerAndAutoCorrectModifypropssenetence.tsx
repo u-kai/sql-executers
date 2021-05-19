@@ -18,16 +18,18 @@ type Props = {
                 // addRowSentence: () => void;
                 // removeRowSentence: () => void;
                 // updateSentences: (newSenetence: string, index: number) => void;
+                colorList:string[][]
+                setColorList:React.Dispatch<React.SetStateAction<string[][]>>
             }
 
 
 export const EditerAndAutoCorrectModi:VFC<Props> = (props)=>{
-    const {sentences,setSentences} = props
-    const { colorList, focusRowIndex, updateColorList,
+    const {sentences,setSentences,colorList,setColorList} = props
+    const { focusRowIndex, updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
-        focusElement, moveFocusToClickedElement,setColorList,
+        focusElement, moveFocusToClickedElement,
         incrementFocusRowIndex, decrementFocusRowIndex,
-        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer(sentences,setSentences)
+        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer(sentences,setSentences,colorList,setColorList)
     const {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,
         getAndSetAutoCorrectsPosition, autoCorrectsPosition, focusAutoCorrectsIndex,setIsDisplayAutoCorrects,
         autoCorrects, isDisplayAutoCorrects, incrementFocusAutoCorrectsIndex,decrementFocusAutoCorrectsIndex} = useAutoCorrecters()

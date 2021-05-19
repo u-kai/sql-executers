@@ -6,6 +6,7 @@ import {useSentences,UseSentences} from "hocks/useSentences"
 import {useState} from "react"
 export const FolderAndEditer = () =>{
     const [sentences, setSentences] = useState([""])
+    const [colorList,setColorList] = useState<string[][]>([[]])
     return (
         <Contener>
             <FolderContener
@@ -25,7 +26,10 @@ export const FolderAndEditer = () =>{
                 text={sentences.join("\n")}
                 fileName="d"/>}/>
             <EditerContener
-            children={EditerAndAutoCorrectModi({sentences:sentences,setSentences:setSentences})}></EditerContener>
+            children={EditerAndAutoCorrectModi({sentences:sentences,
+                                                setSentences:setSentences,
+                                                colorList:colorList,
+                                                setColorList:setColorList})}></EditerContener>
         </Contener>
     )
 }

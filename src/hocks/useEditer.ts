@@ -3,7 +3,8 @@ import {useFocusRowIndex} from "./useFocusRowIndex"
 // import {useSentences} from "./useSentences"
 import {UseSentences} from "./useSentences"
 
-export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.SetStateAction<string[]>>) =>{
+export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.SetStateAction<string[]>>,
+    colorList:string[][],setColorList:React.Dispatch<React.SetStateAction<string[][]>>) =>{
     const removeLastValue = (list:string[]) => {
         return list.filter((_:string,i:number)=>i!==list.length-1)
     }
@@ -18,12 +19,11 @@ export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.S
         sentences[index] = newCharacter
         setSentences([...sentences])
     }     
-    const { colorList, 
-            setColorList,
+    const { 
             addRowColorList, 
             removeRowColorList,
             updateColorList
-        } = useColorList()
+        } = useColorList(colorList, setColorList,)
     const { focusRowIndex,
             focusElement,
             moveFocusToClickedElement,
