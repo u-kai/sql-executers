@@ -1,7 +1,7 @@
 import {useState} from "react"
 
 
-export const useAutoCorrectPosition = () => {
+export const useAutoCorrectsPosition = () => {
     const [autoCorrectsPosition,setAutoCorrectsPosition] = useState({x:0,y:0})
     const getAutoCorrectsPosition = (focusRowIndex:number,prefixId="tailPosition") => {
         const tail = document.getElementById(`${prefixId}${focusRowIndex}`)
