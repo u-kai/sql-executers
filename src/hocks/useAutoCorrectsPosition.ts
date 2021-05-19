@@ -12,6 +12,7 @@ export const useAutoCorrectsPosition = () => {
             x = window.pageXOffset + (tail.getBoundingClientRect().left)
             y = window.pageYOffset + (tail.getBoundingClientRect().top) - ajustTop
         }
+        
         return {x,y}
     }
     const getAndSetAutoCorrectsPosition = (focusRowIndex:number,prefixId="tailPosition") => {

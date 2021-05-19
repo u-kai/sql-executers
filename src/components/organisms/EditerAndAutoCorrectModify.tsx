@@ -6,6 +6,7 @@ import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/ca
 import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
 import styled, { StyledInterface } from "styled-components" 
 import { useEditer } from "hocks/useEditer"
+import {useAutoCorrecters} from "hocks/useAutoCorrecters"
 
 
 const wordDivide = (newCharacter:string) => {
@@ -17,25 +18,22 @@ const removeLastValue = (list:string[]) => {
 }
 
 export const EditerAndAutoCorrectModi = ()=>{
-    const [position,setPosition] = useState({x:0,y:0})
-    const [autoCorrects, setAutoCorrect] = useState<string[]>([])
-    const [isDisplayAutoCorrects, setIsDisplayAutoCorrects] = useState(false)
-    const [focusAutoCorrectsIndex,setFocusAutoCorrectsIndex] = useState(0)
+    // const [position,setPosition] = useState({x:0,y:0})
     const {sentences, colorList, focusRowIndex,
         updateSentences, updateColorList, 
         addInitRowDatas, removeRowDatas,
         focusElement, moveFocusToClickedElement,
         incrementFocusRowIndex, decrementFocusRowIndex,
         isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer()
+    const {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,
+        getAndSetAutoCorrectsPosition, autoCorrectsPosition, focusAutoCorrectsIndex,setIsDisplayAutoCorrects,
+        autoCorrects, isDisplayAutoCorrects, incrementFocusAutoCorrectsIndex,decrementFocusAutoCorrectsIndex} = useAutoCorrecters()
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
     const editerContenerHeight = 800
     const rowHeight = 30
     
-    const initAutoCorrects = () => {
-        setIsDisplayAutoCorrects(false)
-        setFocusAutoCorrectsIndex(0)//add init condition
-    } 
+    console.log(isDisplayAutoCorrects)
 
     const didEnterNewCharacters = (newCharacter:string)=>{
         initAutoCorrects()
@@ -44,38 +42,14 @@ export const EditerAndAutoCorrectModi = ()=>{
         updateColorList(wordList,focusRowIndex)
     }
 
-    const sortAutoCorrect = (testStr:string)=>{
-        let keyList:string[] = []
-        let primaryList:string[] = []
-        let noPrimaryList:string[] = []
-        const index = testStr.length - 1
-        for(let key in ChangeColorRegDatas){
-            if(ChangeColorRegDatas[key][index]===undefined){
-                continue
-            }
-            const pattern:RegExp = ChangeColorRegDatas[key][index]
-            if(pattern.test(testStr)){
-                keyList.push(key)
-                setIsDisplayAutoCorrects(true)
-            }
-        }
-        const reg = new RegExp(testStr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "i")
-        keyList.map((key:string)=>{
-            if(reg.test(key)){
-                primaryList.push(key)
-            }else{
-                noPrimaryList.push(key)
-            }
-        })
-        setAutoCorrect((primaryList.concat(noPrimaryList)))
-    }
+    
 
     const handleChanges = (e:React.ChangeEvent<HTMLInputElement>)=>{
-        const newChar = e.target.value
-        didEnterNewCharacters(newChar)
-        const strList = newChar.split(" ")
-        const lastStr = strList[strList.length - 1]
-        sortAutoCorrect(lastStr)
+        didEnterNewCharacters(e.target.value)
+        const wordList = wordDivide(e.target.value)
+        const lastWord = wordList[wordList.length - 1]
+        setIsDisplayAutoCorrects(sortAutoCorrect(lastWord))
+        
      }
 
     const selectAutoCorrect = (e:React.MouseEvent<HTMLSpanElement, MouseEvent>)=>{
@@ -87,10 +61,7 @@ export const EditerAndAutoCorrectModi = ()=>{
         }
     }
     
-    const handleMouseDownToSelectAutoCorrect = (e:React.MouseEvent<HTMLSpanElement>)=>{
-        const hoverId = e.currentTarget.id    
-        setFocusAutoCorrectsIndex(parseInt(hoverId.replace("hover","")))
-    }
+   
 
     const deleteLastWord = (sentence:string) => {
         const words = wordDivide(sentence)
@@ -107,12 +78,12 @@ export const EditerAndAutoCorrectModi = ()=>{
         },
         "ArrowUp":()=> {
             if(focusAutoCorrectsIndex > 0){
-                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex - 1)
+                decrementFocusAutoCorrectsIndex()
             }
         },
         "ArrowDown":()=> {
             if(focusAutoCorrectsIndex < autoCorrects.length -1){
-                setFocusAutoCorrectsIndex(focusAutoCorrectsIndex + 1)
+                incrementFocusAutoCorrectsIndex()
             }
         },
         "ArrowRight":() => {
@@ -164,13 +135,14 @@ export const EditerAndAutoCorrectModi = ()=>{
             
 
     useEffect(()=>{
-        const span = document.getElementById(`tailPosition${focusRowIndex}`)
-        if(span){
-            console.log("tail",span.getBoundingClientRect().left)
-            const distx = window.pageXOffset + (span.getBoundingClientRect().left)
-            const disty = window.pageYOffset + (span.getBoundingClientRect().top) - 20//oukyuusyoti
-            setPosition({x:distx,y:disty})
-        }
+        getAndSetAutoCorrectsPosition(focusRowIndex)
+        // const span = document.getElementById(`tailPosition${focusRowIndex}`)
+        // if(span){
+        //     console.log("tail",span.getBoundingClientRect().left)
+        //     const distx = window.pageXOffset + (span.getBoundingClientRect().left)
+        //     const disty = window.pageYOffset + (span.getBoundingClientRect().top) - 20//oukyuusyoti
+        //     setPosition({x:distx,y:disty})
+        // }
     },[sentences])
     
     useEffect(()=>{
@@ -211,7 +183,7 @@ export const EditerAndAutoCorrectModi = ()=>{
                 handleMouseDown={handleMouseDownToSelectAutoCorrect}
                 focusAutoCorrectsIndex={focusAutoCorrectsIndex}
                 handleClick={selectAutoCorrect}
-                position={position}
+                position={autoCorrectsPosition}
                 autoCorrects={autoCorrects}
                 />
             ):(

@@ -5,8 +5,9 @@ import {useAutoCorrectsPosition} from "./useAutoCorrectsPosition"
 
 
 export const useAutoCorrecters = () =>{
-    const {isDisplayAutoCorrects, notDisplayAutoCorrects, displayAutoCorrects} = useIsDisplayAutoCorrects()
+    const {isDisplayAutoCorrects, notDisplayAutoCorrects, displayAutoCorrects,setIsDisplayAutoCorrects} = useIsDisplayAutoCorrects()
     const { focusAutoCorrectsIndex, initFocusAutoCorrectsIndex, 
+        incrementFocusAutoCorrectsIndex, decrementFocusAutoCorrectsIndex,
         handleMouseDownToSelectAutoCorrect} = useFocusAutoCorrectIndex()
     const {autoCorrects,sortAutoCorrect} = useAutoCorrects()
     const {autoCorrectsPosition, getAndSetAutoCorrectsPosition} = useAutoCorrectsPosition()
@@ -17,7 +18,7 @@ export const useAutoCorrecters = () =>{
 
     
 
-    return {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,
+    return {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,setIsDisplayAutoCorrects,
             getAndSetAutoCorrectsPosition, autoCorrectsPosition, focusAutoCorrectsIndex,
-            autoCorrects, isDisplayAutoCorrects}
+            autoCorrects, isDisplayAutoCorrects, incrementFocusAutoCorrectsIndex,decrementFocusAutoCorrectsIndex}
 }
