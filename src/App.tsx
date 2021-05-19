@@ -14,7 +14,8 @@ import { SaveFileOnIcon } from "components/molecules/SaveFileOnIcon";
 import {AutoCorrects} from "components/molecules/AutoCorrects"
 import {InputAndCopy} from "components/molecules/InputAndCopy"
 import { InputAndCopyAndLabel } from "components/organisms/InputAndCopyAndLabel";
-import {EditerAndAutoCorrectModi} from "components/organisms/EditerAndAutoCorrectModify"
+import {EditerAndAutoCorrectModi} from "components/organisms/EditerAndAutoCorrectModifypropssenetence"
+import { FolderAndEditer } from "components/organisms/FolderAndEditer";
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
@@ -34,7 +35,8 @@ function App() {
     onClick={()=>setToggle(!toggle)}
     ></Button>
     {toggle ? (
-      <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
+      // <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
+      <FolderAndEditer></FolderAndEditer>
       // <InputAndCopyAndLabel
       // style={inputstyle}
       // index={1}

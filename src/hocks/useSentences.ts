@@ -1,6 +1,13 @@
 import {useState} from "react"
 
-export const useSentences = () => {
+export type UseSentences = ()=>{
+    sentences: string[];
+    setSentences:React.Dispatch<React.SetStateAction<string[]>>
+    addRowSentence: () => void;
+    removeRowSentence: () => void;
+    updateSentences: (newCharacter: string, index: number) => void;
+}
+export const useSentences:UseSentences = () => {
     const [sentences, setSentences] = useState<string[]>([""])
 
     const addRowSentence = () => {
@@ -13,7 +20,7 @@ export const useSentences = () => {
         sentences[index] = newCharacter
         setSentences([...sentences])
     } 
-    return { sentences, addRowSentence, removeRowSentence,updateSentences }
+    return { sentences, setSentences,addRowSentence, removeRowSentence,updateSentences }
 }
 const removeLastValue = (list:string[]) => {
     return list.filter((_:string,i:number)=>i!==list.length-1)
