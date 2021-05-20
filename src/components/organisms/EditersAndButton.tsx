@@ -2,15 +2,35 @@ import {FolderAndEditer} from "../organisms/FolderAndEditer"
 import { ContainedButtons } from "../atoms/Bottun_MatirialUI"
 import styled from "styled-components"
 import { useState } from "react"
+import {postDataAndReturnResposeJson} from "functions/tableFunctions"
+import { removeLastChar, removeLastValue } from "functions/editerFucntions"
 export const EditersAndButton = () => {
     const [sentences,setSentences] = useState([""])
+    const onClick = () =>{
+        const querys = returnQuerys()
+        console.log(querys)
+        const sendData = {
+            querys:querys
+        }
+        const url = "editerhandler"
+        postDataAndReturnResposeJson(sendData,url)
+        .then((data)=>console.log(data))
+    }
+    const returnQuerys = () =>{
+        let oneLineQuery = sentences.join("")
+        if(oneLineQuery[oneLineQuery.length-1]===";"){
+            oneLineQuery = removeLastChar(oneLineQuery)
+        }
+        const querys = oneLineQuery.split(";")
+        return querys
+    }
     return (
     <Contener>
     <ButtonContener>
     <ContainedButtons
         value="Execute"
         color="secondary"
-        onClick={()=>console.log(sentences)}
+        onClick={()=>onClick()}
         />
     </ButtonContener>
     <EditersContener>
