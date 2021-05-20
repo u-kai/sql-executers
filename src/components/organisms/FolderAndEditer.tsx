@@ -1,8 +1,7 @@
-import {EditerAndAutoCorrectModi} from "../organisms/EditerAndAutoCorrectModifypropssenetence"
+import {EditerAndAutoCorrects} from "./EditerAndAutoCorrects"
 import {FileReaderOnIcon} from "../molecules/FileReaderOnIcon"
 import {SaveFileOnIcon} from "../molecules/SaveFileOnIcon"
 import styled from "styled-components"
-import {useSentences,UseSentences} from "hocks/useSentences"
 import {useState} from "react"
 export const FolderAndEditer = () =>{
     const [sentences, setSentences] = useState([""])
@@ -28,7 +27,7 @@ export const FolderAndEditer = () =>{
                 text={sentences.join("\n")}
                 fileName="d"/>}/>
             <EditerContener
-            children={EditerAndAutoCorrectModi({sentences:sentences,
+            children={EditerAndAutoCorrects({sentences:sentences,
                                                 setSentences:setSentences,
                                                 colorList:colorList,
                                                 setColorList:setColorList})}></EditerContener>

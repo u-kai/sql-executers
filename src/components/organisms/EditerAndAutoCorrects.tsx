@@ -1,17 +1,13 @@
 import {useEffect,useState} from "react"
-import {ChangeColorRegDatas} from "../../datas/Datas"
-import {InputAndCopyAndLabel} from "../organisms/InputAndCopyAndLabel"
+import {InputAndCopyAndLabel} from "./InputAndCopyAndLabel"
 import {AutoCorrects} from "../molecules/AutoCorrects"
-import {caseDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseDisplayAutoCorrectsHandleKeyDown"
-import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDownmodi"
 import styled from "styled-components" 
 import { useEditer } from "hocks/useEditer"
 import {useAutoCorrecters} from "hocks/useAutoCorrecters"
 import {wordDivide, deleteLastWord} from "functions/editerFucntions"
-import {useSentences, UseSentences} from "hocks/useSentences"
+
 import {VFC} from "react"
-import { ContactSupportOutlined } from "@material-ui/icons"
-import { whatWordColor } from "hocks/useColorList"
+
 type Props = {
                 sentences: string[];
                 setSentences:React.Dispatch<React.SetStateAction<string[]>>
@@ -23,7 +19,7 @@ type Props = {
             }
 
 
-export const EditerAndAutoCorrectModi:VFC<Props> = (props)=>{
+export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
     const {sentences,setSentences,colorList,setColorList} = props
     const { focusRowIndex, updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
@@ -38,20 +34,6 @@ export const EditerAndAutoCorrectModi:VFC<Props> = (props)=>{
     const editerContenerHeight = 800
     const rowHeight = 30
     
-    // useEffect(()=>{
-    //     console.log("senteneces",sentences)
-    //     console.log("colorList",colorList)
-    //     console.log("useEffect!")
-    //     sentences.map((sentence,index)=>{
-    //         const wordList = wordDivide(sentence)
-    //         wordList.map((word,wordIndex)=>{
-    //             colorList[index][wordIndex] = whatWordColor(word)
-    //         })
-    //     })
-    //     setColorList([...colorList])
-        
-    // },[sentences.length])
-
     const didEnterNewCharacters = (newSenetence:string)=>{
         initAutoCorrects()
         updateSentences(newSenetence,focusRowIndex)

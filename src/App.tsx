@@ -6,7 +6,7 @@ import {FileReaderOnIcon} from "components/molecules/FileReaderOnIcon"
 import { TextareaInsertProps } from "components/organisms/TextareInsertProps";
 import { useState } from "react";
 import {Button} from "components/atoms/Button"
-import {EditerAndAutoCorrect} from "components/organisms/EditerAndAutoCorrect"
+import {EditerAndAutoCorrects} from "components/organisms/EditerAndAutoCorrects"
 import { ImageToButton } from "components/molecules/ImageToButton";
 import {StyledType} from "components/styledTypes/styledType"
 import { LabelAndFileReader } from "components/molecules/LabelAndFileReader";
@@ -14,7 +14,7 @@ import { SaveFileOnIcon } from "components/molecules/SaveFileOnIcon";
 import {AutoCorrects} from "components/molecules/AutoCorrects"
 import {InputAndCopy} from "components/molecules/InputAndCopy"
 import { InputAndCopyAndLabel } from "components/organisms/InputAndCopyAndLabel";
-import {EditerAndAutoCorrectModi} from "components/organisms/EditerAndAutoCorrectModifypropssenetence"
+// import {EditerAndAutoCorrectModi} from "components/organisms/EditerAndAutoCorrects"
 import { FolderAndEditer } from "components/organisms/FolderAndEditer";
 function App() {
   const [toggle,setToggle] = useState(true)

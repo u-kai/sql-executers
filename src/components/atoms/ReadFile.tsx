@@ -12,7 +12,6 @@ type Props = {
 
 export const ReadFile:VFC<Props> = (props) => {
     const {texts,setTexts,colorList,setColorList} = props
-    const [isReadFile,setIsReadFile] = useState(false)
     const newColorList = (newSenetences:string[]) => {
         let clone:string[][] = []
         newSenetences.map((sentence)=>{
@@ -24,7 +23,6 @@ export const ReadFile:VFC<Props> = (props) => {
             })
             clone = [...clone,tempList]
         })
-        console.log("clone",clone)
         setColorList(clone)
     }
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -38,7 +36,6 @@ export const ReadFile:VFC<Props> = (props) => {
                     newSentences.filter((sentence)=>sentence!=="")
                     newColorList(newSentences.filter((sentence)=>sentence!==""))
                     setTexts(newSentences.filter((sentence)=>sentence!==""))
-                    setIsReadFile(!isReadFile)
                 }else{
                     console.log("notstring")
                 }
@@ -49,16 +46,10 @@ export const ReadFile:VFC<Props> = (props) => {
                 }catch(e){
                     console.log(e)
                 }
-                
-                // console.log("text",texts)
-                // console.log(file.files![0])
             }
         }
     }
-    // useEffect(()=>{
-    //     console.log("changeColor")
 
-    // },[isReadFile])
     return (
         <SInput
         id="readfile"
