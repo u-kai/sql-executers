@@ -15,7 +15,9 @@ export const FolderAndEditer = () =>{
             children={
                 <FileReaderOnIcon
                 texts={sentences}
-                setTexts={setSentences}/>
+                setTexts={setSentences}
+                colorList={colorList}
+                setColorList={setColorList}/>
             }
                 />
             <FolderContener

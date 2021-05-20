@@ -64,11 +64,13 @@ function App() {
       // ></SaveFileOnIcon>
       // <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
-    <FileReaderOnIcon
-    texts={test}
-    setTexts={setTest}></FileReaderOnIcon>
+      null
+    // <FileReaderOnIcon
+    // texts={test}
+    // setTexts={setTest}></FileReaderOnIcon>
+    // )}
     )}
-    </>
+  </>
   );
 }
 

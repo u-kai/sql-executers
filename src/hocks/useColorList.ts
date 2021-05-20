@@ -21,6 +21,9 @@ export const useColorList = (colorList:string[][],setColorList:React.Dispatch<Re
 }
 
 export const whatWordColor = (word:string):string => {
+    if(word.length === 0){
+        return "black"
+    }
     for (let key in ChangeColorRegDatas){
         if(!isExistRegData(word,key)){
             continue

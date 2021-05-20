@@ -1,13 +1,32 @@
 import styled from "styled-components"
-import {VFC} from "react"
+import {useEffect, useState, VFC} from "react"
+import { wordDivide } from "functions/editerFucntions"
+import { whatWordColor } from "hocks/useColorList"
 
 type Props = {
     texts:string[]
     setTexts: (value: React.SetStateAction<string[]>) => void
+    colorList:string[][]
+    setColorList:React.Dispatch<React.SetStateAction<string[][]>>
 }
 
 export const ReadFile:VFC<Props> = (props) => {
-    const {texts,setTexts} = props
+    const {texts,setTexts,colorList,setColorList} = props
+    const [isReadFile,setIsReadFile] = useState(false)
+    const newColorList = (newSenetences:string[]) => {
+        let clone:string[][] = []
+        newSenetences.map((sentence)=>{
+            const wordList = wordDivide(sentence)
+            let tempList:string[] = []
+            wordList.map((word)=>{
+                
+                tempList = [...tempList,whatWordColor(word)]//isueu
+            })
+            clone = [...clone,tempList]
+        })
+        console.log("clone",clone)
+        setColorList(clone)
+    }
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         const input = document.getElementById("readfile")
         if(input){
@@ -15,20 +34,31 @@ export const ReadFile:VFC<Props> = (props) => {
             const file = e.target
             reader.addEventListener("load",()=>{
                 if(typeof reader.result === "string"){
-                    setTexts(reader.result!.split("\n"))
-                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                    console.log(reader.result!.split("\n"))
+                    const newSentences = reader.result!.split("\n")
+                    newSentences.filter((sentence)=>sentence!=="")
+                    newColorList(newSentences.filter((sentence)=>sentence!==""))
+                    setTexts(newSentences.filter((sentence)=>sentence!==""))
+                    setIsReadFile(!isReadFile)
                 }else{
                     console.log("notstring")
                 }
             })
             if(file.files){
-                reader.readAsText(file.files[0],"UTF-8")
+                try{
+                    reader.readAsText(file.files[0],"UTF-8")
+                }catch(e){
+                    console.log(e)
+                }
+                
                 // console.log("text",texts)
                 // console.log(file.files![0])
             }
         }
     }
+    // useEffect(()=>{
+    //     console.log("changeColor")
+
+    // },[isReadFile])
     return (
         <SInput
         id="readfile"
