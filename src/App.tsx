@@ -66,10 +66,10 @@ function App() {
       // ></SaveFileOnIcon>
       // <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
-      // <TextareaInsertProps></TextareaInsertProps>
-      <ButtonAppBar
-      buttons={["INSERT","CREATE"]}
-      onClicks={[(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("INSERT"),(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("CREATE")]}></ButtonAppBar>
+      <TextareaInsertProps></TextareaInsertProps>
+      // <ButtonAppBar
+      // buttons={["INSERT","CREATE"]}
+      // onClicks={[(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("INSERT"),(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("CREATE")]}></ButtonAppBar>
     // <FileReaderOnIcon
     // texts={test}
     // setTexts={setTest}></FileReaderOnIcon>

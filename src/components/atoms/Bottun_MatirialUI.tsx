@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 type Props = {
     value?:string
-    color?:"primary"|"secondary"
+    color?:"default" | "inherit" | "primary" | "secondary" | undefined
     onClick?:(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 export const ContainedButtons:VFC<Props> = (props) => {

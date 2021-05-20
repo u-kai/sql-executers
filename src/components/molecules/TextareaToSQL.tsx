@@ -7,6 +7,7 @@ import {Results} from "../../types/tableTypes"
 import {VFC} from "react"
 import { TextareaAndImage } from "./TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
+import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
 
 
 type Props = {
@@ -183,15 +184,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     value={textarea}/>
             </ImageContener>
             <ResetButtonContener>
-                <Button 
-                    backgroundColor={"#e73562"}
-                    borderColor={"#942343"}
-                    bottomColor={"#941f57"}
+                <ContainedButtons
                     onClick={resetAndChangeUI}
-                    width={120}
-                    height={50}
-                    fontSize={30}
-                    children={"RESET"}/>
+                    color="secondary"
+                    value={"RESET"}/>
             </ResetButtonContener>
             <TableContener>
                 <Table
@@ -203,23 +199,15 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 tableKey={`table${sqlType}`}/> 
             </TableContener>
             <ButtonsContener>
-                <Button 
+                <ContainedButtons 
                     onClick={sendDataAndSetResults}
-                    backgroundColor={"#e73562"}
-                    borderColor={"#942343"}
-                    bottomColor={"#941f57"}
-                    width={150}
-                    height={50}
-                    fontSize={30}
-                    children={"EXECUTE"}/>
-                <Button onClick={addRows}
-                    backgroundColor={"#e73562"}
-                    borderColor={"#942343"}
-                    bottomColor={"#941f57"}
-                    width={120}
-                    height={50}
-                    fontSize={30}
-                    children={"ADD"}/>
+                    color="primary"
+                    value={"EXECUTE"}/>
+                <ContainedButtons 
+                    onClick={addRows}
+                    color="primary"
+                    value={"ADD"}
+                    />
             </ButtonsContener>
         </Contener>
         
@@ -262,7 +250,7 @@ padding:10px;
 `
 const ButtonsContener = styled.div`
 grid-row: 4 / 5;
-grid-column: 1 / 4;
+grid-column: 1 / 3;
 display:flex;
 justify-content:space-around;
 `
