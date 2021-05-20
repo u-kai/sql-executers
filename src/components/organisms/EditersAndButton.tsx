@@ -4,17 +4,29 @@ import styled from "styled-components"
 import { useState } from "react"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 import { removeLastChar, removeLastValue } from "functions/editerFucntions"
+
+
+type Props = {
+    results:{[key:string]:string}[]
+    //setResults:
+}
 export const EditersAndButton = () => {
     const [sentences,setSentences] = useState([""])
+    const [resutls, setResults] = useState<{[key:string]:[]}[]>([])
     const onClick = () =>{
         const querys = returnQuerys()
         console.log(querys)
-        const sendData = {
+        const postData = {
             querys:querys
         }
         const url = "editerhandler"
-        postDataAndReturnResposeJson(sendData,url)
-        .then((data)=>console.log(data))
+        postDataAndReturnResposeJson(postData,url)
+        .then((data)=>{
+            console.log(data["select"])
+            // console.log(typeof data["select"])
+            console.log(getColumns(data["select"]))
+
+        })
     }
     const returnQuerys = () =>{
         let oneLineQuery = sentences.join("")
@@ -23,6 +35,11 @@ export const EditersAndButton = () => {
         }
         const querys = oneLineQuery.split(";")
         return querys
+    }
+    //{[key:string]:string|number|null|undefined}[]
+    const getColumns = (results:{[key:string]:string|number|null|undefined}[][]) => {
+        console.log(results[0][0],"success")
+        return Object.keys(results[0][0])
     }
     return (
     <Contener>

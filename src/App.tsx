@@ -17,6 +17,7 @@ import { InputAndCopyAndLabel } from "components/organisms/InputAndCopyAndLabel"
 // import {EditerAndAutoCorrectModi} from "components/organisms/EditerAndAutoCorrects"
 import {EditersAndButton} from "components/organisms/EditersAndButton"
 import { FolderAndEditer } from "components/organisms/FolderAndEditer";
+import {ButtonAppBar} from "components/atoms/ButtonAppBar-MaterialUI";
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
@@ -65,7 +66,10 @@ function App() {
       // ></SaveFileOnIcon>
       // <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
-      <TextareaInsertProps></TextareaInsertProps>
+      // <TextareaInsertProps></TextareaInsertProps>
+      <ButtonAppBar
+      buttons={["INSERT","CREATE"]}
+      onClicks={[(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("INSERT"),(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("CREATE")]}></ButtonAppBar>
     // <FileReaderOnIcon
     // texts={test}
     // setTexts={setTest}></FileReaderOnIcon>
