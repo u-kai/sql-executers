@@ -19,7 +19,6 @@ export const ImageToButton:VFC<Props> = (props) =>{
     const {src,imageStyle,contenerStyle,children,onClick,hoverWord="ファイル読み取り"} = props
     const [isMouseEnter,setIsMouseEnter] = useState(false)
     let contenerStyles:string | undefined
-    
     contenerStyles = returnStyle(contenerStyle)
     return (
         <>
@@ -35,14 +34,21 @@ export const ImageToButton:VFC<Props> = (props) =>{
             {children}
         </Contener>
         {isMouseEnter ? (
-            <p>{hoverWord}</p>
+            <HoverText>
+                {hoverWord}
+            </HoverText>
         ):(
             null
         )}
-        
         </>
     )
 }
+
+const HoverText = styled.div`
+margin-top:10px;
+font-size:12px;
+text-align:center;
+`
 
 const Contener = styled.div<{styles:string | undefined}>`
 width:120px;

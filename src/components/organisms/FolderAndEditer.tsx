@@ -4,11 +4,15 @@ import {SaveFileOnIcon} from "../molecules/SaveFileOnIcon"
 import styled from "styled-components"
 import {useState} from "react"
 import {BasicTextFields} from "../atoms/TextFiled_MaterialUI"
-import { TransformInput } from "components/atoms/TransformInput"
 import { StyledType } from "components/styledTypes/styledType"
-import { Height } from "@material-ui/icons"
-export const FolderAndEditer = () =>{
-    const [sentences, setSentences] = useState([""])
+import {VFC} from "react"
+
+type Props = {
+    sentences:string[]
+    setSentences:React.Dispatch<React.SetStateAction<string[]>>
+}
+export const FolderAndEditer:VFC<Props> = (props) =>{
+    const {sentences, setSentences} = props
     const [colorList,setColorList] = useState<string[][]>([[]])
     const [fileName,setFileName] = useState("")
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +22,7 @@ export const FolderAndEditer = () =>{
         width:"100px",
         height:"30px"
     }
+    
     return (
         <Contener>
             <FolderContener
@@ -45,7 +50,6 @@ export const FolderAndEditer = () =>{
             value={fileName}
             />
             </InputContener>
-            
             <EditerContener
             children={EditerAndAutoCorrects({sentences:sentences,
                                                 setSentences:setSentences,
@@ -57,11 +61,11 @@ export const FolderAndEditer = () =>{
 const Contener = styled.div`
 display:grid;
 grid-template-rows:120px 70px 1fr;
-grid-template-columns:50px 150px 150px 1fr;
+grid-template-columns:10px 120px 120px  1fr;
 `
 const EditerContener = styled.div`
 grid-row:3/4;
-grid-column:1/5;
+grid-column:1/6;
 `
 const FolderContener = styled.div<{start:number,end:number}>`
 grid-row:1/2;

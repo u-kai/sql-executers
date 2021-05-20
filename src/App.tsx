@@ -15,6 +15,7 @@ import {AutoCorrects} from "components/molecules/AutoCorrects"
 import {InputAndCopy} from "components/molecules/InputAndCopy"
 import { InputAndCopyAndLabel } from "components/organisms/InputAndCopyAndLabel";
 // import {EditerAndAutoCorrectModi} from "components/organisms/EditerAndAutoCorrects"
+import {EditersAndButton} from "components/organisms/EditersAndButton"
 import { FolderAndEditer } from "components/organisms/FolderAndEditer";
 function App() {
   const [toggle,setToggle] = useState(true)
@@ -36,7 +37,7 @@ function App() {
     ></Button>
     {toggle ? (
       // <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
-      <FolderAndEditer></FolderAndEditer>
+      <EditersAndButton></EditersAndButton>
       // <InputAndCopyAndLabel
       // style={inputstyle}
       // index={1}
@@ -64,7 +65,7 @@ function App() {
       // ></SaveFileOnIcon>
       // <EditerAndAutoCorrect></EditerAndAutoCorrect>
     ):(
-      null
+      <TextareaInsertProps></TextareaInsertProps>
     // <FileReaderOnIcon
     // texts={test}
     // setTexts={setTest}></FileReaderOnIcon>
