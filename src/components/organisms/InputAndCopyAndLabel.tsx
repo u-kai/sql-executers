@@ -42,10 +42,10 @@ export const InputAndCopyAndLabel:VFC<Props> = (props) =>{
     )
 }
 const Contener = styled.div`
-width:3000px;
+width:100%;//3000px;
 height:30px;
 // overflow:auto;
 display:grid;
-grid-template-columns:20px 780px;
+grid-template-columns:20px 400px;//780px;change
 grid-template-rows:40px;
 `

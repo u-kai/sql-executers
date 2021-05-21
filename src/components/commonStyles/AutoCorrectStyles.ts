@@ -20,5 +20,5 @@ padding-left:5px;
 padding-right:5px;
 padding-top:5px;
 text-decoration:none;
-width:1150px;
+width:100%;
 `

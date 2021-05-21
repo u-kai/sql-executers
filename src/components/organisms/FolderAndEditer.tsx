@@ -60,8 +60,8 @@ export const FolderAndEditer:VFC<Props> = (props) =>{
 }
 const Contener = styled.div`
 display:grid;
-grid-template-rows:120px 70px 1fr;
-grid-template-columns:10px 120px 120px  1fr;
+grid-template-rows:60px 70px 1fr;
+grid-template-columns:10px 70px 70px  1fr;
 `
 const EditerContener = styled.div`
 grid-row:3/4;

@@ -18,6 +18,7 @@ import { InputAndCopyAndLabel } from "components/organisms/InputAndCopyAndLabel"
 import {EditersAndButton} from "components/organisms/EditersAndButton"
 import { FolderAndEditer } from "components/organisms/FolderAndEditer";
 import {ButtonAppBar} from "components/atoms/ButtonAppBar-MaterialUI";
+import { SQLExrcuters } from "components/pages/SQLExecuters";
 function App() {
   const [toggle,setToggle] = useState(true)
   const [test,setTest] = useState(["testdayo","uhyohyo"])
@@ -32,50 +33,51 @@ function App() {
     setChar(e.target.value)
   }
   return (
-    <>
-    <Button
-    onClick={()=>setToggle(!toggle)}
-    ></Button>
-    {toggle ? (
-      // <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
-      <EditersAndButton></EditersAndButton>
-      // <InputAndCopyAndLabel
-      // style={inputstyle}
-      // index={1}
-      // handleChange={handleChange}
-      // colorList={["red","black"]}
-      // sentence={char}
-      // ></InputAndCopyAndLabel>
-      // <InputAndCopy
-      // handleChange={handleChange}
-      // sentence={char}
-      // colorList={["red","black"]}
-      // index={1}
-      // style={inputstyle}
-      // />
+    <SQLExrcuters></SQLExrcuters>
+  //   <>
+  //   <Button
+  //   onClick={()=>setToggle(!toggle)}
+  //   ></Button>
+  //   {toggle ? (
+  //     // <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
+  //     <EditersAndButton></EditersAndButton>
+  //     // <InputAndCopyAndLabel
+  //     // style={inputstyle}
+  //     // index={1}
+  //     // handleChange={handleChange}
+  //     // colorList={["red","black"]}
+  //     // sentence={char}
+  //     // ></InputAndCopyAndLabel>
+  //     // <InputAndCopy
+  //     // handleChange={handleChange}
+  //     // sentence={char}
+  //     // colorList={["red","black"]}
+  //     // index={1}
+  //     // style={inputstyle}
+  //     // />
     
-      // autoCorrects={["hello worle","konnnithiha","ni-hao"]}
-      // position={{x:100,y:100}}
-      // handleClick={(e)=>console.log(e)}
+  //     // autoCorrects={["hello worle","konnnithiha","ni-hao"]}
+  //     // position={{x:100,y:100}}
+  //     // handleClick={(e)=>console.log(e)}
   
 
   
-      // <SaveFileOnIcon
-      // text={test[0]}
-      // fileName={fileName}
-      // ></SaveFileOnIcon>
-      // <EditerAndAutoCorrect></EditerAndAutoCorrect>
-    ):(
-      <TextareaInsertProps></TextareaInsertProps>
-      // <ButtonAppBar
-      // buttons={["INSERT","CREATE"]}
-      // onClicks={[(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("INSERT"),(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("CREATE")]}></ButtonAppBar>
-    // <FileReaderOnIcon
-    // texts={test}
-    // setTexts={setTest}></FileReaderOnIcon>
-    // )}
-    )}
-  </>
+  //     // <SaveFileOnIcon
+  //     // text={test[0]}
+  //     // fileName={fileName}
+  //     // ></SaveFileOnIcon>
+  //     // <EditerAndAutoCorrect></EditerAndAutoCorrect>
+  //   ):(
+  //     <TextareaInsertProps></TextareaInsertProps>
+  //     // <ButtonAppBar
+  //     // buttons={["INSERT","CREATE"]}
+  //     // onClicks={[(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("INSERT"),(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("CREATE")]}></ButtonAppBar>
+  //   // <FileReaderOnIcon
+  //   // texts={test}
+  //   // setTexts={setTest}></FileReaderOnIcon>
+  //   // )}
+  //   )}
+  // </>
   );
 }
 

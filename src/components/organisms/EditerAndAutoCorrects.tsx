@@ -31,7 +31,7 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
         autoCorrects, isDisplayAutoCorrects, incrementFocusAutoCorrectsIndex,decrementFocusAutoCorrectsIndex} = useAutoCorrecters()
     const [labelPosition, setLabelPosition] = useState(0)
     const [rowPosition,setRowPosition] = useState<number[]>([])
-    const editerContenerHeight = 800
+    const editerContenerHeight = 500
     const rowHeight = 30
     
     const didEnterNewCharacters = (newSenetence:string)=>{
@@ -187,6 +187,6 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
 }
 const Contener = styled.div<{height:number}>`
 width:${props=>props.height}px;
-height:800px;
+height:500px;
 overflow:auto;
 `

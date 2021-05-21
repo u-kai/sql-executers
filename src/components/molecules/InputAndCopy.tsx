@@ -37,7 +37,7 @@ export const InputAndCopy:VFC<Props> = (props) => {
                 onScroll={onScroll}
                 style={style}
                 type="text"/>
-            <CopyBox  key={`copyContener${index}`}>
+            <CopyBox  key={`copyContener${index}`} overflow="auto">
             {sentence.split(" ").map((phrase,pharaseIndex)=>(
                     <CopySpan
                         color={colorList[pharaseIndex]}

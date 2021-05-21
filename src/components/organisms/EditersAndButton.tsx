@@ -63,7 +63,7 @@ export const EditersAndButton = () => {
 const Contener  = styled.div`
 display:grid;
 grid-template-rows:120px 70px 1fr;
-grid-template-columns:10px 120px 200px  1fr;
+grid-template-columns:10px 120px 300px  1fr;
 `
 const ButtonContener = styled.div`
 grid-row:2/3;

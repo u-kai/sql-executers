@@ -16,7 +16,7 @@ type Props = {
 }
 
 export const ImageToButton:VFC<Props> = (props) =>{
-    const {src,imageStyle,contenerStyle,children,onClick,hoverWord="ファイル読み取り"} = props
+    const {src,imageStyle,contenerStyle,children,onClick,hoverWord="ファイル読取り"} = props
     const [isMouseEnter,setIsMouseEnter] = useState(false)
     let contenerStyles:string | undefined
     contenerStyles = returnStyle(contenerStyle)
@@ -46,13 +46,13 @@ export const ImageToButton:VFC<Props> = (props) =>{
 
 const HoverText = styled.div`
 margin-top:10px;
-font-size:12px;
+font-size:5px;
 text-align:center;
 `
 
 const Contener = styled.div<{styles:string | undefined}>`
-width:120px;
-height:80px;
+width:70px;
+height:40px;
 position:relative;
 background-color:transparent;
 :hover{

@@ -22,8 +22,8 @@ export const Image:VFC<Props> = (props) => {
 
 
 const SImage = styled.img<{styles:string | undefined}>`
-width:120px;
-height:100px;
+width:60px;
+height:50px;
 position:absolute;
 top:0px;
 left:0px;
