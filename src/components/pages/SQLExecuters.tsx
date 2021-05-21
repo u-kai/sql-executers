@@ -29,16 +29,13 @@ export const SQLExrcuters = () =>{
                 let valuesBuff:string[][]= []
                 try{
                     results.forEach((result)=>{
-                        if(result[0]!==undefined){
-                            console.log(result[0])
+                      
+                        if(result.length!==0){
                             const columnsList = Object.keys(result[0])
                             // console.log("nulllll2")
                             cloneColumns.push(columnsList)
                             result.map((value)=>{
                                 // console.log("nulllll3")
-                                if(value === null){
-                                    console.log("nulllll")
-                                }
                                 const dataValuse:string[] = Object.values(value)
                                 // console.log("nulllll4")
                                 valuesBuff.push(dataValuse)
@@ -47,12 +44,23 @@ export const SQLExrcuters = () =>{
                             valuesBuff=[]
                         }
                     })
+                    
+                }catch(e){
+                    console.log(e)}
+                if(cloneColumns.length !==0 && cloneValues.length !==0){
                     setRows(cloneValues)
                     setColumns(cloneColumns)
-                }catch(e){
-                    setRows([[[]]])
-                    setColumns([[]])
-                    console.log(e)}
+                }
+                // try{
+                //     console.log(cloneValues)
+                //     console.log(cloneColumns)
+                //     setRows(cloneValues)
+                //     setColumns(cloneColumns) 
+                // }catch{
+                //     setRows([[[]]])
+                //     setColumns([[]])
+                // }
+                
             }
 
 
