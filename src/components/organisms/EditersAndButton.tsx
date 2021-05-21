@@ -1,46 +1,24 @@
 import {FolderAndEditer} from "../organisms/FolderAndEditer"
 import { ContainedButtons } from "../atoms/Bottun_MatirialUI"
 import styled from "styled-components"
-import { useState } from "react"
+import { useState,VFC } from "react"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 import { removeLastChar, removeLastValue } from "functions/editerFucntions"
 
 
 type Props = {
-    results:{[key:string]:string}[]
+    onClick: () => void
+    sentences:string[]
+    setSentences: React.Dispatch<React.SetStateAction<string[]>>
     //setResults:
 }
-export const EditersAndButton = () => {
-    const [sentences,setSentences] = useState([""])
-    const [resutls, setResults] = useState<{[key:string]:[]}[]>([])
-    const onClick = () =>{
-        const querys = returnQuerys()
-        console.log(querys)
-        const postData = {
-            querys:querys
-        }
-        const url = "editerhandler"
-        postDataAndReturnResposeJson(postData,url)
-        .then((data)=>{
-            console.log(data["select"])
-            // console.log(typeof data["select"])
-            console.log(getColumns(data["select"]))
 
-        })
-    }
-    const returnQuerys = () =>{
-        let oneLineQuery = sentences.join("")
-        if(oneLineQuery[oneLineQuery.length-1]===";"){
-            oneLineQuery = removeLastChar(oneLineQuery)
-        }
-        const querys = oneLineQuery.split(";")
-        return querys
-    }
-    //{[key:string]:string|number|null|undefined}[]
-    const getColumns = (results:{[key:string]:string|number|null|undefined}[][]) => {
-        console.log(results[0][0],"success")
-        return Object.keys(results[0][0])
-    }
+
+export const EditersAndButton:VFC<Props> = (props) => {
+    // const [sentences,setSentences] = useState([""])
+    const {onClick,sentences,setSentences} = props
+    const [resutls, setResults] = useState<{[key:string]:[]}[]>([])
+    
     return (
     <Contener>
     <ButtonContener>

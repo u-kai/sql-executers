@@ -1,8 +1,39 @@
+import { useState } from "react"
 import styled from "styled-components"
 import {ButtonAppBar} from "../atoms/ButtonAppBar-MaterialUI"
 import { EditersAndButton } from "../organisms/EditersAndButton" 
 import {insert, InsertClone} from "../TableClass.ts/Insert"
+import { removeLastChar, removeLastValue } from "functions/editerFucntions"
+import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 export const SQLExrcuters = () =>{
+    const [sentences,setSentences] = useState([""])
+    const onClick = () =>{
+        const querys = returnQuerys()
+        console.log(querys)
+        const postData = {
+            querys:querys
+        }
+        const url = "editerhandler"
+        postDataAndReturnResposeJson(postData,url)
+        .then((data)=>{
+            console.log(data["select"])
+            // console.log(typeof data["select"])
+            console.log(getColumns(data["select"]))
+        })
+    }
+    const returnQuerys = () =>{
+        let oneLineQuery = sentences.join("")
+        if(oneLineQuery[oneLineQuery.length-1]===";"){
+            oneLineQuery = removeLastChar(oneLineQuery)
+        }
+        const querys = oneLineQuery.split(";")
+        return querys
+    }
+    //{[key:string]:string|number|null|undefined}[]
+    const getColumns = (results:{[key:string]:string|number|null|undefined}[][]) => {
+        console.log(results[0][0],"success")
+        return Object.keys(results[0][0])
+    }
     return (
         <Contener>
             <HeaderContener>
@@ -11,7 +42,10 @@ export const SQLExrcuters = () =>{
                 onClicks={[(e)=>console.log("I")]}/>
             </HeaderContener>
             <EditersContener>
-                <EditersAndButton></EditersAndButton>
+                <EditersAndButton
+                    onClick={onClick}
+                    sentences={sentences}
+                    setSentences={setSentences}></EditersAndButton>
             </EditersContener>
             <CopyDBContener>
                 <DumyC></DumyC>
