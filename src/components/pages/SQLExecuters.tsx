@@ -13,8 +13,11 @@ export const SQLExrcuters = () =>{
                 <EditersAndButton></EditersAndButton>
             </EditersContener>
             <CopyDBContener>
-                <DumyT></DumyT>
+                <DumyC></DumyC>
             </CopyDBContener>
+            <TablesConetener>
+                <DumyT></DumyT>
+            </TablesConetener>
         </Contener>
     )
 }
@@ -40,6 +43,17 @@ grid-column:1/2;
 const CopyDBContener = styled.div`
 grid-row:2/3;
 grid-column:2/3;
+`
+
+const TablesConetener = styled.div`
+gird-row:3/4;
+grid-column:1/3;
+padding:10px;
+`
+const DumyC = styled.div`
+border:solid black;
+width:100%;
+height:100%;
 `
 const DumyT = styled.div`
 border:solid black;
