@@ -69,7 +69,7 @@ const STh = styled.th`
 border:solid black 2px;
 background-color:transparent;
 overflow:auto;
-width:150px;
+width:110px;
 height:30px;
 `
 const STHeader = styled.thead`

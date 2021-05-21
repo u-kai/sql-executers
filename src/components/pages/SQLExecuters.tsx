@@ -6,6 +6,7 @@ import {insert, InsertClone} from "../TableClass.ts/Insert"
 import { TextareaCreateProps} from "../organisms/TextareaCreateprops"
 import { removeLastChar, removeLastValue } from "functions/editerFucntions"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
+import {Table as TableEditer} from "../atoms/TableEditer"
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
     const onClick = () =>{
@@ -52,7 +53,13 @@ export const SQLExrcuters = () =>{
                 <TextareaCreateProps></TextareaCreateProps>
             </CopyDBContener>
             <TablesConetener>
-                <DumyT></DumyT>
+                <TableEditer
+                rows={[["d"]]}
+                columns={["d"]}
+                tableKey={"select"}
+                headerKey={"select"}
+                bodyKey={"select"}
+                />
             </TablesConetener>
         </Contener>
     )
@@ -83,7 +90,7 @@ grid-column:2/3;
 
 const TablesConetener = styled.div`
 gird-row:3/4;
-grid-column:1/3;
+grid-column:1/2;
 padding:10px;
 `
 const DumyC = styled.div`

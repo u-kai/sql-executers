@@ -251,6 +251,7 @@ const TableContener = styled.div`
 grid-row: 4 / 5;
 grid-column: 1 / 4;
 overflow:auto;
+height:600px;
 // display:flex;
 // justify-content:center;
 padding:10px;
