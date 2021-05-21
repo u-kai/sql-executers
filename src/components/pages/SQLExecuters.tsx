@@ -3,6 +3,7 @@ import styled from "styled-components"
 import {ButtonAppBar} from "../atoms/ButtonAppBar-MaterialUI"
 import { EditersAndButton } from "../organisms/EditersAndButton" 
 import {insert, InsertClone} from "../TableClass.ts/Insert"
+import { TextareaCreateProps} from "../organisms/TextareaCreateprops"
 import { removeLastChar, removeLastValue } from "functions/editerFucntions"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 export const SQLExrcuters = () =>{
@@ -48,7 +49,7 @@ export const SQLExrcuters = () =>{
                     setSentences={setSentences}></EditersAndButton>
             </EditersContener>
             <CopyDBContener>
-                <DumyC></DumyC>
+                <TextareaCreateProps></TextareaCreateProps>
             </CopyDBContener>
             <TablesConetener>
                 <DumyT></DumyT>

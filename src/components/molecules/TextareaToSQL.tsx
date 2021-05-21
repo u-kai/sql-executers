@@ -179,16 +179,17 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 </InputContener>
             <ImageContener>
                 <TextareaAndImage
+                    
                     src={"../../../image/db.png"}
                     onChange={pasteToTable}
                     value={textarea}/>
             </ImageContener>
-            <ResetButtonContener>
+            {/* <ResetButtonContener>
                 <ContainedButtons
                     onClick={resetAndChangeUI}
                     color="secondary"
                     value={"RESET"}/>
-            </ResetButtonContener>
+            </ResetButtonContener> */}
             <TableContener>
                 <Table
                 columns={columns}
@@ -208,6 +209,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     color="primary"
                     value={"ADD"}
                     />
+                    <ContainedButtons
+                    onClick={resetAndChangeUI}
+                    color="secondary"
+                    value={"RESET"}/>
             </ButtonsContener>
         </Contener>
         
@@ -216,23 +221,25 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
 
 const Contener = styled.div`
 position:absolute;
-overflow:auto;
+// overflow:auto;
 display:grid;
-width:100%;
+width:600px;
 height:100%;
-grid-template-columns:300px 50px 450px;
-grid-template-rows:100px 200px 70px 70px 1fr;
+grid-template-columns:70px 460px 70px;
+grid-template-rows:100px 220px 70px 210px;
 `
 const InputContener = styled.div`
 margin:10px;
 grid-row:1/2;
-grid-column:1/2;
+grid-column:2/3;
 `
 const ImageContener = styled.div`
 width:310px;
 height:220px;
-grid-row: 2 / 4;
-grid-column: 1 / 2;
+display:flex;
+text-align:center;
+grid-row: 2 / 3;
+grid-column: 2 / 3;
 `
 
 const ResetButtonContener = styled.div`
@@ -241,7 +248,7 @@ grid-column: 2 / 3;
 `
 
 const TableContener = styled.div`
-grid-row: 5 / 6;
+grid-row: 4 / 5;
 grid-column: 1 / 4;
 overflow:auto;
 // display:flex;
@@ -249,8 +256,9 @@ overflow:auto;
 padding:10px;
 `
 const ButtonsContener = styled.div`
-grid-row: 4 / 5;
-grid-column: 1 / 3;
+grid-row: 3 / 4;
+grid-column: 2 / 3;
+margin-top:30px;
 display:flex;
 justify-content:space-around;
 `
