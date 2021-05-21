@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import {ButtonAppBar} from "../atoms/ButtonAppBar-MaterialUI"
 import { EditersAndButton } from "../organisms/EditersAndButton" 
+import {insert, InsertClone} from "../TableClass.ts/Insert"
 export const SQLExrcuters = () =>{
     return (
         <Contener>
