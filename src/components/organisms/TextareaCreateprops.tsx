@@ -21,7 +21,7 @@ export const TextareaCreateProps = () =>{
                 DataType:nameAndType[1],
                 Option:"",
                 IsPrimary:"",
-                IsNull:"NULL"
+                IsNull:"NOT NULL"
             }
             return cells
         }

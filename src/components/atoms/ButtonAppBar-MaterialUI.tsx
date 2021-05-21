@@ -24,17 +24,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 type Props = {
-    buttons:string[]
-    onClicks:((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)[]
+    buttons?:string[]
+    onClicks?:((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)[]
     color?: "inherit" | "transparent" | "default" | "primary" | "secondary" | undefined
     title?:string
+    futter?:boolean
 
 }
 export const ButtonAppBar:VFC<Props> = (props) => {
   const classes = useStyles();
-  const {buttons,onClicks,color="secondary",title="SQL-EXECUTERS"} = props
+  const {buttons,onClicks=[console.log("")],color="secondary",title="SQL-EXECUTERS",futter=false} = props
   return (
-    <div className={classes.root}>
+    <>
+    {futter ? (
+      <div className={classes.root}>
       <AppBar position="static" color={color}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -45,7 +48,7 @@ export const ButtonAppBar:VFC<Props> = (props) => {
           </Typography>
             {buttons?.map((button,i)=>(
                 onClicks[i] ? (
-                <Button color="inherit" onClick={onClicks[i]}>
+                <Button color="inherit" onClick={(e)=>onClicks[i]}>
                     {button}
                 </Button>
                 ) : (
@@ -57,5 +60,31 @@ export const ButtonAppBar:VFC<Props> = (props) => {
         </Toolbar>
       </AppBar>
     </div>
+    ):(
+      <div className={classes.root}>
+      <AppBar position="static" color={color}>
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {title}
+          </Typography>
+            {buttons?.map((button,i)=>(
+                onClicks[i] ? (
+                <Button color="inherit" onClick={(e)=>onClicks[i]}>
+                    {button}
+                </Button>
+                ) : (
+                <Button color="inherit">
+                    {button}
+                </Button>
+                )
+            ))}
+        </Toolbar>
+      </AppBar>
+    </div>
+    )}
+    </>
   );
 }

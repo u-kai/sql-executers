@@ -27,7 +27,7 @@ export const LabelAndFileReader:VFC<Props> = (props) =>{
 
 const Label = styled.label`
 width:100%;
-height:100%;
+height:70px;
 z-index:2;
 position:absolute;
 top:0px;

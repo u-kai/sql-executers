@@ -40,14 +40,14 @@ export const EditersAndButton:VFC<Props> = (props) => {
 
 const Contener  = styled.div`
 display:grid;
-grid-template-rows:120px 70px 1fr;
+grid-template-rows:120px 70px 250px 1fr;
 grid-template-columns:10px 120px 300px  1fr;
 `
 const ButtonContener = styled.div`
-grid-row:2/3;
+grid-row:4/5;
 grid-column:4/5;
 `
 const EditersContener = styled.div`
-grid-row:1/4;
+grid-row:1/5;
 grid-column:1/5;
 `

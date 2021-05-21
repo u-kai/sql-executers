@@ -8,6 +8,7 @@ import {VFC} from "react"
 import { TextareaAndImage } from "./TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
+import { useEditer } from "hocks/useEditer"
 
 
 type Props = {
@@ -30,8 +31,12 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
-    
-    
+    // const heightAtOneRow = 60
+    // const [height,setHeight] = useState(2*heightAtOneRow)
+
+    // useEffect(()=>{
+    //     setHeight(multiLineCells.length * heightAtOneRow)
+    // },[multiLineCells])
     const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
         const sendTableName = {
             tableName:e.target.value
@@ -152,8 +157,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             case "IsNull":
                 return(
                     <SSelect onChange={(e)=>handleChange(e,index,column)}>
-                            <SOption defaultValue="NULL" >Null</SOption>
-                            <SOption value="NOT NULL" >NOT NULL</SOption>
+                        <SOption defaultValue="NOT NULL" >NOT NULL</SOption>
+                            <SOption value="NULL">Null</SOption>
                     </SSelect>
                 )
             default:
@@ -224,12 +229,12 @@ position:absolute;
 // overflow:auto;
 display:grid;
 width:600px;
-height:100%;
+height:600px;
 grid-template-columns:70px 460px 70px;
-grid-template-rows:100px 220px 70px 210px;
+grid-template-rows:130px 250px 100px 30px 210px;
 `
 const InputContener = styled.div`
-margin:10px;
+margin:20px;
 grid-row:1/2;
 grid-column:2/3;
 `
@@ -246,20 +251,28 @@ const ResetButtonContener = styled.div`
 grid-row: 3 / 4;
 grid-column: 2 / 3;
 `
-
 const TableContener = styled.div`
-grid-row: 4 / 5;
+grid-row: 5 / 6;
 grid-column: 1 / 4;
 overflow:auto;
-height:600px;
+height:px;
 // display:flex;
 // justify-content:center;
 padding:10px;
 `
+// const TableContener = styled.div<{height:number}>`
+// grid-row: 4 / 5;
+// grid-column: 1 / 4;
+// overflow:auto;
+// height:${props=>props.height}px;
+// // display:flex;
+// // justify-content:center;
+// padding:10px;
+// `
 const ButtonsContener = styled.div`
 grid-row: 3 / 4;
 grid-column: 2 / 3;
-margin-top:30px;
+margin-top:60px;
 display:flex;
 justify-content:space-around;
 `

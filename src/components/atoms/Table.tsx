@@ -33,7 +33,10 @@ export const Table:VFC<Props> = (props)=>{
                             {columns.map((columnType,index) => 
                                     (
                                     <STh key={`th${bodyKey}${index}${rowIndex}`}>
-                                        {cellElements? cellElements(row[columnType],rowIndex,columnType):(`${row[columnType]}`)}
+                                        {cellElements? cellElements(row[columnType],rowIndex,columnType):(
+                                            
+                                            `${row[columnType]}`
+                                            )}
                                     </STh>
                                     )
                                 )
@@ -56,12 +59,14 @@ border-collapse:  collapse;
 background-color:transparent;
 width:  30px;         
 table-layout: fixed; 
+font-weight: normal;
 `
 const STr = styled.tr`
 border:solid black 2px;
 background-color:transparent;
 overflow:auto;
 height:30px;
+font-weight: normal;
 `
 
 const STh = styled.th`
@@ -70,10 +75,12 @@ background-color:transparent;
 overflow:auto;
 width:110px;
 height:30px;
+font-weight: normal;
 `
 const STHeader = styled.thead`
-background-color:#00a381;
+background-color:#ff0066;
 `
 const STBody = styled.tbody`
-
+font-weight: normal;
+height:300px;
 `

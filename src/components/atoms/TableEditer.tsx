@@ -33,8 +33,9 @@ export const Table:VFC<Props> = (props)=>{
                             <STh key={`th${bodyKey}${index}`}>
                                 {cellElements ? (
                                     cellElements(value,rowIndex,index)
-                                ):(
-                                 `${value}`   
+                                ):(<TableSpan>
+                                 {value} 
+                                 </TableSpan>  
                                 ) }
                             </STh>
                                 )
@@ -57,6 +58,10 @@ background-color:transparent;
 width:  30px;         
 table-layout: fixed; 
 `
+
+const TableSpan = styled.span`
+font-weight:normal;
+`
 const STr = styled.tr`
 border:solid black 2px;
 background-color:transparent;
@@ -73,7 +78,7 @@ width:110px;
 height:30px;
 `
 const STHeader = styled.thead`
-background-color:#00a381;
+background-color:#ff0066;
 `
 const STBody = styled.tbody`
 
