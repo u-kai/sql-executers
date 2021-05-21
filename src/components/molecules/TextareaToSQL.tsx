@@ -9,27 +9,36 @@ import { TextareaAndImage } from "./TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
 
-
+type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
 type Props = {
     url:string
     initColumns:string[]
     initState?:{
         [key: string]: string;
     }
+    multiLineCells:{[key: string]: string;}[]
+    setMultiLineCells:React.Dispatch<React.SetStateAction<{
+        [key: string]: string;
+    }[]>>
+    columns:string[]
+    setColumns: React.Dispatch<React.SetStateAction<string[]>>
     CloneClass:any
     sqlType:"insert"|"create"
+    //handleChange:(e: CellChageEvent, index: number, column: string) => void
+
 }
 
 export const TextareaToSQL:VFC<Props> = (props) =>{
-    const {url,initColumns,CloneClass,sqlType,initState} = props
+    const {url,initColumns,CloneClass,sqlType,initState,
+            multiLineCells,setMultiLineCells,columns,setColumns} = props
     type OneLineCells = {[key:string]:string}
-    type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
+    
     
     const [tableName,setTableName] = useState("")
     const [results, setResults] = useState<Results>()
-    const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
+    //const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
-    const [columns,setColumns] = useState(initColumns.slice())
+    //const [columns,setColumns] = useState(initColumns.slice())
     
     
     const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -79,7 +88,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 cloneClass.makeClone(row)
             })
         }
-        console.log("fasdfasdfa",cloneClass.clone)
+        
         setMultiLineCells(cloneClass.clone)
     }
     const handleChange = (e:CellChageEvent,index:number,column:string) => {
@@ -189,7 +198,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     color="secondary"
                     value={"RESET"}/>
             </ResetButtonContener>
-            <TableContener>
+            {/* <TableContener>
                 <Table
                 columns={columns}
                 rows={multiLineCells}
@@ -197,7 +206,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 headerKey={`header${sqlType}`}
                 bodyKey={`body${sqlType}`}
                 tableKey={`table${sqlType}`}/> 
-            </TableContener>
+            </TableContener> */}
             <ButtonsContener>
                 <ContainedButtons 
                     onClick={sendDataAndSetResults}
@@ -220,8 +229,8 @@ overflow:auto;
 display:grid;
 width:100%;
 height:100%;
-grid-template-columns:300px 50px 450px;
-grid-template-rows:100px 200px 70px 70px 1fr;
+grid-template-columns:300px 100px 100px;
+grid-template-rows:100px 250px 70px 70px;
 `
 const InputContener = styled.div`
 margin:10px;
@@ -240,17 +249,17 @@ grid-row: 3 / 4;
 grid-column: 2 / 3;
 `
 
-const TableContener = styled.div`
-grid-row: 5 / 6;
-grid-column: 1 / 4;
-overflow:auto;
-// display:flex;
-// justify-content:center;
-padding:10px;
-`
+// const TableContener = styled.div`
+// grid-row: 5 / 6;
+// grid-column: 1 / 4;
+// overflow:auto;
+// // display:flex;
+// // justify-content:center;
+// padding:10px;
+// `
 const ButtonsContener = styled.div`
-grid-row: 4 / 5;
-grid-column: 1 / 3;
+grid-row: 3 / 4;
+grid-column: 1 / 2;
 display:flex;
 justify-content:space-around;
 `

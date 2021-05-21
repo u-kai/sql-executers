@@ -12,7 +12,7 @@ let initLine:OneLineCells = {
 } 
 let sqlType = "create"
 
-
+export const createCellElements = ""
 export const create = new SQLTableData(url=url,constColumns=constColumns,sqlType=sqlType,initLine=initLine)
 export class CreateClone {
     clone:OneLineCells[]

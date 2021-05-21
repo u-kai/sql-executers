@@ -26,6 +26,13 @@ export const Table:VFC<Props> = (props)=>{
                     }
                 </STr>
             </STHeader>
+            {columns.map((column,i)=>(
+                i===0 ? (
+                    <div>0</div>
+                ) : (
+                    <div>i</div>
+                )
+            ))}
             <STBody key={`${bodyKey}TBody`}>
                 {rows.map((row,rowIndex)=>(
                     <STr key={`tr${bodyKey}TBody${rowIndex}`}>

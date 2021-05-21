@@ -33,13 +33,15 @@ function App() {
     setChar(e.target.value)
   }
   return (
-    <SQLExrcuters></SQLExrcuters>
-  //   <>
-  //   <Button
-  //   onClick={()=>setToggle(!toggle)}
-  //   ></Button>
-  //   {toggle ? (
-  //     // <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
+    // <SQLExrcuters></SQLExrcuters>
+    <>
+    <Button
+    onClick={()=>setToggle(!toggle)}
+    ></Button>
+    {toggle ? (<SQLExrcuters></SQLExrcuters>):(<TextareaInsertProps></TextareaInsertProps>)}
+    </>
+    
+    //     // <EditerAndAutoCorrectModi></EditerAndAutoCorrectModi>
   //     <EditersAndButton></EditersAndButton>
   //     // <InputAndCopyAndLabel
   //     // style={inputstyle}
@@ -68,7 +70,7 @@ function App() {
   //     // ></SaveFileOnIcon>
   //     // <EditerAndAutoCorrect></EditerAndAutoCorrect>
   //   ):(
-  //     <TextareaInsertProps></TextareaInsertProps>
+
   //     // <ButtonAppBar
   //     // buttons={["INSERT","CREATE"]}
   //     // onClicks={[(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("INSERT"),(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>console.log("CREATE")]}></ButtonAppBar>

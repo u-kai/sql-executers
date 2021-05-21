@@ -1,3 +1,4 @@
+import { setConstantValue } from "typescript"
 import {TextareaToSQL} from "../molecules/TextareaToSQL"
 
 export const TextareaInsertProps = () => {
@@ -36,12 +37,14 @@ export const TextareaInsertProps = () => {
     }
 
     return (
-        <TextareaToSQL
-        url={url}
-        initColumns={constColumns}
-        sqlType={sqlType}
-        CloneClass={ColumnValueClone}
-        ></TextareaToSQL>
+        <></>
+        // <TextareaToSQL
+        // setMultiLineCells={}
+        // url={url}
+        // initColumns={constColumns}
+        // sqlType={sqlType}
+        // CloneClass={ColumnValueClone}
+        // ></TextareaToSQL>
     )
 }
    

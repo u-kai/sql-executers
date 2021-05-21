@@ -1,9 +1,19 @@
 import {TextareaToSQL} from "../molecules/TextareaToSQL"
-
+import {VFC} from "react"
 const url = "copyToCreate"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]
 
-export const TextareaCreateProps = () =>{
+type Props = {
+    multiLineCells:{[key: string]: string;}[]
+    setMultiLineCells:React.Dispatch<React.SetStateAction<{
+        [key: string]: string;
+    }[]>>
+    columns:string[]
+    setColumns: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+export const TextareaCreateProps:VFC<Props> = (props) =>{
+    const {multiLineCells,setMultiLineCells,columns,setColumns} = props
     type OneLineCells = {[key:string]:string}
     class MultiLineCellsClone {
         clone:OneLineCells[]
@@ -42,6 +52,10 @@ export const TextareaCreateProps = () =>{
     } 
     return (
         <TextareaToSQL
+        setMultiLineCells={setMultiLineCells}
+        multiLineCells={multiLineCells}
+        columns={columns}
+        setColumns={setColumns}
         url={url}
         initColumns={constColumns}
         initState={initLine}

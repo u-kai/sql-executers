@@ -5,8 +5,14 @@ import { EditersAndButton } from "../organisms/EditersAndButton"
 import {insert, InsertClone} from "../TableClass.ts/Insert"
 import { removeLastChar, removeLastValue } from "functions/editerFucntions"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
+import {TextareaCreateProps} from "../organisms/TextareaCreateprops"
+import {Tables} from "../molecules/Tables"
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
+    const [editerColumns, setEditerColumns] = useState<string[][]>([])
+    const [resuluts,setResults] = useState<{[key: string]: string;}[][]>([])
+    const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
+    const [columns,setColumns] = useState(insert.constColumns.slice())
     const onClick = () =>{
         const querys = returnQuerys()
         console.log(querys)
@@ -17,8 +23,7 @@ export const SQLExrcuters = () =>{
         postDataAndReturnResposeJson(postData,url)
         .then((data)=>{
             console.log(data["select"])
-            // console.log(typeof data["select"])
-            console.log(getColumns(data["select"]))
+            setEditerColumns(getColumns(data["select"]))
         })
     }
     const returnQuerys = () =>{
@@ -31,8 +36,11 @@ export const SQLExrcuters = () =>{
     }
     //{[key:string]:string|number|null|undefined}[]
     const getColumns = (results:{[key:string]:string|number|null|undefined}[][]) => {
-        console.log(results[0][0],"success")
-        return Object.keys(results[0][0])
+        let columns:string[][] = []
+        results.map((result)=>{
+            columns = [...columns,Object.keys(result[0])]
+        })
+        return columns
     }
     return (
         <Contener>
@@ -48,10 +56,20 @@ export const SQLExrcuters = () =>{
                     setSentences={setSentences}></EditersAndButton>
             </EditersContener>
             <CopyDBContener>
-                <DumyC></DumyC>
+                <TextareaCreateProps
+                setColumns={setColumns}
+                columns={columns}
+                multiLineCells={multiLineCells}
+                setMultiLineCells={setMultiLineCells}/>
             </CopyDBContener>
             <TablesConetener>
-                <DumyT></DumyT>
+                <Tables
+                multiLineCells={multiLineCells}
+                setMultiLineCells={setMultiLineCells}
+                columns={columns}
+                editerColumns={editerColumns}
+                editerResults={resuluts}
+                />
             </TablesConetener>
         </Contener>
     )
