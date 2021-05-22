@@ -12,7 +12,7 @@ type Props = {
 
 export const TransformInput:VFC<Props> = (props)=>{
     const {lineColor="#3be5ae",defaultChildren="Input password"
-    ,onChange,id,value="",label="Password",onBlur} = props
+    ,onChange,id,value="",label="",onBlur} = props
     const [color,setColor] = useState("lightgray")
     const [isInput,setIsInput] = useState(false)
     const handleFocus = ()=>{

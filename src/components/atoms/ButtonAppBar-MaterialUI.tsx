@@ -7,7 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
+ 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -25,19 +26,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
     buttons?:string[]
-    onClicks?:((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)[]
+    onClick?: ((event: Reac.MouseEvent<HTMLButtonElement, MouseEvent>) => void)[] | undefined
     color?: "inherit" | "transparent" | "default" | "primary" | "secondary" | undefined
     title?:string
     futter?:boolean
-
 }
 export const ButtonAppBar:VFC<Props> = (props) => {
   const classes = useStyles();
-  const {buttons,onClicks=[console.log("")],color="secondary",title="SQL-EXECUTERS",futter=false} = props
+  const {buttons,onClick,color="secondary",title="SQL-EXECUTERS",futter=false} = props
+  console.log(onClick)
   return (
     <>
-    {futter ? (
-      <div className={classes.root}>
+     <div className={classes.root}>
       <AppBar position="static" color={color}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -47,44 +47,11 @@ export const ButtonAppBar:VFC<Props> = (props) => {
             {title}
           </Typography>
             {buttons?.map((button,i)=>(
-                onClicks[i] ? (
-                <Button color="inherit" onClick={(e)=>onClicks[i]}>
-                    {button}
-                </Button>
-                ) : (
-                <Button color="inherit">
-                    {button}
-                </Button>
-                )
+                <ContainedButtons onClick={onClick![i]} color={"primary"} value={button}></ContainedButtons>
             ))}
         </Toolbar>
       </AppBar>
     </div>
-    ):(
-      <div className={classes.root}>
-      <AppBar position="static" color={color}>
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {title}
-          </Typography>
-            {buttons?.map((button,i)=>(
-                onClicks[i] ? (
-                <Button color="inherit" onClick={(e)=>onClicks[i]}>
-                    {button}
-                </Button>
-                ) : (
-                <Button color="inherit">
-                    {button}
-                </Button>
-                )
-            ))}
-        </Toolbar>
-      </AppBar>
-    </div>
-    )}
     </>
   );
 }

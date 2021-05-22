@@ -8,10 +8,13 @@ import { removeLastChar, removeLastValue } from "functions/editerFucntions"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 import {Table as TableEditer} from "../atoms/TableEditer"
 import { TableContainer } from "@material-ui/core"
+import {TextareaInsertProps} from "../organisms/TextareInsertProps"
+type IorC = "insert" | "create"
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
     const [rows,setRows] = useState<string[][][]>([[[]]])
     const [columns, setColumns] = useState<string[][]>([[]])
+    const [IorC,setIorC] = useState<IorC>("create")
     const onClick = () =>{
         const querys = returnQuerys()
         console.log(querys)
@@ -28,7 +31,7 @@ export const SQLExrcuters = () =>{
                 let cloneValues:string[][][] = []
                 let valuesBuff:string[][]= []
                 try{
-                    
+                    console.log("results",results)
                     results.forEach((result)=>{
                         if(result[0]!==undefined){
                             console.log(result[0])
@@ -48,10 +51,13 @@ export const SQLExrcuters = () =>{
                             valuesBuff=[]
                         }
                     })
-                }catch(e){
-                    console.log(e)}
-                setRows(cloneValues)
-                setColumns(cloneColumns)
+                }catch(e){console.log(e)}
+
+                if(cloneColumns.length !== 0 && cloneValues.length !== 0){
+                    setRows(cloneValues)
+                    setColumns(cloneColumns)
+                }
+                
             }
 
 
@@ -66,22 +72,13 @@ export const SQLExrcuters = () =>{
         return querys
     }
     //{[key:string]:string|number|null|undefined}[]
-    const getColumns = (results:{[key:string]:string|number|null|undefined}[][]) => {
-        console.log(results[0][0],"success")
-        return Object.keys(results[0][0])
-    }
-    useEffect(()=>{
-        const contener = document.getElementById(`tableContener`)
-        if(contener){
-            console.log(contener.clientHeight)
-        }
-    },[columns])
+   
     return (
         <Contener>
             <HeaderContener>
                 <ButtonAppBar
-                buttons={["INSERT"]}
-                onClicks={[(e)=>console.log("I")]}/>
+                buttons={["INSERT","CREATE"]}
+                onClick={[(e)=>setIorC("insert"),(e)=>setIorC("create")]}/>
             </HeaderContener>
             <EditersContener>
                 <EditersAndButton
@@ -90,7 +87,11 @@ export const SQLExrcuters = () =>{
                     setSentences={setSentences}></EditersAndButton>
             </EditersContener>
             <CopyDBContener>
-                <TextareaCreateProps></TextareaCreateProps>
+                {IorC === "create" ? (
+                    <TextareaCreateProps></TextareaCreateProps>
+                ):(
+                    <TextareaInsertProps></TextareaInsertProps>
+                )}
             </CopyDBContener>
             <Results>Results</Results>
             <TablesConetener
@@ -119,6 +120,7 @@ const Results = styled.div`
 font-size:30px;
 margin:0px;
 font-weight:bold;
+margin-left:30px;
 `
 
 const Contener = styled.div`
@@ -138,11 +140,13 @@ grid-column:1/3;
 const EditersContener = styled.div`
 grid-row:2/3;
 grid-column:1/2;
+margin-left:30px;
 `
 
 const CopyDBContener = styled.div`
 grid-row:2/3;
 grid-column:2/3;
+margin-left:30px;
 `
 
 const TablesConetener = styled.div`
@@ -150,4 +154,5 @@ gird-row:3/4;
 grid-column:1/2;
 padding:10px;
 border:solid #d4d9df 1px;
+margin-left:30px;
 `

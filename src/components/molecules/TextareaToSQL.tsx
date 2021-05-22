@@ -84,7 +84,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 cloneClass.makeClone(row)
             })
         }
-        console.log("fasdfasdfa",cloneClass.clone)
         setMultiLineCells(cloneClass.clone)
     }
     const handleChange = (e:CellChageEvent,index:number,column:string) => {
@@ -122,8 +121,13 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     }
     const resetAndChangeUI = () => {
         setColumns(initColumns.slice())
-        setMultiLineCells([Object.assign({},initState)])
+        if(initState){
+            setMultiLineCells([Object.assign({},initState)])
+        }else{
+            setMultiLineCells([])
+        }
         
+        console.log("after",[Object.assign({},initState)])
     }
     const cellChildren = (value:string,index:number,column:string) => {
         switch(column){
@@ -178,7 +182,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     onBlur={sendTableNameAndsetColumns}
                     lineColor={"red"}
                     defaultChildren={"Input table name"}
-                    label={"Table name"}
                     value={tableName}
                     onChange={(e)=>setTableName(e.target.value)}/>
                 </InputContener>
@@ -189,12 +192,9 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     onChange={pasteToTable}
                     value={textarea}/>
             </ImageContener>
-            {/* <ResetButtonContener>
-                <ContainedButtons
-                    onClick={resetAndChangeUI}
-                    color="secondary"
-                    value={"RESET"}/>
-            </ResetButtonContener> */}
+            <TitleContener>
+            {sqlType.toLocaleUpperCase()}
+            </TitleContener>
             <TableContener>
                 <Table
                 columns={columns}
@@ -231,12 +231,19 @@ display:grid;
 width:600px;
 height:600px;
 grid-template-columns:70px 460px 70px;
-grid-template-rows:130px 250px 100px 30px 210px;
+grid-template-rows:130px 250px 100px 25px 190px;
 `
 const InputContener = styled.div`
 margin:20px;
 grid-row:1/2;
 grid-column:2/3;
+`
+
+const TitleContener = styled.div`
+grid-row:4/5;
+grid-column:1/2;
+font-size:30px;
+font-weight:bold;
 `
 const ImageContener = styled.div`
 width:310px;
@@ -260,19 +267,11 @@ height:px;
 // justify-content:center;
 padding:10px;
 `
-// const TableContener = styled.div<{height:number}>`
-// grid-row: 4 / 5;
-// grid-column: 1 / 4;
-// overflow:auto;
-// height:${props=>props.height}px;
-// // display:flex;
-// // justify-content:center;
-// padding:10px;
-// `
+
 const ButtonsContener = styled.div`
 grid-row: 3 / 4;
 grid-column: 2 / 3;
-margin-top:60px;
+margin-top:45px;
 display:flex;
 justify-content:space-around;
 `

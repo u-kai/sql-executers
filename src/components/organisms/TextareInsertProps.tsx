@@ -1,6 +1,7 @@
 import {TextareaToSQL} from "../molecules/TextareaToSQL"
 
 export const TextareaInsertProps = () => {
+    console.log("Insert")
     const url = "copyToInsert"
     const constColumns:string[] = []
     type ColumnValue = {[key:string]:string}
@@ -37,6 +38,7 @@ export const TextareaInsertProps = () => {
 
     return (
         <TextareaToSQL
+        // initState={}
         url={url}
         initColumns={constColumns}
         sqlType={sqlType}
