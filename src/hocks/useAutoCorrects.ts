@@ -1,10 +1,8 @@
 import {useState} from "react"
-import {useIsDisplayAutoCorrects} from "./useIsDisplayAutoCorrects"
 import {ChangeColorRegDatas} from "../datas/Datas"
+
 export const useAutoCorrects = () => {
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
-    const {isDisplayAutoCorrects,displayAutoCorrects,setIsDisplayAutoCorrects,notDisplayAutoCorrects} = useIsDisplayAutoCorrects()
-    
     const findAutoCorrect = (word:string) => {
         let matchAutoCorrects:string[] = []
         const wordLength = word.length - 1
@@ -34,13 +32,9 @@ export const useAutoCorrects = () => {
                 }
             })
             setAutoCorrect(([...primaryList,...noPrimaryList]))
-            return true
-            //displayAutoCorrects()
-             
+            return true             
         }
         return false
-        // notDisplayAutoCorrects()
-        // return 
     }
     return {autoCorrects, sortAutoCorrect}
 }

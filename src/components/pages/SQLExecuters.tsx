@@ -15,14 +15,12 @@ type EditerResults = {select:{[key:string]:string}[][]
                         error:SQLError[]
                         otherList:{[key:string]:string}[]}
 
-const errorType:["code","sqlState","errno","sqlMessage"] = ["code","sqlState","errno","sqlMessage"]
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
     const [rows,setRows] = useState<string[][][]>([[[]]])
     const [columns, setColumns] = useState<string[][]>([[]])
     const [IorC,setIorC] = useState<IorC>("create")
     const [errorMessages,setErrorMessages] = useState<SQLError[]>([])
-    const [message,setMessage] = useState()
     const onClick = () =>{
         const querys = returnQuerys()
         const postData = {
@@ -120,10 +118,6 @@ font-size:30px;
 margin:0px;
 font-weight:bold;
 margin-left:30px;
-`
-
-const Errors = styled.div`
-color:red;
 `
 
 const Contener = styled.div`

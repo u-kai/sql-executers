@@ -1,7 +1,6 @@
 import { useColorList } from "./useColorList"
 import {useFocusRowIndex} from "./useFocusRowIndex"
-// import {useSentences} from "./useSentences"
-import {UseSentences} from "./useSentences"
+
 
 export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.SetStateAction<string[]>>,
     colorList:string[][],setColorList:React.Dispatch<React.SetStateAction<string[][]>>) =>{

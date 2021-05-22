@@ -1,8 +1,3 @@
-// type Props = {
-//     fontFamily?:string
-//     fontSize?:number
-// }
-
 export const InputAndCopyBoxStyle =  
 `
 border-bottom-width:1px;

@@ -5,7 +5,7 @@ import {useAutoCorrectsPosition} from "./useAutoCorrectsPosition"
 
 
 export const useAutoCorrecters = () =>{
-    const {isDisplayAutoCorrects, notDisplayAutoCorrects, displayAutoCorrects,setIsDisplayAutoCorrects} = useIsDisplayAutoCorrects()
+    const {isDisplayAutoCorrects, notDisplayAutoCorrects,setIsDisplayAutoCorrects} = useIsDisplayAutoCorrects()
     const { focusAutoCorrectsIndex, initFocusAutoCorrectsIndex, 
         incrementFocusAutoCorrectsIndex, decrementFocusAutoCorrectsIndex,
         handleMouseDownToSelectAutoCorrect} = useFocusAutoCorrectIndex()
