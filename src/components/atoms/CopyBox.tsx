@@ -12,7 +12,7 @@ export type Props = {
 }
 
 export const CopyBox:VFC<Props> = (props)=>{
-    const {id, children, fontFamily='', fontSize=15,overflow} = props
+    const {id, children, fontFamily="'Tahoma'", fontSize=15,overflow} = props
     return(
         <SCopyBox 
         id={id}

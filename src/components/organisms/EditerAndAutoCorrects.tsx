@@ -174,7 +174,7 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
                 <InputAndCopyAndLabel
                 handleChange={handleChanges}
                 position={labelPosition}
-                style={{outline:"solid"}}
+                style={{fontFamily:"'Tahoma'"}}
                 handleKeyDown={handleAnyKeyOnInput}
                 onClick={moveFocusToClickedElement}
                 sentence={sentence}

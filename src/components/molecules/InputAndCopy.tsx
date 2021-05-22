@@ -6,6 +6,7 @@ import { CopySpan,Props as CopySpanProps } from "../atoms/CopySpan"
 import {StyledType} from "../styledTypes/styledType"
 import {TailSpan} from "../atoms/TailSpan"
 export type Props = {
+    fontFamily?:string
     style?:StyledType
     index:number
     colorList:string[]
@@ -20,7 +21,7 @@ export type Props = {
 
 export const InputAndCopy:VFC<Props> = (props) => {
     const {style,index,colorList,sentence,handleChange,handleKeyDown,onScroll,onClick,
-    gridColumn,gridRow} = props
+    gridColumn,gridRow,fontFamily} = props
     return(
         <Contener 
         gridColumn={gridColumn}

@@ -19,6 +19,4 @@ export const CopySpan:VFC<Props> =(props)=> {
 }
 const SCopySpan = styled.span<{color:string}>`
 color:${props=>props.color};
-
-
 `
