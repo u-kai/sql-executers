@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {VFC} from "react"
 
-type makeElement = (value:string,rowIndex:number,column:string)=>JSX.Element
+type makeElement = (value:string,rowIndex:number,columnIndex:number,column:string)=>JSX.Element
 
 type Props = {
     columns:string[]
@@ -30,10 +30,10 @@ export const Table:VFC<Props> = (props)=>{
                 {rows.map((row,rowIndex)=>
                         (
                         <STr key={`tr${bodyKey}TBody${rowIndex}`}>
-                            {columns.map((columnType,index) => 
+                            {columns.map((columnType,columnIndex) => 
                                     (
-                                    <STh key={`th${bodyKey}${index}${rowIndex}`}>
-                                        {cellElements? cellElements(row[columnType],rowIndex,columnType):(
+                                    <STh key={`th${bodyKey}${columnIndex}${rowIndex}`}>
+                                        {cellElements? cellElements(row[columnType],rowIndex,columnIndex,columnType):(
                                             
                                             `${row[columnType]}`
                                             )}

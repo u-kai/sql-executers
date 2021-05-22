@@ -26,6 +26,7 @@ export const CopyBox:VFC<Props> = (props)=>{
 const SCopyBox = styled.div<{fontFamily:string,fontSize:number,overflow:Overflow}>`
 ${InputAndCopyBoxStyle}
 position:absolute;
+overflow:auto;
 font-family:${props=>props.fontFamily};
 font-size:${props=>props.fontSize.toString()}px;
 z-index:1;

@@ -24,5 +24,5 @@
   },
   "include": [
     "src"
-, "old/EditerAndFolderIcons.tsx", "old/EditerAndAutoCorrectModify.tsx", "old/EditerAndAutoCorrectOld.tsx", "old/EditerAndFolders.tsx"  ]
+, "old/EditerAndFolderIcons.tsx", "old/EditerAndAutoCorrectModify.tsx", "old/EditerAndAutoCorrectOld.tsx", "old/EditerAndFolders.tsx", "old/TextareInsert.tsx", "old/TextareaCreate.tsx"  ]
 }

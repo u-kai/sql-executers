@@ -11,7 +11,7 @@ import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
 import { useEditer } from "hocks/useEditer"
 import { SQLErrors } from "components/atoms/SQLErrors"
 import {StatusMessage} from "../atoms/StatusMessage"
-
+import {focusElement} from "functions/focusElement"
 type Props = {
     url:string
     initColumns:string[]
@@ -45,6 +45,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     type OneLineCells = {[key:string]:string}
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     const [errors,setErrors] = useState<SQLError[]>([])
+    const [focusIndex,setFocusIndex] = useState([0][0])
     const [tableName,setTableName] = useState("")
     const [results, setResults] = useState<StatusMessage[]>([])
     const [isSuccess,setIsSuccess] = useState(false)
@@ -67,12 +68,13 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             }
             
             setColumns(columnsName)
-            let newRow:OneLineCells = Object.assign({},initState)
-            columnsName.map((column)=>{
-                newRow[column] = ""
+            if(sqlType==="insert"){
+                let newRow:OneLineCells = Object.assign({},initState)
+                columnsName.map((column)=>{
+                    newRow[column] = ""
                 })
-            setMultiLineCells([...multiLineCells,newRow])
-            // console.log("showTable",results)
+                setMultiLineCells([...multiLineCells,newRow])
+            }
         })
     }
     useEffect(()=>{
@@ -170,12 +172,14 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         setErrors([])
         setResults([])
     }
-    const cellChildren = (value:string,index:number,column:string) => {
+
+
+    const cellChildren = (value:string,rowIndex:number,columnIndex:number,column:string) => {
         switch(column){
             case "IsPrimary":
                 return(
                     <>
-                        <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue={""}>
+                        <SSelect id={`${rowIndex.toString()}_${columnIndex.toString()}`} onChange={(e)=>handleChange(e,rowIndex,column)} defaultValue={""}>
                                 <SOption value={""}></SOption>
                                 <SOption  value={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
@@ -183,7 +187,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 )
             case "Option":
                 return(
-                    <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue="">
+                    <SSelect id={`${rowIndex.toString()}_${columnIndex.toString()}`} onChange={(e)=>handleChange(e,rowIndex,column)} defaultValue="">
                         <SOption value=""></SOption>
                         <SOption value="AUTO INCREMENT">AUTO INCREMENT</SOption>
                         <SOption value="DEFAULT CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP</SOption>
@@ -192,7 +196,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 )
             case "IsNull":
                 return(
-                    <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue="NOT NULL">
+                    <SSelect id={`${rowIndex.toString()}_${columnIndex.toString()}`} onChange={(e)=>handleChange(e,rowIndex,column)} defaultValue="NOT NULL">
                         <SOption value="NOT NULL" >NOT NULL</SOption>
                             <SOption value="NULL">NULL</SOption>
                     </SSelect>
@@ -200,9 +204,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             default:
                 return(
                     <TableTextArea
+                        id={`${rowIndex.toString()}_${columnIndex.toString()}`}
                         spellCheck="false"
                         value={value}
-                        onChange={(e)=>handleChange(e,index,column)}/>
+                        onChange={(e)=>handleChange(e,rowIndex,column)}/>
                 )
             }
     }
@@ -249,7 +254,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     color="primary"
                     value={"ADD"}
                     />
-                    <ContainedButtons
+                <ContainedButtons
                     onClick={resetAndChangeUI}
                     color="secondary"
                     value={"RESET"}/>
@@ -294,10 +299,7 @@ const TableContener = styled.div`
 grid-row: 5 / 6;
 grid-column: 1 / 4;
 overflow:auto;
-//height:px;
-// display:flex;
-// justify-content:center;
-//padding:20px;
+//border:solid #d4d9df 1px;
 `
 
 const ButtonsContener = styled.div`

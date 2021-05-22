@@ -20,6 +20,6 @@ padding-left:5px;
 padding-right:5px;
 padding-top:5px;
 text-decoration:none;
-width:100%;
+width:1000px;
 border-bottom:solid #e7e7eb 1px;
 `

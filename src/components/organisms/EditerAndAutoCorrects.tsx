@@ -11,9 +11,6 @@ import {VFC} from "react"
 type Props = {
                 sentences: string[];
                 setSentences:React.Dispatch<React.SetStateAction<string[]>>
-                // addRowSentence: () => void;
-                // removeRowSentence: () => void;
-                // updateSentences: (newSenetence: string, index: number) => void;
                 colorList:string[][]
                 setColorList:React.Dispatch<React.SetStateAction<string[][]>>
             }
