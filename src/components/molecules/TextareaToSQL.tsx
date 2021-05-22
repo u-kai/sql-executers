@@ -55,7 +55,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         const sendTableName = {
             tableName:e.target.value
         }
-        console.log(sendTableName)
         postDataAndReturnResposeJson(sendTableName,"showTableColumn")
         .then((results)=>{
             console.log(results)
@@ -63,7 +62,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     }
     useEffect(()=>{
         if(initState){
-            setMultiLineCells([initState])
+            setMultiLineCells([Object.assign({},initState)])
         }
     },[])
 
@@ -140,7 +139,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const addRows = () => {
         if(isDataExist()){
             let newRow:OneLineCells = Object.assign({},initState)
-            console.log("initstate",newRow)
+            console.log("initstate",newRow,"init",initState)
             if(sqlType === "insert"){
                 initColumns.map((column)=>{
                 newRow[column] = ""
@@ -152,6 +151,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const resetAndChangeUI = () => {
         setColumns(initColumns.slice())
         if(initState){
+            console.log("resett",[Object.assign({},initState)])
             setMultiLineCells([Object.assign({},initState)])
         }else{
             setMultiLineCells([])
@@ -165,7 +165,11 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             case "IsPrimary":
                 return(
                     <>
-                        {multiLineCells[index][column] === "PRIMARY" ? (
+                    <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue={""}>
+                                <SOption value={""}></SOption>
+                                <SOption  value={"PRIMARY"}>PRIMARY</SOption>
+                            </SSelect>
+                        {/* {multiLineCells[index][column] === "PRIMARY" ? (
                             <SSelect onChange={(e)=>handleChange(e,index,column)}>
                                 <SOption value={""}></SOption>
                                 <SOption  defaultValue={"PRIMARY"}>PRIMARY</SOption>
@@ -177,13 +181,13 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                                 <SOption value={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
                             )
-                        }
+                        } */}
                     </>
                 )
             case "Option":
                 return(
-                    <SSelect onChange={(e)=>handleChange(e,index,column)}>
-                        <SOption defaultValue=""></SOption>
+                    <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue="">
+                        <SOption value=""></SOption>
                         <SOption value="AUTO INCREMENT">AUTO INCREMENT</SOption>
                         <SOption value="DEFAULT CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP</SOption>
                         <SOption value="DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP">DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</SOption>
@@ -191,9 +195,9 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 )
             case "IsNull":
                 return(
-                    <SSelect onChange={(e)=>handleChange(e,index,column)}>
-                        <SOption defaultValue="NOT NULL" >NOT NULL</SOption>
-                            <SOption value="NULL">Null</SOption>
+                    <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue="NOT NULL">
+                        <SOption value="NOT NULL" >NOT NULL</SOption>
+                            <SOption value="NULL">NULL</SOption>
                     </SSelect>
                 )
             default:
@@ -228,10 +232,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             <TableContener>
                 <SQLErrors
                 errors={errors}></SQLErrors>
-                <br></br>
                 {/* {isSuccess ? ("succsess"):(null)} */}
                 <StatusMessage statusMessage={results}></StatusMessage>
-                <br></br>
                 <Table
                 columns={columns}
                 rows={multiLineCells}
@@ -295,10 +297,10 @@ const TableContener = styled.div`
 grid-row: 5 / 6;
 grid-column: 1 / 4;
 overflow:auto;
-height:px;
+//height:px;
 // display:flex;
 // justify-content:center;
-padding:20px;
+//padding:20px;
 `
 
 const ButtonsContener = styled.div`

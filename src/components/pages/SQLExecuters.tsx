@@ -15,6 +15,7 @@ type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type EditerResults = {select:{[key:string]:string}[][]
                         error:SQLError[]
                         otherList:{[key:string]:string}[]}
+
 const errorType:["code","sqlState","errno","sqlMessage"] = ["code","sqlState","errno","sqlMessage"]
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
@@ -22,7 +23,7 @@ export const SQLExrcuters = () =>{
     const [columns, setColumns] = useState<string[][]>([[]])
     const [IorC,setIorC] = useState<IorC>("create")
     const [errorMessages,setErrorMessages] = useState<SQLError[]>([])
-
+    const [message,setMessage] = useState()
     const onClick = () =>{
         const querys = returnQuerys()
         const postData = {

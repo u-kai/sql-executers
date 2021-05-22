@@ -38,7 +38,7 @@ export const TextareaCreateProps = () =>{
         DataType:"",
         IsPrimary:"",
         Option:"",
-        IsNull:"NULL"
+        IsNull:"NOT NULL"
     } 
     return (
         <TextareaToSQL
