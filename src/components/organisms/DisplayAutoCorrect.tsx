@@ -26,7 +26,7 @@ export const DisplayAutoCorrect =():JSX.Element=>{
         setColorList([])
         setIsDisplayAutoCorrects(false)
         setAutoCorrectsIndex(0)
-        strList.map((str,i)=>{
+        strList.map((str)=>{
             let isRed = false
             for (let key in ChangeColorRegDatas){
                 const index = str.length - 1

@@ -4,7 +4,6 @@ import {SaveFileOnIcon} from "../molecules/SaveFileOnIcon"
 import styled from "styled-components"
 import {useState} from "react"
 import {BasicTextFields} from "../atoms/TextFiled_MaterialUI"
-import { StyledType } from "components/styledTypes/styledType"
 import {VFC} from "react"
 
 type Props = {
@@ -17,10 +16,6 @@ export const FolderAndEditer:VFC<Props> = (props) =>{
     const [fileName,setFileName] = useState("")
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFileName(e.target.value)
-    }
-    const styles:StyledType ={
-        width:"100px",
-        height:"30px"
     }
     
     return (

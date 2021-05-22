@@ -1,4 +1,4 @@
-import { VFC,ReactNode, ReactNodeArray } from "react"
+import { VFC,ReactNode} from "react"
 import styled from "styled-components"
 import {InputAndCopyBoxStyle} from "../commonStyles/AutoCorrectStyles"
 import { Overflow } from "../../types/StyleType"

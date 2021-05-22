@@ -23,6 +23,5 @@
     "baseUrl": "./src"
   },
   "include": [
-    "src"
-, "old/EditerAndFolderIcons.tsx", "old/EditerAndAutoCorrectModify.tsx", "old/EditerAndAutoCorrectOld.tsx", "old/EditerAndFolders.tsx", "old/TextareInsert.tsx", "old/TextareaCreate.tsx", "old/TextareaToSQLnoTable.tsx", "old/Button.tsx"  ]
+    "src"]
 }

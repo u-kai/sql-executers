@@ -19,7 +19,7 @@ type Props = {
     CloneClass:any
     sqlType:"insert"|"create"
 }
-type StatusMessage = {
+type StatusType = {
     fieldCount: number,
     affectedRows: number,
     insertId: number,
@@ -27,7 +27,7 @@ type StatusMessage = {
     serverStatus: number,
     warningStatus: number
   }
-const errorType:["code","sqlState","errno","sqlMessage"] = ["code","sqlState","errno","sqlMessage"]
+
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type Results = {
     results:[[{affectedRows: number
@@ -45,8 +45,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const [errors,setErrors] = useState<SQLError[]>([])
     const [focusIndex,setFocusIndex] = useState([0][0])
     const [tableName,setTableName] = useState("")
-    const [results, setResults] = useState<StatusMessage[]>([])
-    const [isSuccess,setIsSuccess] = useState(false)
+    const [results, setResults] = useState<StatusType[]>([])
     const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
@@ -82,7 +81,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     },[])
 
     const sendDataAndSetResults = () => {
-        setIsSuccess(false)
         const sendDatas = {
                 tableName:tableName,
                 multiLineCells:multiLineCells
@@ -90,10 +88,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         postDataAndReturnResposeJson(sendDatas,url)
         .then((results:Results)=>{
             setErrors(results["error"])
-            if(results["results"].length>0){
-                setIsSuccess(true)
-            }
-            let resultsTemp:StatusMessage[] = []
+            let resultsTemp:StatusType[] = []
             results.results.map((result)=>{
                 result.filter((value)=>{
                     if(value!==null){

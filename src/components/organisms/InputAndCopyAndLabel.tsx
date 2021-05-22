@@ -1,4 +1,4 @@
-import {InputAndCopy,Props as InputAndCopyProps} from "../molecules/InputAndCopy"
+import {InputAndCopy} from "../molecules/InputAndCopy"
 import {VFC} from "react"
 import styled from "styled-components"
 import { Label } from "components/atoms/Label"

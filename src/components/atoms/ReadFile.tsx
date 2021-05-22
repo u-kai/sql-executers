@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const ReadFile:VFC<Props> = (props) => {
-    const {texts,setTexts,colorList,setColorList} = props
+    const {setTexts,setColorList} = props
     const newColorList = (newSenetences:string[]) => {
         let clone:string[][] = []
         newSenetences.map((sentence)=>{

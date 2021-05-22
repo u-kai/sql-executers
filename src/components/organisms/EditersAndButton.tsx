@@ -1,7 +1,7 @@
 import {FolderAndEditer} from "../organisms/FolderAndEditer"
 import { ContainedButtons } from "../atoms/Bottun_MatirialUI"
 import styled from "styled-components"
-import { useState,VFC } from "react"
+import { VFC } from "react"
 
 
 
@@ -14,7 +14,6 @@ type Props = {
 
 export const EditersAndButton:VFC<Props> = (props) => {
     const {onClick,sentences,setSentences} = props
-    const [resutls, setResults] = useState<{[key:string]:[]}[]>([])
     
     return (
     <Contener>

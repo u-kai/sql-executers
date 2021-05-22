@@ -1,10 +1,9 @@
 
-import Reac,{VFC} from 'react';
+import {VFC} from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
@@ -26,16 +25,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
     buttons?:string[]
-    onClick?: ((event: Reac.MouseEvent<HTMLButtonElement, MouseEvent>) => void)[] | undefined
+    onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)[] | undefined
     color?: "inherit" | "transparent" | "default" | "primary" | "secondary" | undefined
     title?:string
     futter?:boolean
 }
 export const ButtonAppBar:VFC<Props> = (props) => {
   const classes = useStyles();
-  const {buttons,onClick,color="secondary",title="SQL-EXECUTERS",futter=false} = props
+  const {buttons,onClick,color="secondary",title="SQL-EXECUTERS"} = props
   return (
-    <>
      <div className={classes.root}>
       <AppBar position="static" color={color}>
         <Toolbar>
@@ -51,6 +49,5 @@ export const ButtonAppBar:VFC<Props> = (props) => {
         </Toolbar>
       </AppBar>
     </div>
-    </>
   );
 }
