@@ -3,12 +3,13 @@ import { Button } from "../atoms/Button"
 import {useEffect, useState} from "react"
 import {Table} from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-import {Results} from "../../types/tableTypes"
+//import {Results} from "../../types/tableTypes"
 import {VFC} from "react"
 import { TextareaAndImage } from "./TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
 import { useEditer } from "hocks/useEditer"
+import { SQLErrors } from "components/atoms/SQLErrors"
 
 
 type Props = {
@@ -20,23 +21,27 @@ type Props = {
     CloneClass:any
     sqlType:"insert"|"create"
 }
-
+const errorType:["code","sqlState","errno","sqlMessage"] = ["code","sqlState","errno","sqlMessage"]
+type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
+type Results = {
+    results:{affectedRows: number
+    fieldCount: number
+    info: string
+    insertId: number
+    serverStatus: number
+    warningStatus: number}[][]
+    error:SQLError[]
+}
 export const TextareaToSQL:VFC<Props> = (props) =>{
     const {url,initColumns,CloneClass,sqlType,initState} = props
     type OneLineCells = {[key:string]:string}
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
-    
+    const [errors,setErrors] = useState<SQLError[]>([])
     const [tableName,setTableName] = useState("")
     const [results, setResults] = useState<Results>()
     const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
-    // const heightAtOneRow = 60
-    // const [height,setHeight] = useState(2*heightAtOneRow)
-
-    // useEffect(()=>{
-    //     setHeight(multiLineCells.length * heightAtOneRow)
-    // },[multiLineCells])
     const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
         const sendTableName = {
             tableName:e.target.value
@@ -61,7 +66,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         postDataAndReturnResposeJson(sendDatas,url)
         .then((results)=>{
             console.log(results)
-            setResults(results)})
+            setErrors(results["error"])
+            setResults(results["results"])})
     }
     
     const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -126,7 +132,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         }else{
             setMultiLineCells([])
         }
-        
+        //init setResult
+        setErrors([])
         console.log("after",[Object.assign({},initState)])
     }
     const cellChildren = (value:string,index:number,column:string) => {
@@ -187,7 +194,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                 </InputContener>
             <ImageContener>
                 <TextareaAndImage
-                    
                     src={"../../../image/db.png"}
                     onChange={pasteToTable}
                     value={textarea}/>
@@ -196,6 +202,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             {sqlType.toLocaleUpperCase()}
             </TitleContener>
             <TableContener>
+                <SQLErrors
+                errors={errors}></SQLErrors>
                 <Table
                 columns={columns}
                 rows={multiLineCells}
@@ -229,9 +237,9 @@ position:absolute;
 // overflow:auto;
 display:grid;
 width:600px;
-height:600px;
+height:100%;
 grid-template-columns:70px 460px 70px;
-grid-template-rows:130px 250px 100px 25px 190px;
+grid-template-rows:130px 250px 100px 25px 1fr;
 `
 const InputContener = styled.div`
 margin:20px;

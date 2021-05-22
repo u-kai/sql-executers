@@ -9,6 +9,7 @@ import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 import {Table as TableEditer} from "../atoms/TableEditer"
 import { TableContainer } from "@material-ui/core"
 import {TextareaInsertProps} from "../organisms/TextareInsertProps"
+import { SQLErrors } from "components/atoms/SQLErrors"
 type IorC = "insert" | "create"
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type EditerResults = {select:{[key:string]:string}[][]
@@ -93,12 +94,9 @@ export const SQLExrcuters = () =>{
             id={`tableContener`}>
             {columns.map((column,i)=>(
                 <>
-                {errorMessages.map((error)=>(
-                    errorType.map((type)=>(
-                        <Errors>{type}:{error[type]}</Errors>
-                    ))
-                ))}
-                <br></br>
+                <SQLErrors
+                errors={errorMessages}
+                ></SQLErrors>
                 <TableContainer>
                 <TableEditer
                 rows={rows[i]}
