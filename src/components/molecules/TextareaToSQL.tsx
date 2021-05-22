@@ -10,7 +10,7 @@ import {TransformInput} from "../atoms/TransformInput"
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
 import { useEditer } from "hocks/useEditer"
 import { SQLErrors } from "components/atoms/SQLErrors"
-
+import {StatusMessage} from "../atoms/StatusMessage"
 
 type Props = {
     url:string
@@ -21,15 +21,23 @@ type Props = {
     CloneClass:any
     sqlType:"insert"|"create"
 }
+type StatusMessage = {
+    fieldCount: number,
+    affectedRows: number,
+    insertId: number,
+    info: string,
+    serverStatus: number,
+    warningStatus: number
+  }
 const errorType:["code","sqlState","errno","sqlMessage"] = ["code","sqlState","errno","sqlMessage"]
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type Results = {
-    results:{affectedRows: number
+    results:[[{affectedRows: number
     fieldCount: number
     info: string
     insertId: number
     serverStatus: number
-    warningStatus: number}[][]
+    warningStatus: number},null]]
     error:SQLError[]
 }
 export const TextareaToSQL:VFC<Props> = (props) =>{
@@ -38,7 +46,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     const [errors,setErrors] = useState<SQLError[]>([])
     const [tableName,setTableName] = useState("")
-    const [results, setResults] = useState<Results>()
+    const [results, setResults] = useState<StatusMessage[]>([])
+    const [isSuccess,setIsSuccess] = useState(false)
     const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
@@ -59,15 +68,30 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     },[])
 
     const sendDataAndSetResults = () => {
+        setIsSuccess(false)
         const sendDatas = {
                 tableName:tableName,
                 multiLineCells:multiLineCells
             }
         postDataAndReturnResposeJson(sendDatas,url)
-        .then((results)=>{
+        .then((results:Results)=>{
             console.log(results)
             setErrors(results["error"])
-            setResults(results["results"])})
+            if(results["results"].length>0){
+                setIsSuccess(true)
+            }
+            console.log(results["results"])
+            let resultsTemp:StatusMessage[] = []
+            results.results.map((result)=>{
+                result.filter((value)=>{
+                    if(value!==null){
+                        resultsTemp = [...resultsTemp,value]
+                    }
+                })
+            })
+            setResults(resultsTemp)
+        }
+            )
     }
     
     const pasteToTable = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -134,7 +158,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         }
         //init setResult
         setErrors([])
-        console.log("after",[Object.assign({},initState)])
+        setResults([])
     }
     const cellChildren = (value:string,index:number,column:string) => {
         switch(column){
@@ -204,6 +228,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             <TableContener>
                 <SQLErrors
                 errors={errors}></SQLErrors>
+                <br></br>
+                {/* {isSuccess ? ("succsess"):(null)} */}
+                <StatusMessage statusMessage={results}></StatusMessage>
+                <br></br>
                 <Table
                 columns={columns}
                 rows={multiLineCells}
@@ -239,7 +267,7 @@ display:grid;
 width:600px;
 height:100%;
 grid-template-columns:70px 460px 70px;
-grid-template-rows:130px 250px 100px 25px 1fr;
+grid-template-rows:130px 250px 100px 40px 1fr;
 `
 const InputContener = styled.div`
 margin:20px;
@@ -262,10 +290,7 @@ grid-row: 2 / 3;
 grid-column: 2 / 3;
 `
 
-const ResetButtonContener = styled.div`
-grid-row: 3 / 4;
-grid-column: 2 / 3;
-`
+
 const TableContener = styled.div`
 grid-row: 5 / 6;
 grid-column: 1 / 4;
@@ -273,7 +298,7 @@ overflow:auto;
 height:px;
 // display:flex;
 // justify-content:center;
-padding:10px;
+padding:20px;
 `
 
 const ButtonsContener = styled.div`

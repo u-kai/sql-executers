@@ -34,7 +34,6 @@ type Props = {
 export const ButtonAppBar:VFC<Props> = (props) => {
   const classes = useStyles();
   const {buttons,onClick,color="secondary",title="SQL-EXECUTERS",futter=false} = props
-  console.log(onClick)
   return (
     <>
      <div className={classes.root}>
