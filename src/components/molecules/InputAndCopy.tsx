@@ -3,7 +3,7 @@ import {CopyBox} from "../atoms/CopyBox"
 import styled from "styled-components"
 import {VFC} from "react"
 import { CopySpan} from "../atoms/CopySpan"
-import {StyledType} from "../styledTypes/styledType"
+import {StyledType} from "../../types/styledTypes/styledType"
 import {TailSpan} from "../atoms/TailSpan"
 export type Props = {
     fontFamily?:string

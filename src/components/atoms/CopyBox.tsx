@@ -1,6 +1,6 @@
 import { VFC,ReactNode} from "react"
 import styled from "styled-components"
-import {InputAndCopyBoxStyle} from "../commonStyles/AutoCorrectStyles"
+import {InputAndCopyBoxStyle} from "../../types/styledTypes/commonStyles/AutoCorrectStyles"
 import { Overflow } from "../../types/StyleType"
 
 export type Props = {

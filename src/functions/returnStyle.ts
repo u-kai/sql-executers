@@ -1,4 +1,4 @@
-import {StyledType} from "../components/styledTypes/styledType"
+import {StyledType} from "../types/styledTypes/styledType"
 
 export const returnStyle = (props:StyledType | undefined):string|undefined => {
     if(props){

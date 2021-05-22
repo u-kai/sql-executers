@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {VFC} from "react"
-import {StyledType} from "../styledTypes/styledType"
+import {StyledType} from "../../types/styledTypes/styledType"
 import {returnStyle} from "../../functions/returnStyle"
 type Props = {
     style?:StyledType

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {VFC} from "react"
-import {InputAndCopyBoxStyle} from "../commonStyles/AutoCorrectStyles"
-import {StyledType} from "../styledTypes/styledType"
+import {InputAndCopyBoxStyle} from "../../types/styledTypes/commonStyles/AutoCorrectStyles"
+import {StyledType} from "../../types/styledTypes/styledType"
 import {returnStyle} from "../../functions/returnStyle"
 
 

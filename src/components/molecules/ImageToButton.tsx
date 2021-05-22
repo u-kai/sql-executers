@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useState } from "react"
 import {Image} from "../atoms/Image"
-import {StyledType} from "../styledTypes/styledType"
+import {StyledType} from "../../types/styledTypes/styledType"
 import {VFC} from "react"
 import { returnStyle } from "functions/returnStyle"
 

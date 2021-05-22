@@ -2,7 +2,7 @@ import {InputAndCopy} from "../molecules/InputAndCopy"
 import {VFC} from "react"
 import styled from "styled-components"
 import { Label } from "components/atoms/Label"
-import {StyledType} from "components/styledTypes/styledType"
+import {StyledType} from "types/styledTypes/styledType"
 type Props = {
     position?:number
     style?:StyledType
