@@ -1,4 +1,4 @@
-import {VFC,useState} from "react"
+import {VFC} from "react"
 import {AutoCorrect} from "../atoms/AutoCorrect"
 import {AutoCorrectBox} from "../atoms/AutoCorrectBox"
 
@@ -10,17 +10,11 @@ type Props = {
     }
     handleMouseDown:(e:React.MouseEvent<HTMLSpanElement>)=>void
     focusAutoCorrectsIndex:number
-    // setFocusAutoCorrectsIndex:React.Dispatch<React.SetStateAction<number>>
     handleClick:(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
 }
 export const AutoCorrects:VFC<Props> = (props) =>{
     const {autoCorrects, position,handleClick,
         handleMouseDown,focusAutoCorrectsIndex,} = props
-    // const [autoCorrectFocusIndex,setAutoCorrectFocusIndex] = useState(0)
-    // const handleMouseDown = (e:React.MouseEvent<HTMLSpanElement>)=>{
-    //     const hoverId = e.currentTarget.id    
-    //     setAutoCorrectFocusIndex(parseInt(hoverId.replace("hover","")))
-    // }
     return(
         <AutoCorrectBox id="AutoCorrectsBox" posi={position}>
             {autoCorrects.map((value,i)=>(

@@ -1,17 +1,15 @@
 import styled from "styled-components"
-import { Button } from "../atoms/Button"
 import {useEffect, useState} from "react"
 import {Table} from "../atoms/Table"
 import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-//import {Results} from "../../types/tableTypes"
 import {VFC} from "react"
-import { TextareaAndImage } from "./TextareaAndImage"
+import { TextareaAndImage } from "../molecules/TextareaAndImage"
 import {TransformInput} from "../atoms/TransformInput"
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
-import { useEditer } from "hocks/useEditer"
 import { SQLErrors } from "components/atoms/SQLErrors"
 import {StatusMessage} from "../atoms/StatusMessage"
 import {focusElement} from "functions/focusElement"
+
 type Props = {
     url:string
     initColumns:string[]

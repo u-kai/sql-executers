@@ -1,4 +1,4 @@
-import {TextareaToSQL} from "../molecules/TextareaToSQL"
+import {TextareaToSQL} from "./TextareaToSQL"
 
 const url = "copyToCreate"
 const constColumns = ["DataName","DataType","IsPrimary","Option","IsNull"]

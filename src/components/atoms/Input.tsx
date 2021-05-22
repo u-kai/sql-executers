@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import {VFC} from "react"
 import {InputAndCopyBoxStyle} from "../commonStyles/AutoCorrectStyles"
-import {Overflow} from "../../types/StyleType"
 import {StyledType} from "../styledTypes/styledType"
 import {returnStyle} from "../../functions/returnStyle"
 

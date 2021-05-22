@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import {VFC} from "react"
-import { ChangeColorRegDatas } from "../../datas/Datas"
 export type Props = {
     id?:string
     color:string

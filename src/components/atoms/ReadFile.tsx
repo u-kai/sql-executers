@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useEffect, useState, VFC} from "react"
+import {VFC} from "react"
 import { wordDivide } from "functions/editerFucntions"
 import { whatWordColor } from "hocks/useColorList"
 

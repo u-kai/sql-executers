@@ -2,20 +2,17 @@ import {FolderAndEditer} from "../organisms/FolderAndEditer"
 import { ContainedButtons } from "../atoms/Bottun_MatirialUI"
 import styled from "styled-components"
 import { useState,VFC } from "react"
-import {postDataAndReturnResposeJson} from "functions/tableFunctions"
-import { removeLastChar, removeLastValue } from "functions/editerFucntions"
+
 
 
 type Props = {
     onClick: () => void
     sentences:string[]
     setSentences: React.Dispatch<React.SetStateAction<string[]>>
-    //setResults:
 }
 
 
 export const EditersAndButton:VFC<Props> = (props) => {
-    // const [sentences,setSentences] = useState([""])
     const {onClick,sentences,setSentences} = props
     const [resutls, setResults] = useState<{[key:string]:[]}[]>([])
     

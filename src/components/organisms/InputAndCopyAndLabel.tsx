@@ -1,4 +1,3 @@
-import { FiberPinTwoTone } from "@material-ui/icons"
 import {InputAndCopy,Props as InputAndCopyProps} from "../molecules/InputAndCopy"
 import {VFC} from "react"
 import styled from "styled-components"

@@ -1,8 +1,7 @@
 import React,{VFC} from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import {StyledType} from "../styledTypes/styledType"
-// import {returnStyel} from "../../functions/returnStyel"
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {

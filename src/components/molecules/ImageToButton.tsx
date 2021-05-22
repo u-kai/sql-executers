@@ -1,4 +1,3 @@
-import {ReadFile} from "../atoms/ReadFile"
 import styled from "styled-components"
 import { useState } from "react"
 import {Image} from "../atoms/Image"

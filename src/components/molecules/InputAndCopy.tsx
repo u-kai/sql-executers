@@ -1,8 +1,8 @@
-import {Input,Props as InputProps} from "../atoms/Input"
-import {CopyBox, Props as CopyBoxProps} from "../atoms/CopyBox"
+import {Input} from "../atoms/Input"
+import {CopyBox} from "../atoms/CopyBox"
 import styled from "styled-components"
-import {useState, VFC} from "react"
-import { CopySpan,Props as CopySpanProps } from "../atoms/CopySpan"
+import {VFC} from "react"
+import { CopySpan} from "../atoms/CopySpan"
 import {StyledType} from "../styledTypes/styledType"
 import {TailSpan} from "../atoms/TailSpan"
 export type Props = {

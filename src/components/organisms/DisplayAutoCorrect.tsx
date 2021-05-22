@@ -1,4 +1,4 @@
-import { VFC,ReactNode, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {ChangeColorRegDatas} from "../../datas/Datas"
 import {Contener} from "../atoms/Contener"
 import {Input} from "../atoms/Input"

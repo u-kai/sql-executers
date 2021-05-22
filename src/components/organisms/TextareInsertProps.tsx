@@ -1,4 +1,4 @@
-import {TextareaToSQL} from "../molecules/TextareaToSQL"
+import {TextareaToSQL} from "./TextareaToSQL"
 
 export const TextareaInsertProps = () => {
     console.log("Insert")

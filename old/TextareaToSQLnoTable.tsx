@@ -1,13 +1,13 @@
 import styled from "styled-components"
-import { Button } from "../atoms/Button"
+import { Button } from "./Button"
 import {useEffect, useState} from "react"
-import {Table} from "../atoms/Table"
-import {postDataAndReturnResposeJson,caseNotTable} from "../../functions/tableFunctions"
-import {Results} from "../../types/tableTypes"
+import {Table} from "../src/components/atoms/Table"
+import {postDataAndReturnResposeJson,caseNotTable} from "../src/functions/tableFunctions"
+import {Results} from "../src/types/tableTypes"
 import {VFC} from "react"
-import { TextareaAndImage } from "./TextareaAndImage"
-import {TransformInput} from "../atoms/TransformInput"
-import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
+import { TextareaAndImage } from "../src/components/molecules/TextareaAndImage"
+import {TransformInput} from "../src/components/atoms/TransformInput"
+import {ContainedButtons} from "../src/components/atoms/Bottun_MatirialUI"
 
 
 type Props = {

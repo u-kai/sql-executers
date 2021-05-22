@@ -1,7 +1,7 @@
 import { VFC,useEffect,useState } from "react"
 import styled from "styled-components"
 import { JsxElement } from "typescript"
-import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../../functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDown"
+import {caseNotDisplayAutoCorrectsHandleKeyDown} from "../src/functions/onKeyDown/caseNotDisplayAutoCorrectsHandleKeyDown"
 
 type Props = {
     children:JSX.Element
