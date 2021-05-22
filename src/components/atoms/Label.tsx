@@ -14,7 +14,7 @@ export type Props = {
     gridRow?:string
 }
 export const Label:VFC<Props> = (props)=>{
-    const {id, htmlFor, textContent,fontSize=15,fontFamily="Meiryo",
+    const {id, htmlFor, textContent,fontSize=15,fontFamily="",
             width=20,height=30,position,gridColumn,gridRow} = props
     return(
         <SBox

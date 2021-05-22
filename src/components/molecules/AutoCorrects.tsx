@@ -25,8 +25,9 @@ export const AutoCorrects:VFC<Props> = (props) =>{
         <AutoCorrectBox id="AutoCorrectsBox" posi={position}>
             {autoCorrects.map((value,i)=>(
                 <AutoCorrect 
-                    opacity={i===focusAutoCorrectsIndex ? 0.3 : 1}
-                    color={i===focusAutoCorrectsIndex ? "yellow":"white"}
+                    backgroundColor={i===focusAutoCorrectsIndex ? "white" : "black"}
+                    opacity={i===focusAutoCorrectsIndex ? 1 : 1}
+                    color={i===focusAutoCorrectsIndex ? "black":"white"}
                     id={`hover${i}`} 
                     handleClick={handleClick} 
                     handleMouseDown={handleMouseDown} 

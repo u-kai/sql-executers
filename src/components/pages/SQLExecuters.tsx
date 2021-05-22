@@ -10,41 +10,38 @@ import {Table as TableEditer} from "../atoms/TableEditer"
 import { TableContainer } from "@material-ui/core"
 import {TextareaInsertProps} from "../organisms/TextareInsertProps"
 type IorC = "insert" | "create"
+type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
+type EditerResults = {select:{[key:string]:string}[][]
+                        error:SQLError[]
+                        otherList:{[key:string]:string}[]}
+const errorType:["code","sqlState","errno","sqlMessage"] = ["code","sqlState","errno","sqlMessage"]
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
     const [rows,setRows] = useState<string[][][]>([[[]]])
     const [columns, setColumns] = useState<string[][]>([[]])
     const [IorC,setIorC] = useState<IorC>("create")
+    const [errorMessages,setErrorMessages] = useState<SQLError[]>([])
+
     const onClick = () =>{
         const querys = returnQuerys()
-        console.log(querys)
         const postData = {
             querys:querys
         }
         const url = "editerhandler"
         postDataAndReturnResposeJson(postData,url)
-        .then((data:{select:{[key:string]:string}[][]})=>{
+        .then((data:EditerResults)=>{
             if(data["select"].length !== 0){
-                console.log(data["select"])
                 const results = new Map<string,Object[]>(Object.entries(data["select"]))
                 let cloneColumns:string[][] = []
                 let cloneValues:string[][][] = []
                 let valuesBuff:string[][]= []
                 try{
-                    console.log("results",results)
                     results.forEach((result)=>{
                         if(result[0]!==undefined){
-                            console.log(result[0])
                             const columnsList = Object.keys(result[0])
-                            // console.log("nulllll2")
                             cloneColumns.push(columnsList)
                             result.map((value)=>{
-                                // console.log("nulllll3")
-                                if(value === null){
-                                    console.log("nulllll")
-                                }
                                 const dataValuse:string[] = Object.values(value)
-                                // console.log("nulllll4")
                                 valuesBuff.push(dataValuse)
                             })
                             cloneValues.push(valuesBuff)
@@ -52,15 +49,14 @@ export const SQLExrcuters = () =>{
                         }
                     })
                 }catch(e){console.log(e)}
-
                 if(cloneColumns.length !== 0 && cloneValues.length !== 0){
                     setRows(cloneValues)
                     setColumns(cloneColumns)
                 }
-                
             }
-
-
+            if(data["error"]){
+                setErrorMessages(data["error"])
+            }
         })
     }
     const returnQuerys = () =>{
@@ -71,7 +67,6 @@ export const SQLExrcuters = () =>{
         const querys = oneLineQuery.split(";")
         return querys
     }
-    //{[key:string]:string|number|null|undefined}[]
    
     return (
         <Contener>
@@ -98,6 +93,12 @@ export const SQLExrcuters = () =>{
             id={`tableContener`}>
             {columns.map((column,i)=>(
                 <>
+                {errorMessages.map((error)=>(
+                    errorType.map((type)=>(
+                        <Errors>{type}:{error[type]}</Errors>
+                    ))
+                ))}
+                <br></br>
                 <TableContainer>
                 <TableEditer
                 rows={rows[i]}
@@ -121,6 +122,10 @@ font-size:30px;
 margin:0px;
 font-weight:bold;
 margin-left:30px;
+`
+
+const Errors = styled.div`
+color:red;
 `
 
 const Contener = styled.div`

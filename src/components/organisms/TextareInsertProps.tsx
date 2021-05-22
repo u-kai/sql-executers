@@ -38,7 +38,6 @@ export const TextareaInsertProps = () => {
 
     return (
         <TextareaToSQL
-        // initState={}
         url={url}
         initColumns={constColumns}
         sqlType={sqlType}

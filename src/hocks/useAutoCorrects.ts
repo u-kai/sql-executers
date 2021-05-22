@@ -1,6 +1,6 @@
 import {useState} from "react"
 import {useIsDisplayAutoCorrects} from "./useIsDisplayAutoCorrects"
-import {ChangeColorRegDatas} from "../datas/ChangeColorRegDatas"
+import {ChangeColorRegDatas} from "../datas/Datas"
 export const useAutoCorrects = () => {
     const [autoCorrects, setAutoCorrect] = useState<string[]>([])
     const {isDisplayAutoCorrects,displayAutoCorrects,setIsDisplayAutoCorrects,notDisplayAutoCorrects} = useIsDisplayAutoCorrects()
