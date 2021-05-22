@@ -54,16 +54,17 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             tableName:e.target.value
         }
         postDataAndReturnResposeJson(sendTableName,"showTableColumn")
-        .then((results:{"results":[[{"Field":string}],[{[key:string]:string}]]})=>{
+        .then((results:{"results":[[{"Field":string,"Default":string}],[{[key:string]:string}]]})=>{
             let columnsName:string[] = []
             try{
                 results.results[0].map((filed)=>{
-                    columnsName = [...columnsName,filed.Field]
+                    if(filed.Default === null){
+                        columnsName = [...columnsName,filed.Field]
+                    }
                 })
             }catch(e){
                 console.log(e)
             }
-            
             setColumns(columnsName)
             if(sqlType==="insert"){
                 let newRow:OneLineCells = Object.assign({},initState)

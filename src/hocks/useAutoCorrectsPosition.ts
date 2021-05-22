@@ -6,10 +6,11 @@ export const useAutoCorrectsPosition = () => {
     const getAutoCorrectsPosition = (focusRowIndex:number,prefixId="tailPosition") => {
         const tail = document.getElementById(`${prefixId}${focusRowIndex}`)
         const ajustTop = 180
+        const ajustleft = 30
         let x = 0
         let y = 0
         if(tail){
-            x = window.pageXOffset + (tail.getBoundingClientRect().left)
+            x = window.pageXOffset + (tail.getBoundingClientRect().left) -ajustleft
             y = window.pageYOffset + (tail.getBoundingClientRect().top) - ajustTop
         }
         

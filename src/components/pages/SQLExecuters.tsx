@@ -13,7 +13,7 @@ type IorC = "insert" | "create"
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type EditerResults = {select:{[key:string]:string}[][]
                         error:SQLError[]
-                        otherList:{[key:string]:string}[]}
+                        other:{[key:string]:string}[][]}
 
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
@@ -21,7 +21,12 @@ export const SQLExrcuters = () =>{
     const [columns, setColumns] = useState<string[][]>([[]])
     const [IorC,setIorC] = useState<IorC>("create")
     const [errorMessages,setErrorMessages] = useState<SQLError[]>([])
+    const [otherResults,setOtherResults] = useState<string[]>([])
     const onClick = () =>{
+        setErrorMessages([])
+        setOtherResults([])
+        setColumns([[]])
+        setRows([[[]]])
         const querys = returnQuerys()
         const postData = {
             querys:querys
@@ -56,6 +61,19 @@ export const SQLExrcuters = () =>{
             if(data["error"]){
                 setErrorMessages(data["error"])
             }
+            if(data["other"]){
+                console.log(otherResults)
+                let otherList:string[] = []
+                data["other"].map((others)=>{
+                    others.map((other)=>{
+                        Object.keys(other).map((key)=>{
+                            const displayOther = `${key}:${other[key]}`
+                            otherList = [...otherList,displayOther]
+                        })
+                    })
+                })
+                setOtherResults(otherList)
+            }
         })
     }
     const returnQuerys = () =>{
@@ -88,6 +106,7 @@ export const SQLExrcuters = () =>{
                 )}
             </CopyDBContener>
             <Results>Results</Results>
+            <p>{otherResults}</p>
             <TablesConetener
             id={`tableContener`}>
             {columns.map((column,i)=>(
@@ -95,6 +114,9 @@ export const SQLExrcuters = () =>{
                 <SQLErrors
                 errors={errorMessages}
                 ></SQLErrors>
+                {otherResults.map((other,i)=>(
+                    <OtherResults key={`${other}${i}`}>{other}</OtherResults>
+                    ))}
                 <TableContainer>
                 <TableEditer
                 rows={rows[i]}
@@ -128,7 +150,9 @@ height:100%;
 grid-template-rows:70px 480px 1fr;
 grid-template-columns:50% 50%;
 `
+const OtherResults = styled.div`
 
+`
 
 const HeaderContener = styled.div`
 grid-row:1/2;

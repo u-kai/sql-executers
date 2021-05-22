@@ -115,7 +115,6 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
                 CaseNotDisplayAutoCorrectsHandleKeyDown[e.key]()
             }
         }catch(e){
-            //console.log(e)
         }
     }
             
@@ -147,7 +146,7 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
         const input = document.getElementById(`input${focusRowIndex}`)
         if(scroll && input){
             let disty = rowPosition[focusRowIndex]
-            scroll.scroll(0,disty)
+            scroll.scroll(-2000,disty)
         }
     },[focusRowIndex])
 
