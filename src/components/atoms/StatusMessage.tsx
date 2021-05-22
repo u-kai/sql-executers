@@ -21,8 +21,8 @@ export const StatusMessage:VFC<Props> = (props) => {
     return (
         <>
         {statusMessage.map((message)=>(
-            messageType.map((key)=>(
-                <SQLStatusMessage>{key}:{message[key].toString()}</SQLStatusMessage>
+            messageType.map((key,i)=>(
+                <SQLStatusMessage key={`${key}${i}`}>{key}:{message[key].toString()}</SQLStatusMessage>
             ))
         ))}
         </>

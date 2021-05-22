@@ -56,8 +56,23 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             tableName:e.target.value
         }
         postDataAndReturnResposeJson(sendTableName,"showTableColumn")
-        .then((results)=>{
-            console.log(results)
+        .then((results:{"results":[[{"Field":string}],[{[key:string]:string}]]})=>{
+            let columnsName:string[] = []
+            try{
+                results.results[0].map((filed)=>{
+                    columnsName = [...columnsName,filed.Field]
+                })
+            }catch(e){
+                console.log(e)
+            }
+            
+            setColumns(columnsName)
+            let newRow:OneLineCells = Object.assign({},initState)
+            columnsName.map((column)=>{
+                newRow[column] = ""
+                })
+            setMultiLineCells([...multiLineCells,newRow])
+            // console.log("showTable",results)
         })
     }
     useEffect(()=>{
@@ -74,12 +89,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             }
         postDataAndReturnResposeJson(sendDatas,url)
         .then((results:Results)=>{
-            console.log(results)
             setErrors(results["error"])
             if(results["results"].length>0){
                 setIsSuccess(true)
             }
-            console.log(results["results"])
             let resultsTemp:StatusMessage[] = []
             results.results.map((result)=>{
                 result.filter((value)=>{
@@ -104,7 +117,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             setColumns(rows[0].split("\t"))
             rows.map((row,i)=>{
                 if(i!==0){
-                    console.log("row",row)
                     cloneClass.makeClone(row)
                 }
             })
@@ -151,12 +163,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const resetAndChangeUI = () => {
         setColumns(initColumns.slice())
         if(initState){
-            console.log("resett",[Object.assign({},initState)])
             setMultiLineCells([Object.assign({},initState)])
         }else{
             setMultiLineCells([])
         }
-        //init setResult
         setErrors([])
         setResults([])
     }
@@ -165,23 +175,10 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
             case "IsPrimary":
                 return(
                     <>
-                    <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue={""}>
+                        <SSelect onChange={(e)=>handleChange(e,index,column)} defaultValue={""}>
                                 <SOption value={""}></SOption>
                                 <SOption  value={"PRIMARY"}>PRIMARY</SOption>
                             </SSelect>
-                        {/* {multiLineCells[index][column] === "PRIMARY" ? (
-                            <SSelect onChange={(e)=>handleChange(e,index,column)}>
-                                <SOption value={""}></SOption>
-                                <SOption  defaultValue={"PRIMARY"}>PRIMARY</SOption>
-                            </SSelect>
-                            ):
-                            (
-                            <SSelect onChange={(e)=>handleChange(e,index,column)}>
-                                <SOption defaultValue=""></SOption>
-                                <SOption value={"PRIMARY"}>PRIMARY</SOption>
-                            </SSelect>
-                            )
-                        } */}
                     </>
                 )
             case "Option":
@@ -227,20 +224,20 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     value={textarea}/>
             </ImageContener>
             <TitleContener>
-            {sqlType.toLocaleUpperCase()}
+                {sqlType.toLocaleUpperCase()}
             </TitleContener>
             <TableContener>
                 <SQLErrors
-                errors={errors}></SQLErrors>
-                {/* {isSuccess ? ("succsess"):(null)} */}
-                <StatusMessage statusMessage={results}></StatusMessage>
+                    errors={errors}/>
+                <StatusMessage 
+                    statusMessage={results}/>
                 <Table
-                columns={columns}
-                rows={multiLineCells}
-                cellElements={cellChildren}
-                headerKey={`header${sqlType}`}
-                bodyKey={`body${sqlType}`}
-                tableKey={`table${sqlType}`}/> 
+                    columns={columns}
+                    rows={multiLineCells}
+                    cellElements={cellChildren}
+                    headerKey={`header${sqlType}`}
+                    bodyKey={`body${sqlType}`}
+                    tableKey={`table${sqlType}`}/> 
             </TableContener>
             <ButtonsContener>
                 <ContainedButtons 

@@ -11,8 +11,8 @@ export const SQLErrors:VFC<Props> = (props) =>{
     return (
         <>
         {errors.map((error)=>(
-            errorType.map((type)=>(
-                <Errors>{type}:{error[type]}</Errors>
+            errorType.map((type,i)=>(
+                <Errors key={`${type}${i}`}>{type}:{error[type]}</Errors>
             ))
         ))}
         <br></br>
