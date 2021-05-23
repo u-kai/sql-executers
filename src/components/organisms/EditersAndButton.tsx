@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { VFC } from "react"
 import { sentencesState } from "store/sentences";
 import {useRecoilState} from "recoil"
-const [sentences,setSentences] = useRecoilState(sentencesState)
+
 
 type Props = {
     onClick: () => void
@@ -15,8 +15,8 @@ type Props = {
 
 export const EditersAndButton:VFC<Props> = (props) => {
     const {onClick} = props
-    
-    return (
+    const [sentences,setSentences] = useRecoilState(sentencesState)  
+    return ( 
     <Contener>
     <ButtonContener>
     <ContainedButtons

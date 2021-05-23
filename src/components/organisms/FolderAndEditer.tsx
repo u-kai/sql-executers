@@ -5,13 +5,16 @@ import styled from "styled-components"
 import {useState} from "react"
 import {BasicTextFields} from "../atoms/TextFiled_MaterialUI"
 import {VFC} from "react"
+import { sentencesState } from "store/sentences";
+import {useRecoilState} from "recoil"
 
 type Props = {
     sentences:string[]
     setSentences:React.Dispatch<React.SetStateAction<string[]>>
 }
 export const FolderAndEditer:VFC<Props> = (props) =>{
-    const {sentences, setSentences} = props
+    const [sentences,setSentences] = useRecoilState(sentencesState)
+    //const {sentences, setSentences} = props
     const [colorList,setColorList] = useState<string[][]>([[]])
     const [fileName,setFileName] = useState("")
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -8,7 +8,7 @@ import {wordDivide, deleteLastWord} from "functions/editerFucntions"
 import { sentencesState } from "store/sentences";
 import {useRecoilState} from "recoil"
 import {VFC} from "react"
-const [sentences,setSentences] = useRecoilState(sentencesState)
+
 type Props = {
                 sentences: string[];
                 setSentences:React.Dispatch<React.SetStateAction<string[]>>
@@ -18,13 +18,14 @@ type Props = {
 
 
 export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
+    const [sentences,setSentences] = useRecoilState(sentencesState)
     //const [sentences,setSentences] = useRecoilState(sentencesState)
     const {colorList,setColorList} = props
     const { focusRowIndex, updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
         focusElement, moveFocusToClickedElement,
         incrementFocusRowIndex, decrementFocusRowIndex,
-        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer(sentences,setSentences,colorList,setColorList)
+        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer(colorList,setColorList)
     const {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,
         getAndSetAutoCorrectsPosition, autoCorrectsPosition, focusAutoCorrectsIndex,setIsDisplayAutoCorrects,
         autoCorrects, isDisplayAutoCorrects, incrementFocusAutoCorrectsIndex,decrementFocusAutoCorrectsIndex} = useAutoCorrecters()
@@ -101,6 +102,7 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
         },
         "Backspace":()=>{
             if(isFocusRowSentencesNull() && !isFocusRowIndexInit()){
+                console.log("!!!!!!!!!!!!!")
                 if(isFocusRowIndexEnd()){
                     removeRowDatas()
                 }
@@ -143,6 +145,8 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
     },[sentences.length])
 
     useEffect(()=>{
+        console.log("useEffect",focusRowIndex)
+        console.log("input"+focusRowIndex.toString())
         focusElement("input"+focusRowIndex.toString())
         const scroll = document.getElementById("contener")
         const input = document.getElementById(`input${focusRowIndex}`)
@@ -180,7 +184,6 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
                 index={rowIndex}/>
             ))}
         </Contener>
-            
     )
 }
 const Contener = styled.div<{height:number}>`

@@ -1,13 +1,15 @@
 import { useColorList } from "./useColorList"
 import {useFocusRowIndex} from "./useFocusRowIndex"
+import { sentencesState } from "store/sentences";
+import {useRecoilState} from "recoil"
 
 
-export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.SetStateAction<string[]>>,
+export const useEditer = (
     colorList:string[][],setColorList:React.Dispatch<React.SetStateAction<string[][]>>) =>{
     const removeLastValue = (list:string[]) => {
         return list.filter((_:string,i:number)=>i!==list.length-1)
     }
-
+    const [sentences,setSentences] = useRecoilState(sentencesState)
     const addRowSentence = () => {
         setSentences([...sentences,""])
     }
@@ -15,8 +17,11 @@ export const useEditer = (sentences:string[],setSentences:React.Dispatch<React.S
         setSentences(removeLastValue(sentences))
     }
     const updateSentences = (newCharacter:string,index:number) => {
-        sentences[index] = newCharacter
-        setSentences([...sentences])
+        console.log(index,newCharacter)
+        let clone = sentences.slice() 
+        clone[index] = newCharacter
+        console.log(clone)
+        setSentences([...clone])
     }     
     const { 
             addRowColorList, 

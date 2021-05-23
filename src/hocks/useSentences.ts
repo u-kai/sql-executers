@@ -1,4 +1,6 @@
 import {useState} from "react"
+import { sentencesState } from "store/sentences";
+import {useRecoilState} from "recoil"
 
 export type UseSentences = ()=>{
     sentences: string[];
@@ -8,7 +10,8 @@ export type UseSentences = ()=>{
     updateSentences: (newCharacter: string, index: number) => void;
 }
 export const useSentences:UseSentences = () => {
-    const [sentences, setSentences] = useState<string[]>([""])
+    //const [sentences, setSentences] = useState<string[]>([""])
+    const [sentences,setSentences] = useRecoilState(sentencesState)
 
     const addRowSentence = () => {
         setSentences([...sentences,""])
