@@ -1,7 +1,10 @@
 import { SQLExrcuters } from "components/pages/SQLExecuters";
+import {RecoilRoot} from "recoil"
 function App() {
   return (
-    <SQLExrcuters></SQLExrcuters>
+    <RecoilRoot>
+      <SQLExrcuters/>
+    </RecoilRoot>
   );
 }
 
