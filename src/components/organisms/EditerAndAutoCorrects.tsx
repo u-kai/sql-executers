@@ -5,7 +5,8 @@ import styled from "styled-components"
 import { useEditer } from "hocks/useEditer"
 import {useAutoCorrecters} from "hocks/useAutoCorrecters"
 import {wordDivide, deleteLastWord} from "functions/editerFucntions"
-
+import { sentencesState } from "store/sentences";
+import {useRecoilState} from "recoil"
 import {VFC} from "react"
 
 type Props = {
@@ -17,7 +18,8 @@ type Props = {
 
 
 export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
-    const {sentences,setSentences,colorList,setColorList} = props
+    const [sentences,setSentences] = useRecoilState(sentencesState)
+    const {colorList,setColorList} = props
     const { focusRowIndex, updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
         focusElement, moveFocusToClickedElement,

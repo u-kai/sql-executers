@@ -26,8 +26,8 @@ export const EditersAndButton:VFC<Props> = (props) => {
     </ButtonContener>
     <EditersContener>
         <FolderAndEditer
-        sentences={sentences}
-        setSentences={setSentences}></FolderAndEditer>
+            sentences={sentences}
+            setSentences={setSentences}/>
     </EditersContener>
     </Contener>
     )
