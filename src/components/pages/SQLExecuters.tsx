@@ -10,6 +10,7 @@ import { TableContainer } from "@material-ui/core"
 import {TextareaInsertProps} from "../organisms/TextareInsertProps"
 import { SQLErrors } from "components/atoms/SQLErrors"
 import {StatusMessage} from "../atoms/StatusMessage"
+import { OtherList } from "components/atoms/OtherList"
 
 type IorC = "insert" | "create"
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
@@ -126,12 +127,14 @@ export const SQLExrcuters = () =>{
                 <SQLErrors
                 errors={errorMessages}
                 ></SQLErrors>
-                {otherResults.map((other,i)=>(
+                <OtherList
+                    otherList={otherResults}/>
+                {/* {otherResults.map((other,i)=>(
                     <OtherResults key={`${other}${i}`}>{other}</OtherResults>
                     ))}
                 <StatusMessage
                 statusMessage={statusMessage}
-                ></StatusMessage>
+                ></StatusMessage> */}
                 <TableContainer>
                 <TableEditer
                 rows={rows[i]}

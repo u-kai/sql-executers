@@ -9,17 +9,27 @@ type Props = {
 export const SQLErrors:VFC<Props> = (props) =>{
     const {errors} = props
     return (
-        <>
+        <Contener>
         {errors.map((error)=>(
             errorType.map((type,i)=>(
+                <LineContener>
                 <Errors key={`${type}${i}`}>{type}:{error[type]}</Errors>
+                </LineContener>
             ))
         ))}
-        <br></br>
-        </>
+        </Contener>
     )
 }
-const Errors = styled.div`
-color:red;
 
+const LineContener = styled.div`
+padding-bottom:5px;
+`
+
+const Contener = styled.div`
+margin-bottom:20px;
+
+`
+const Errors = styled.span`
+color:red;
+border-bottom:solid red 1px;
 `
