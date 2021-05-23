@@ -2,8 +2,9 @@ import {FolderAndEditer} from "../organisms/FolderAndEditer"
 import { ContainedButtons } from "../atoms/Bottun_MatirialUI"
 import styled from "styled-components"
 import { VFC } from "react"
-
-
+import { sentencesState } from "store/sentences";
+import {useRecoilState} from "recoil"
+const [sentences,setSentences] = useRecoilState(sentencesState)
 
 type Props = {
     onClick: () => void
@@ -13,7 +14,7 @@ type Props = {
 
 
 export const EditersAndButton:VFC<Props> = (props) => {
-    const {onClick,sentences,setSentences} = props
+    const {onClick} = props
     
     return (
     <Contener>

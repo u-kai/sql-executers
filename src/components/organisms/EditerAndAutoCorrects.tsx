@@ -8,7 +8,7 @@ import {wordDivide, deleteLastWord} from "functions/editerFucntions"
 import { sentencesState } from "store/sentences";
 import {useRecoilState} from "recoil"
 import {VFC} from "react"
-
+const [sentences,setSentences] = useRecoilState(sentencesState)
 type Props = {
                 sentences: string[];
                 setSentences:React.Dispatch<React.SetStateAction<string[]>>
@@ -18,7 +18,7 @@ type Props = {
 
 
 export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
-    const [sentences,setSentences] = useRecoilState(sentencesState)
+    //const [sentences,setSentences] = useRecoilState(sentencesState)
     const {colorList,setColorList} = props
     const { focusRowIndex, updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
