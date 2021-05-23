@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {VFC} from "react"
+import {VFC,useState} from "react"
 
 type  Props = {
     id?:string
@@ -8,12 +8,13 @@ type  Props = {
         y:number
     }
     children:React.ReactNodeArray
+    autoCorrectNumber:number
 }
 
 export const AutoCorrectBox:VFC<Props> = (props)=>{
-    const {id,posi,children} = props
+    const {id,posi,children,autoCorrectNumber} = props
     return(
-        <SAutoCorrectBox id={id} posi={posi}>
+        <SAutoCorrectBox id={id} posi={posi} height={autoCorrectNumber}>
             {children}
         </SAutoCorrectBox>
     )
@@ -23,9 +24,9 @@ type Posi = {
     x:number
     y:number
 }
-const SAutoCorrectBox = styled.div<{posi:Posi}>`
-width:100px;
-height:100px;
+const SAutoCorrectBox = styled.div<{posi:Posi,height:number}>`
+//width:100px;
+height:${props=>props.height*20}px;
 border:solid 1px black;
 white-space: pre-wrap;
 position:absolute;

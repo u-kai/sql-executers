@@ -16,9 +16,9 @@ export const AutoCorrects:VFC<Props> = (props) =>{
     const {autoCorrects, position,handleClick,
         handleMouseDown,focusAutoCorrectsIndex,} = props
     return(
-        <AutoCorrectBox id="AutoCorrectsBox" posi={position}>
+        <AutoCorrectBox id="AutoCorrectsBox" posi={position} autoCorrectNumber={autoCorrects.length}>
             {autoCorrects.map((value,i)=>(
-                <AutoCorrect 
+                <AutoCorrect
                     backgroundColor={i===focusAutoCorrectsIndex ? "white" : "black"}
                     opacity={i===focusAutoCorrectsIndex ? 1 : 1}
                     color={i===focusAutoCorrectsIndex ? "black":"white"}

@@ -30,5 +30,6 @@ const SAutoCorrect = styled.span<{opacity:number,color:string,backgroundColor:st
 opacity:${props=>props.opacity};
 overflow:scroll;
 color:${props=>props.color};
-background-color:${props=>props.backgroundColor}
+background-color:${props=>props.backgroundColor};
+font-family:'Tahoma';
 `
