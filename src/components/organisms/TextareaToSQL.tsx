@@ -50,6 +50,9 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
     const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
+        if(sqlType === "create"){
+            return
+        }
         const sendTableName = {
             tableName:e.target.value
         }
