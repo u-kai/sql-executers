@@ -4,18 +4,12 @@ import {SaveFileOnIcon} from "../molecules/SaveFileOnIcon"
 import styled from "styled-components"
 import {useState} from "react"
 import {BasicTextFields} from "../atoms/TextFiled_MaterialUI"
-import {VFC} from "react"
 import { sentencesState } from "store/sentences";
-import {useRecoilState} from "recoil"
+import {useRecoilValue} from "recoil"
 
-type Props = {
-    sentences:string[]
-    setSentences:React.Dispatch<React.SetStateAction<string[]>>
-}
-export const FolderAndEditer:VFC<Props> = (props) =>{
-    const [sentences,setSentences] = useRecoilState(sentencesState)
-    //const {sentences, setSentences} = props
-    const [colorList,setColorList] = useState<string[][]>([[]])
+
+export const FolderAndEditer = () =>{
+    const sentences = useRecoilValue(sentencesState)
     const [fileName,setFileName] = useState("")
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFileName(e.target.value)
@@ -27,11 +21,7 @@ export const FolderAndEditer:VFC<Props> = (props) =>{
             start={2}
             end={3}
             children={
-                <FileReaderOnIcon
-                texts={sentences}
-                setTexts={setSentences}
-                colorList={colorList}
-                setColorList={setColorList}/>
+                <FileReaderOnIcon/>
             }
                 />
             <FolderContener
@@ -48,11 +38,9 @@ export const FolderAndEditer:VFC<Props> = (props) =>{
             value={fileName}
             />
             </InputContener>
-            <EditerContener
-            children={EditerAndAutoCorrects({sentences:sentences,
-                                                setSentences:setSentences,
-                                                colorList:colorList,
-                                                setColorList:setColorList})}></EditerContener>
+            <EditerContener>
+                <EditerAndAutoCorrects/>
+            </EditerContener>
         </Contener>
     )
 }

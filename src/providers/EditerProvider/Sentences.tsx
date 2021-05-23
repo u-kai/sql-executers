@@ -6,7 +6,6 @@ export const SnetencesProvider = () => {
     const [sentences,setSentences] = useState<string[]>([])
     return(
         <SentencesContext.Provider
-            value={{sentences,setSentences}}
-            />
+            value={{sentences,setSentences}}/>
     )
 }

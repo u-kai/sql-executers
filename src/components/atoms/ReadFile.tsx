@@ -1,17 +1,14 @@
 import styled from "styled-components"
-import {VFC} from "react"
 import { wordDivide } from "functions/editerFucntions"
 import { whatWordColor } from "hocks/useColorList"
+import { useSetRecoilState} from "recoil"
+import {colorListState} from "store/colorList"
+import { sentencesState } from "store/sentences"
 
-type Props = {
-    texts:string[]
-    setTexts: (value: React.SetStateAction<string[]>) => void
-    colorList:string[][]
-    setColorList:React.Dispatch<React.SetStateAction<string[][]>>
-}
 
-export const ReadFile:VFC<Props> = (props) => {
-    const {setTexts,setColorList} = props
+export const ReadFile = () => {
+    const setColorList = useSetRecoilState(colorListState)
+    const setSentences = useSetRecoilState(sentencesState)
     const newColorList = (newSenetences:string[]) => {
         let clone:string[][] = []
         newSenetences.map((sentence)=>{
@@ -35,7 +32,7 @@ export const ReadFile:VFC<Props> = (props) => {
                     const newSentences = reader.result!.split("\n")
                     newSentences.filter((sentence)=>sentence!=="")
                     newColorList(newSentences.filter((sentence)=>sentence!==""))
-                    setTexts(newSentences.filter((sentence)=>sentence!==""))
+                    setSentences(newSentences.filter((sentence)=>sentence!==""))
                 }else{
                     console.log("notstring")
                 }

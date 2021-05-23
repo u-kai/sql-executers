@@ -8,14 +8,11 @@ import {useRecoilState} from "recoil"
 
 type Props = {
     onClick: () => void
-    sentences:string[]
-    setSentences: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 
 export const EditersAndButton:VFC<Props> = (props) => {
-    const {onClick} = props
-    const [sentences,setSentences] = useRecoilState(sentencesState)  
+    const {onClick} = props 
     return ( 
     <Contener>
     <ButtonContener>
@@ -26,9 +23,7 @@ export const EditersAndButton:VFC<Props> = (props) => {
         />
     </ButtonContener>
     <EditersContener>
-        <FolderAndEditer
-            sentences={sentences}
-            setSentences={setSentences}/>
+        <FolderAndEditer/>
     </EditersContener>
     </Contener>
     )

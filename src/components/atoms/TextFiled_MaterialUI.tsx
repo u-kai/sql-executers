@@ -21,17 +21,19 @@ type Props = {
     height?:number
     handleChange?:(event: React.ChangeEvent<HTMLInputElement>) => void
     value:string
+    type?:"text" | "password" 
 }
 export const  BasicTextFields:VFC<Props> = (props) => {
-  const {label="",id,width=100,height=30,handleChange,value} = props
+  const {label="",id,width=100,height=30,handleChange,value,type="text"} = props
   const classes = useStyles();
   // const strStyeles = returnStyle(styles)
   return (
     <form className={classes.root} noValidate autoComplete="off" >
       <TextField 
       id="standard-basic" 
+      type={type}
       label={label} 
-      autoComplete="off" 
+      autoComplete="on" 
       onChange={handleChange}
       value={value}/>
       </form>  

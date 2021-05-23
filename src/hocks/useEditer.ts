@@ -1,11 +1,14 @@
 import { useColorList } from "./useColorList"
 import {useFocusRowIndex} from "./useFocusRowIndex"
 import { sentencesState } from "store/sentences";
-import {useRecoilState} from "recoil"
+import {useRecoilState,useRecoilValue} from "recoil"
+import { focusRowIndexState } from "store/focusRowIndex";
+import { colorListState } from "store/colorList";
 
 
-export const useEditer = (
-    colorList:string[][],setColorList:React.Dispatch<React.SetStateAction<string[][]>>) =>{
+
+export const useEditer = () =>{
+    const [colorList,setColorList] = useRecoilState(colorListState)
     const removeLastValue = (list:string[]) => {
         return list.filter((_:string,i:number)=>i!==list.length-1)
     }
@@ -20,21 +23,20 @@ export const useEditer = (
         console.log(index,newCharacter)
         let clone = sentences.slice() 
         clone[index] = newCharacter
-        console.log(clone)
         setSentences([...clone])
     }     
     const { 
             addRowColorList, 
             removeRowColorList,
             updateColorList
-        } = useColorList(colorList, setColorList,)
-    const { focusRowIndex,
+        } = useColorList()
+    const { 
             focusElement,
             moveFocusToClickedElement,
             incrementFocusRowIndex,
             decrementFocusRowIndex
         } = useFocusRowIndex()
-
+        const focusRowIndex = useRecoilValue(focusRowIndexState)
     const addInitRowDatas = () => {
         addRowSentence()
         addRowColorList()

@@ -1,7 +1,9 @@
 import {ChangeColorRegDatas} from "../datas/Datas"
+import {useRecoilState} from "recoil"
+import { colorListState } from "store/colorList"
 
-export const useColorList = (colorList:string[][],setColorList:React.Dispatch<React.SetStateAction<string[][]>>) => {
-
+export const useColorList = () => {
+    const [colorList,setColorList] = useRecoilState(colorListState)
     const addRowColorList = () => {
         setColorList([...colorList,[]])
     }
@@ -9,10 +11,14 @@ export const useColorList = (colorList:string[][],setColorList:React.Dispatch<Re
         setColorList(removeLastList(colorList))
     }
     const updateColorList = (wordList:string[],index:number) => {
-        wordList.map((word,wordIndex)=>{
-            colorList[index][wordIndex] = whatWordColor(word)
+        let clones:string[][] = []
+        colorList.map((color)=>{
+            clones = [...clones,[...color]]
         })
-        setColorList([...colorList])
+        wordList.map((word,wordIndex)=>{
+            clones[index][wordIndex] = whatWordColor(word)
+        })
+        setColorList([...clones])
     }
 
     return {colorList, addRowColorList, removeRowColorList, updateColorList ,setColorList}

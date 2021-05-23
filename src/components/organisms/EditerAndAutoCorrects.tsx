@@ -6,26 +6,20 @@ import { useEditer } from "hocks/useEditer"
 import {useAutoCorrecters} from "hocks/useAutoCorrecters"
 import {wordDivide, deleteLastWord} from "functions/editerFucntions"
 import { sentencesState } from "store/sentences";
-import {useRecoilState} from "recoil"
-import {VFC} from "react"
-
-type Props = {
-                sentences: string[];
-                setSentences:React.Dispatch<React.SetStateAction<string[]>>
-                colorList:string[][]
-                setColorList:React.Dispatch<React.SetStateAction<string[][]>>
-            }
+import {useRecoilState,useRecoilValue} from "recoil"
+import { focusRowIndexState } from "store/focusRowIndex"
+import { colorListState } from "store/colorList"
 
 
-export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
-    const [sentences,setSentences] = useRecoilState(sentencesState)
-    //const [sentences,setSentences] = useRecoilState(sentencesState)
-    const {colorList,setColorList} = props
-    const { focusRowIndex, updateColorList,
+export const EditerAndAutoCorrects = ()=>{
+    const sentences = useRecoilValue(sentencesState)
+    const colorList = useRecoilValue(colorListState)
+    const focusRowIndex = useRecoilValue(focusRowIndexState)
+    const { updateColorList,
         addInitRowDatas, removeRowDatas,updateSentences,
         focusElement, moveFocusToClickedElement,
         incrementFocusRowIndex, decrementFocusRowIndex,
-        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer(colorList,setColorList)
+        isFocusRowSentencesNull, isFocusRowIndexInit, isFocusRowIndexEnd} = useEditer()
     const {initAutoCorrects, sortAutoCorrect, handleMouseDownToSelectAutoCorrect,
         getAndSetAutoCorrectsPosition, autoCorrectsPosition, focusAutoCorrectsIndex,setIsDisplayAutoCorrects,
         autoCorrects, isDisplayAutoCorrects, incrementFocusAutoCorrectsIndex,decrementFocusAutoCorrectsIndex} = useAutoCorrecters()
@@ -33,7 +27,7 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
     const [rowPosition,setRowPosition] = useState<number[]>([])
     const editerContenerHeight = 600
     const rowHeight = 30
-    
+
     const didEnterNewCharacters = (newSenetence:string)=>{
         initAutoCorrects()
         updateSentences(newSenetence,focusRowIndex)
@@ -85,10 +79,12 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
 
     const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=>{
+            console.log("this is;",1)
+            incrementFocusRowIndex()
             if(isFocusRowIndexEnd()){
                 addInitRowDatas()
             }
-            incrementFocusRowIndex()
+            console.log("this is;",3)
         },
         "ArrowUp":()=>{
             if(!isFocusRowIndexInit()){
@@ -128,6 +124,7 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
     },[sentences])
     
     useEffect(()=>{
+        console.log("this is;",5)
         if(focusRowIndex<=rowPosition.length-1){
             return 
         }
@@ -145,7 +142,8 @@ export const EditerAndAutoCorrects:VFC<Props> = (props)=>{
     },[sentences.length])
 
     useEffect(()=>{
-        console.log("useEffect",focusRowIndex)
+        console.log("this is;",4)
+        console.log("useEffect",sentences.length)
         console.log("input"+focusRowIndex.toString())
         focusElement("input"+focusRowIndex.toString())
         const scroll = document.getElementById("contener")

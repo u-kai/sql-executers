@@ -11,7 +11,7 @@ import {TextareaInsertProps} from "../organisms/TextareInsertProps"
 import { SQLErrors } from "components/atoms/SQLErrors"
 import { OtherList } from "components/atoms/OtherList"
 import { sentencesState } from "store/sentences";
-import {useRecoilState} from "recoil"
+import {RecoilRoot,useRecoilState,useRecoilValue} from "recoil"
 
 type IorC = "insert" | "create"
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
@@ -20,8 +20,7 @@ type EditerResults = {select:{[key:string]:string}[][]
                         other:{[key:string]:string}[][]}
 
 export const SQLExrcuters = () =>{
-    const [sentences,setSentences] = useRecoilState(sentencesState)
-    //const [sentences,setSentences] = useState([""])
+    const sentences = useRecoilValue(sentencesState)
     const [rows,setRows] = useState<string[][][]>([[[]]])
     const [columns, setColumns] = useState<string[][]>([[]])
     const [IorC,setIorC] = useState<IorC>("create")
@@ -100,10 +99,10 @@ export const SQLExrcuters = () =>{
                     onClick={[(e)=>setIorC("insert"),(e)=>setIorC("create")]}/>
             </HeaderContener>
             <EditersContener>
-                <EditersAndButton
-                    onClick={onClick}
-                    sentences={sentences}
-                    setSentences={setSentences}/>
+                {/* //<RecoilRoot> */}
+                    <EditersAndButton
+                        onClick={onClick}/>
+                {/* //</RecoilRoot> */}
             </EditersContener>
             <CopyDBContener>
                 {IorC === "create" ? (

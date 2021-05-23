@@ -1,7 +1,7 @@
-import {useState} from "react"
-
+import {useRecoilState} from "recoil"
+import { focusRowIndexState } from "store/focusRowIndex"
 export const useFocusRowIndex = () => {
-    const [focusRowIndex,setFocusIndex] = useState(0)
+    const [focusRowIndex,setFocusIndex] = useRecoilState(focusRowIndexState)
     const focusElement =(id:string):void=>{
         const focusElement = document.getElementById(id)
         if(focusElement){

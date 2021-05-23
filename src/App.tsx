@@ -1,12 +1,11 @@
-import { SQLExrcuters } from "components/pages/SQLExecuters";
-import {RecoilRoot, useRecoilState} from "recoil"
-import { sentencesState } from "store/sentences";
-
+import {BrowserRouter} from "react-router-dom"
+import {Router} from "router/Router"
+import React from "react"
 function App() {
   return (
-    <RecoilRoot>
-      <SQLExrcuters/>
-    </RecoilRoot>
+    <BrowserRouter>
+      <Router></Router>
+    </BrowserRouter>
   );
 }
 

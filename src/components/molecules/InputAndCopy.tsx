@@ -5,6 +5,8 @@ import {VFC} from "react"
 import { CopySpan} from "../atoms/CopySpan"
 import {StyledType} from "../../types/styledTypes/styledType"
 import {TailSpan} from "../atoms/TailSpan"
+import {useRecoilValue} from "recoil"
+
 export type Props = {
     fontFamily?:string
     style?:StyledType
