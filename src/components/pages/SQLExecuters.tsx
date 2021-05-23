@@ -9,12 +9,22 @@ import {Table as TableEditer} from "../atoms/TableEditer"
 import { TableContainer } from "@material-ui/core"
 import {TextareaInsertProps} from "../organisms/TextareInsertProps"
 import { SQLErrors } from "components/atoms/SQLErrors"
+import {StatusMessage} from "../atoms/StatusMessage"
+
 type IorC = "insert" | "create"
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type EditerResults = {select:{[key:string]:string}[][]
                         error:SQLError[]
-                        other:{[key:string]:string}[][]}
-
+                        other:{[key:string]:string}[][]}//|StatusType[]}
+type StatusType = {
+                    fieldCount: number,
+                    affectedRows: number,
+                    insertId: number,
+                    info: string,
+                    serverStatus: number,
+                    warningStatus: number
+                    }
+const message:["fieldCount","affectedRows","insertId","info","serverStatus","warningStatus"] = ["fieldCount","affectedRows","insertId","info","serverStatus","warningStatus"]
 export const SQLExrcuters = () =>{
     const [sentences,setSentences] = useState([""])
     const [rows,setRows] = useState<string[][][]>([[[]]])
@@ -22,6 +32,7 @@ export const SQLExrcuters = () =>{
     const [IorC,setIorC] = useState<IorC>("create")
     const [errorMessages,setErrorMessages] = useState<SQLError[]>([])
     const [otherResults,setOtherResults] = useState<string[]>([])
+    const [statusMessage,setStatusMessage] =useState<StatusType[]>([])
     const onClick = () =>{
         setErrorMessages([])
         setOtherResults([])
@@ -62,15 +73,17 @@ export const SQLExrcuters = () =>{
                 setErrorMessages(data["error"])
             }
             if(data["other"]){
-                console.log(otherResults)
                 let otherList:string[] = []
                 data["other"].map((others)=>{
-                    others.map((other)=>{
-                        Object.keys(other).map((key)=>{
-                            const displayOther = `${key}:${other[key]}`
-                            otherList = [...otherList,displayOther]
+                    try{
+                        others.map((other)=>{
+                            Object.keys(other).map((key)=>{
+                                const displayOther = `${key}:${other[key]}`
+                                otherList = [...otherList,displayOther]
+                            })
                         })
-                    })
+                    }catch(e){
+                    }
                 })
                 setOtherResults(otherList)
             }
@@ -106,7 +119,6 @@ export const SQLExrcuters = () =>{
                 )}
             </CopyDBContener>
             <Results>Results</Results>
-            <p>{otherResults}</p>
             <TablesConetener
             id={`tableContener`}>
             {columns.map((column,i)=>(
@@ -117,6 +129,9 @@ export const SQLExrcuters = () =>{
                 {otherResults.map((other,i)=>(
                     <OtherResults key={`${other}${i}`}>{other}</OtherResults>
                     ))}
+                <StatusMessage
+                statusMessage={statusMessage}
+                ></StatusMessage>
                 <TableContainer>
                 <TableEditer
                 rows={rows[i]}

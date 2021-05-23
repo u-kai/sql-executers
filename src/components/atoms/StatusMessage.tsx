@@ -25,6 +25,7 @@ export const StatusMessage:VFC<Props> = (props) => {
                 <SQLStatusMessage key={`${key}${i}`}>{key}:{message[key].toString()}</SQLStatusMessage>
             ))
         ))}
+        <br></br>
         </>
     )
 }
