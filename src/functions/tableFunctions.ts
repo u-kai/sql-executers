@@ -7,7 +7,6 @@ export const  makeRequest = (bodyData:Object):RequestInit=>{
         }
     }
 export const postDataAndReturnResposeJson = (sendDatas:Object,url:string) => {
-    console.log(url)
     return fetch(`http://127.0.0.1:8000/${url}`,makeRequest(sendDatas)).then((res)=>res.json())
 }
 

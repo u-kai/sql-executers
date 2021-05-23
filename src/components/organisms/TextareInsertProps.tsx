@@ -1,7 +1,6 @@
 import {TextareaToSQL} from "./TextareaToSQL"
 
 export const TextareaInsertProps = () => {
-    console.log("Insert")
     const url = "copyToInsert"
     const constColumns:string[] = []
     type ColumnValue = {[key:string]:string}
@@ -20,9 +19,7 @@ export const TextareaInsertProps = () => {
             const values = row.split("\t")
             let columnsAndValues:{[key:string]:string}= {}
             this.columns.map((column,i)=>{
-                
                 columnsAndValues[column] = values[i]
-                console.log("columnsAndValues[column]",columnsAndValues[column])
             })
             return columnsAndValues
         }
@@ -31,18 +28,16 @@ export const TextareaInsertProps = () => {
         }
         makeClone(row:string){
             const columnsAndValues = this.setOneLineValues(row)
-            console.log("columnsAndValues",columnsAndValues)
             this.appendColumnValuse(columnsAndValues)
         } 
     }
 
     return (
         <TextareaToSQL
-        url={url}
-        initColumns={constColumns}
-        sqlType={sqlType}
-        CloneClass={ColumnValueClone}
-        ></TextareaToSQL>
+            url={url}
+            initColumns={constColumns}
+            sqlType={sqlType}
+            CloneClass={ColumnValueClone}/>
     )
 }
    

@@ -42,11 +42,10 @@ export const TextareaCreateProps = () =>{
     } 
     return (
         <TextareaToSQL
-        url={url}
-        initColumns={constColumns}
-        initState={initLine}
-        CloneClass={MultiLineCellsClone}
-        sqlType={"create"}
-        ></TextareaToSQL>
+            url={url}
+            initColumns={constColumns}
+            initState={initLine}
+            CloneClass={MultiLineCellsClone}
+            sqlType={"create"}/>
     )
 }

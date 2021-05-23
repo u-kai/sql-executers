@@ -40,13 +40,13 @@ type Results = {
 }
 export const TextareaToSQL:VFC<Props> = (props) =>{
     const {url,initColumns,CloneClass,sqlType,initState} = props
-    type OneLineCells = {[key:string]:string}
+    type OneLineCells = {[key:string]:string|null}
     type CellChageEvent = React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>
     const [errors,setErrors] = useState<SQLError[]>([])
     const [focusIndex,setFocusIndex] = useState([0][0])
     const [tableName,setTableName] = useState("")
     const [results, setResults] = useState<StatusType[]>([])
-    const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string}[]>([])
+    const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string|null}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
     const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -112,7 +112,6 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
         const rows = e.target.value.split("\n")
         const cloneClass = new CloneClass(multiLineCells,e.target.value)
         if(sqlType === "insert"){
-            console.log("setcolumns",rows[0].split("\t"))
             setColumns(rows[0].split("\t"))
             rows.map((row,i)=>{
                 if(i!==0){
@@ -150,10 +149,9 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const addRows = () => {
         if(isDataExist()){
             let newRow:OneLineCells = Object.assign({},initState)
-            console.log("initstate",newRow,"init",initState)
             if(sqlType === "insert"){
                 initColumns.map((column)=>{
-                newRow[column] = ""
+                newRow[column] = null
                 })
             }
             setMultiLineCells([...multiLineCells,newRow])
@@ -171,7 +169,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     }
 
 
-    const cellChildren = (value:string,rowIndex:number,columnIndex:number,column:string) => {
+    const cellChildren = (value:string|null,rowIndex:number,columnIndex:number,column:string) => {
         switch(column){
             case "IsPrimary":
                 return(
@@ -203,7 +201,7 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
                     <TableTextArea
                         id={`${rowIndex.toString()}_${columnIndex.toString()}`}
                         spellCheck="false"
-                        value={value}
+                        value={value===null ? "":value}
                         onChange={(e)=>handleChange(e,rowIndex,column)}/>
                 )
             }

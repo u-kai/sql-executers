@@ -100,7 +100,7 @@ export const SQLExrcuters = () =>{
                 <EditersAndButton
                     onClick={onClick}
                     sentences={sentences}
-                    setSentences={setSentences}></EditersAndButton>
+                    setSentences={setSentences}/>
             </EditersContener>
             <CopyDBContener>
                 {IorC === "create" ? (

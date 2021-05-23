@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import {VFC} from "react"
 
-type makeElement = (value:string,rowIndex:number,columnIndex:number,column:string)=>JSX.Element
+type makeElement = (value:string|null,rowIndex:number,columnIndex:number,column:string)=>JSX.Element
 
 type Props = {
     columns:string[]
-    rows:{[key:string]:string}[]
+    rows:{[key:string]:string|null}[]
     tableKey:string
     headerKey:string
     bodyKey:string
