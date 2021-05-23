@@ -25,7 +25,7 @@ type Posi = {
     y:number
 }
 const SAutoCorrectBox = styled.div<{posi:Posi,height:number}>`
-//width:100px;
+// width:100%;
 height:${props=>props.height*20}px;
 border:solid 1px black;
 white-space: pre-wrap;
