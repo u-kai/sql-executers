@@ -3,12 +3,12 @@ import {Login} from "components/pages/Login"
 import {RecoilRoot} from "recoil"
 export const homeRoutes = [
     {
-        path:"/",
+        path:"",
         exact:true,
         children:<Login />
     },
     {
-        path:"/executers",
+        path:"executers",
         exact:false,
         children:<SQLExrcuters />
     },

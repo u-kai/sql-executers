@@ -37,7 +37,7 @@ export const Login = () => {
             if(results?.results){
                 setError(results.results.message)
             }else{
-                history.push("/home/executers")
+                history.push("/executers")
             }
         })
     }

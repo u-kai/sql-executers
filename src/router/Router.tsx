@@ -7,7 +7,7 @@ export const Router = () => {
             <Route exact path="/">
                 <Login/>
             </Route>
-            <Route path="/home" render ={({match:{url}})=>(
+            <Route path="/" render ={({match:{url}})=>(
                 <Switch>
                 {homeRoutes.map((route)=>(
                     <Route 

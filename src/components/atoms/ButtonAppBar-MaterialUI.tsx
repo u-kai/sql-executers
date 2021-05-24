@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
- 
+import {useRecoilValue,useRecoilState} from "recoil"
+import {passwordState} from "store/dbInfo"
+import {BasicTextFields} from "../atoms/TextFiled_MaterialUI"
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -32,6 +35,7 @@ type Props = {
 }
 export const ButtonAppBar:VFC<Props> = (props) => {
   const classes = useStyles();
+  const [password,setPassword] = useRecoilState(passwordState)
   const {buttons,onClick,color="secondary",title="SQL-EXECUTERS"} = props
   return (
      <div className={classes.root}>
@@ -43,6 +47,12 @@ export const ButtonAppBar:VFC<Props> = (props) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
+          <BasicTextFields 
+            value={password} 
+            handleChange={(e)=>{setPassword(e.target.value)}} 
+            type="password" 
+            label={"Enter password to reconnection"}
+            />
             {buttons?.map((button,i)=>(
                 <ContainedButtons onClick={onClick![i]} color={"primary"} value={button}></ContainedButtons>
             ))}

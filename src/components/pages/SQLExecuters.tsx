@@ -14,6 +14,7 @@ import { sentencesState } from "store/sentences";
 import {useRecoilValue} from "recoil"
 import {useDBInfo} from "store/provideDBInfo"
 
+
 type IorC = "insert" | "create"
 type SQLError = {code:string,sqlState:string,errno:number,sqlMessage:string}
 type EditerResults = {select:{[key:string]:string}[][]
