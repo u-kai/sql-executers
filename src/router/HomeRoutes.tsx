@@ -10,7 +10,7 @@ export const homeRoutes = [
     {
         path:"/executers",
         exact:false,
-        children:<RecoilRoot><SQLExrcuters /></RecoilRoot>
+        children:<SQLExrcuters />
     },
    
 ]

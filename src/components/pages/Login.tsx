@@ -5,14 +5,18 @@ import {BasicTextFields} from "../atoms/TextFiled_MaterialUI"
 import {postDataAndReturnResposeJson} from "functions/tableFunctions"
 import {useHistory} from "react-router-dom"
 import {SimpleAlerts} from "../atoms/Alert_MaterialUI"
+import {userState,hostState,passwordState,dbState} from "store/dbInfo"
+import {useRecoilState} from "recoil"
+
 export const Login = () => {
+    // const {user,password,host,db} = props
+    const [user,setUser] = useRecoilState(userState)
+    const [password,setPassword] = useRecoilState(passwordState)
+    const [host,setHost] = useRecoilState(hostState)
+    const [db,setDB] = useRecoilState(dbState)
+    const [error,setError] = useState("")
     const url = "submitUser"
     const history = useHistory()
-    const [user,setUser] = useState("")
-    const [password,setPassword] = useState("")
-    const [host,setHost] = useState("")
-    const [db,setDB] = useState("")
-    const [error,setError] = useState("")
     const inputList:["user","password","host","db"] = ["user","password","host","db"]
     const stateList = [user,password,host,db]
     const setFunctions = {
