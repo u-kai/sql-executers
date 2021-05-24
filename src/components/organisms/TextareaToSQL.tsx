@@ -9,7 +9,7 @@ import {ContainedButtons} from "../atoms/Bottun_MatirialUI"
 import { SQLErrors } from "components/atoms/SQLErrors"
 import {StatusMessage} from "../atoms/StatusMessage"
 import {focusElement} from "functions/focusElement"
-
+import {useDBInfo} from "store/provideDBInfo"
 type Props = {
     url:string
     initColumns:string[]
@@ -49,12 +49,14 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const [multiLineCells,setMultiLineCells] = useState<{[key:string]:string|null}[]>([])
     const [textarea,setTextarea] = useState("")
     const [columns,setColumns] = useState(initColumns.slice())
+    const dbConfig = useDBInfo()
     const sendTableNameAndsetColumns = (e: React.FocusEvent<HTMLInputElement>) => {
         if(sqlType === "create"){
             return
         }
         const sendTableName = {
-            tableName:e.target.value
+            tableName:e.target.value,
+            dbInfo:dbConfig
         }
         postDataAndReturnResposeJson(sendTableName,"showTableColumn")
         .then((results:{"results":[[{"Field":string,"Default":string}],[{[key:string]:string}]]})=>{
@@ -87,7 +89,8 @@ export const TextareaToSQL:VFC<Props> = (props) =>{
     const sendDataAndSetResults = () => {
         const sendDatas = {
                 tableName:tableName,
-                multiLineCells:multiLineCells
+                multiLineCells:multiLineCells,
+                dbInfo:dbConfig
             }
         postDataAndReturnResposeJson(sendDatas,url)
         .then((results:Results)=>{

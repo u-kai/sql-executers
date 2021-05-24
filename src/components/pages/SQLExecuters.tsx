@@ -12,7 +12,6 @@ import { SQLErrors } from "components/atoms/SQLErrors"
 import { OtherList } from "components/atoms/OtherList"
 import { sentencesState } from "store/sentences";
 import {useRecoilValue} from "recoil"
-
 import {useDBInfo} from "store/provideDBInfo"
 
 type IorC = "insert" | "create"
