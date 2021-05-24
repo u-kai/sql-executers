@@ -6,7 +6,6 @@ export const useDBInfo = () => {
     const password = useRecoilValue(passwordState)
     const host = useRecoilValue(hostState)
     const db = useRecoilValue(dbState)
-    console.log(user,password,host,db)
     return {
         user:user,
         password:password,

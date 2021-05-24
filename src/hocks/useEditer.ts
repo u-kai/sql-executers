@@ -20,7 +20,6 @@ export const useEditer = () =>{
         setSentences(removeLastValue(sentences))
     }
     const updateSentences = (newCharacter:string,index:number) => {
-        console.log(index,newCharacter)
         let clone = sentences.slice() 
         clone[index] = newCharacter
         setSentences([...clone])

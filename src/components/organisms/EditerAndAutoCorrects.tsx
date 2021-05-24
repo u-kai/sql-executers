@@ -79,12 +79,10 @@ export const EditerAndAutoCorrects = ()=>{
 
     const CaseNotDisplayAutoCorrectsHandleKeyDown:{[key:string]:()=>void} = {
         "Enter":()=>{
-            console.log("this is;",1)
             incrementFocusRowIndex()
             if(isFocusRowIndexEnd()){
                 addInitRowDatas()
             }
-            console.log("this is;",3)
         },
         "ArrowUp":()=>{
             if(!isFocusRowIndexInit()){
@@ -98,7 +96,6 @@ export const EditerAndAutoCorrects = ()=>{
         },
         "Backspace":()=>{
             if(isFocusRowSentencesNull() && !isFocusRowIndexInit()){
-                console.log("!!!!!!!!!!!!!")
                 if(isFocusRowIndexEnd()){
                     removeRowDatas()
                 }
@@ -124,7 +121,6 @@ export const EditerAndAutoCorrects = ()=>{
     },[sentences])
     
     useEffect(()=>{
-        console.log("this is;",5)
         if(focusRowIndex<=rowPosition.length-1){
             return 
         }
@@ -142,9 +138,6 @@ export const EditerAndAutoCorrects = ()=>{
     },[sentences.length])
 
     useEffect(()=>{
-        console.log("this is;",4)
-        console.log("useEffect",sentences.length)
-        console.log("input"+focusRowIndex.toString())
         focusElement("input"+focusRowIndex.toString())
         const scroll = document.getElementById("contener")
         const input = document.getElementById(`input${focusRowIndex}`)

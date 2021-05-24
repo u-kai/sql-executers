@@ -37,7 +37,6 @@ export const Login = () => {
             if(results?.results){
                 setError(results.results.message)
             }else{
-                console.log("success")
                 history.push("/home/executers")
             }
         })
